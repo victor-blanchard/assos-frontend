@@ -8,9 +8,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom-color: black; 
+  border-bottom-color: #D8D8D8;; 
   border-bottom-width: 1px;
   border-bottom-style: solid; 
+  position: fixed; 
+  top: 0; 
+  width: 100%; 
+  z-index: 999; 
+
  
 }
 .logoAndSearchContainer {
@@ -25,24 +30,59 @@ margin-right: 30px;
 
 .searchContainers {
     width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
 }
-.logo {
-}
+
 .searchText {
-    
+
     margin: 10px;
+    font-size: 16px;
+    width: 30%;
+    height: 30px;
+    height: 40px;
+    border-radius: 15px;
+    border-color: #D8D8D8;
+    padding: 10px;
+  
 }
 .searchLocation {
     margin: 10px;
+    font-size: 16px;
+    width: 30%;
+    height: 40px;
+    border-radius: 15px;
+    border-color: #D8D8D8;
+    padding: 10px;
 }
 .btnSearch {
-}
-.signinSignupContainer {
+    border-color: #D8D8D8;
+    color:#D8D8D8;
+    margin-left: 10px;
+    height: 30px;
 
 }
+
 .btnSignin {
     margin: 10px;
+    background-color: #0093E9;
+    color: white;
+    border-radius: 15px;
+    border-color: #0093E9;
+    width: 100px;
+    height: 40px;
+    font-size: 16px;
 }
 .btnSignup {
     margin-right: 30px;
+    margin-left: 10px;
+    background-color: #0093E9;
+    color: white;
+    border-radius: 15px;
+    border-color: #0093E9;
+    width: 100px;
+    height: 40px;
+    font-size: 16px;
 }
