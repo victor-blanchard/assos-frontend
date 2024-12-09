@@ -10,15 +10,16 @@ export const placesSlice = createSlice({
   reducers: {
     addPlaceToStore: (state, action) => {
       console.log(action.payload);
-      state.value.push(action.payload);
+    //   state.value.push(action.payload);
     },
     removePlaceToStore: (state, action) => {
-      state.value = state.value.filter(
-        (bookmark) => bookmark.title !== action.payload.title
-      );
+        console.log(action.payload);}
+    //   state.value = state.value.filter(
+    //     (bookmark) => bookmark.title !== action.payload.title
+    
     },
   },
-});
+);
 //export of all
 export const { addPlaceToStore, removePlaceToStore } = placesSlice.actions;
 export default placesSlice.reducer;

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
 import styles from "../styles/Header.module.css";
@@ -10,7 +11,7 @@ import { addPlaceToStore } from "../reducers/place";
 function Header() {
   const dispatch = useDispatch();
   const [currentPlace, setcurrentPlace] = useState({});
-  const places = useSelector((state) => state.users.value.nickName);
+  const places = useSelector((state) => state.places.value.placeName);
 
   const handleSearchEvents = () => {
     fetch(`https://api-adresse.data.gouv.fr/search/?q=${currentPlace}`)
