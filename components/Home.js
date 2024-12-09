@@ -1,18 +1,44 @@
 import styles from '../styles/Home.module.css';
 import Image from 'next/image';
+import { useState } from 'react';
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFutbol } from "@fortawesome/free-solid-svg-icons";
+import { faFutbol, faHandshakeAngle, faHeartPulse, faChildren, faDog, faPalette, faUserGraduate } from "@fortawesome/free-solid-svg-icons";
+
 
 function Home() {
-  const dataEvent = [
-    {event: 'Aide à la personne'},
-    {event: 'Sport'},
-    {event: 'Santé'},
-    {event: 'Solidarité'},
-    {event: 'Culture'},
-    {event: 'Education'},
-    {event: 'Sport'}
-  ]
+  const [icon, setIcon] = useState(''); //Récupere le nom de l'evenement au clic sur l'icon;
+  console.log('icon =>',icon);
+
+  const dataEvent = [ 
+    {event: 'Aide à la personne', icon: faHandshakeAngle},
+    {event: 'Sport', icon: faFutbol},
+    {event: 'Santé', icon: faHeartPulse},
+    {event: 'Enfant', icon: faChildren},
+    {event: 'Solidarité', icon: faDog},
+    {event: 'Art & Culture', icon: faPalette},
+    {event: 'Education', icon: faUserGraduate},
+    {event: 'Anaimaux', icon: faDog}
+  ];
+  
+  const handleIconEVent = (event) => {
+    setIcon(event);
+    console.log(event);
+    // setIcon(event);
+  }
+  const iconEvent = dataEvent.map((data, i) => { //On map sur le tableau d'objet afin de recuperer les infos de manière dynamique
+    // console.log(`Event : ${data.event}, Icon: ${data.icon}`)
+    return <div className={styles.divEVent}>
+        <div key={i} className={styles.cicleEvent}>
+              <FontAwesomeIcon icon={data.icon}
+                className={styles.eventIcon}
+                onClick={()=> handleIconEVent(data.event)} />
+          </div> 
+          <p>{data.event}</p>
+      </div>
+          
+  })
+
   return (
     <div>
       <main className={styles.main}>
@@ -35,10 +61,7 @@ function Home() {
           </div>
        </section>
        <section className={styles.mainEventsCategory}>
-        <div className={styles.cicleEvent}>
-        <FontAwesomeIcon icon={faFutbol}
-          className={styles.eventIcon} />
-        </div>
+        {iconEvent}
        </section>
       </main>
     </div>
