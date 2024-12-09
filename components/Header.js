@@ -1,19 +1,33 @@
+import Link from "next/link"; 
+import Image from "next/image"; 
 import styles from "../styles/Header.module.css";
-import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+	
 
 function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.logoAndSearchContainer}>
-        <Image className={styles.logo}>
-          <Link href="/" />
-        </Image>
-        <input className={styles.searchText} placeholder="search..."></input>
+        <Image
+          className={styles.logo}
+          // src="/logo.png"
+          alt="Logo"
+          width={50}
+          height={50}
+        />{" "}
+     
+        <input
+          className={styles.searchText}
+          placeholder="search..."
+          type="text"
+        />{" "}
+   
         <input
           className={styles.searchLocation}
           placeholder="select the location..."
-        ></input>
+          type="text" // input etiketine type özelliği ekleyin
+        />
         <FontAwesomeIcon
           className={styles.btnSearch}
           icon={faMagnifyingGlass}
