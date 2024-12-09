@@ -1,7 +1,18 @@
 import styles from '../styles/Home.module.css';
 import Image from 'next/image';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFutbol } from "@fortawesome/free-solid-svg-icons";
 
 function Home() {
+  const dataEvent = [
+    {event: 'Aide à la personne'},
+    {event: 'Sport'},
+    {event: 'Santé'},
+    {event: 'Solidarité'},
+    {event: 'Culture'},
+    {event: 'Education'},
+    {event: 'Sport'}
+  ]
   return (
     <div>
       <main className={styles.main}>
@@ -24,7 +35,10 @@ function Home() {
           </div>
        </section>
        <section className={styles.mainEventsCategory}>
-        
+        <div className={styles.cicleEvent}>
+        <FontAwesomeIcon icon={faFutbol}
+          className={styles.eventIcon} />
+        </div>
        </section>
       </main>
     </div>

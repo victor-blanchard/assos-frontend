@@ -1,9 +1,10 @@
 .main {
   display: flex;
+  width: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  height: 80%;
   padding: 4rem 0;
 }
 
@@ -11,7 +12,7 @@
 .mainCentral {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 20px;
 }
 
@@ -27,9 +28,9 @@
   width: 142px;
   padding: 10px;
   margin: 10px;
-  /* -webkit-box-shadow: inset -1px 3px 8px 5px #1F87FF, 2px 5px 16px 0px #0B325E, -4px 5px 28px 1px rgba(0,0,0,0);  */
-box-shadow: inset -1px 3px 8px 5px #0093E9, 2px 5px 16px 0px #0B325E, -4px 5px 28px 1px rgba(15, 8, 109, 0);
-transition: 0.3 ease-in-out;
+  -webkit-box-shadow: inset -1px 3px 8px 5px #1F87FF, 2px 5px 16px 0px #0B325E, -4px 5px 28px 1px rgba(6, 103, 122, 0); /*Permet l'utilisation avec firefox*/
+  box-shadow: inset -1px 3px 8px 5px #0093E9, 2px 5px 16px 0px #0B325E, -4px 5px 28px 1px rgba(6, 103, 122, 0);
+  transition: 0.3 ease-in-out;
 }
 
 .btn:hover {
@@ -41,12 +42,28 @@ transition: 0.3 ease-in-out;
 }
 .divImg {
   width: 40%;
+  border-radius: 15px;
 }
+
 
 .imgAccueil{
   width: 100%;
   height: auto;
+  border-radius: 15px;
 }
 /* .mainEventsCategory {
  
 } */
+
+.cicleEvent {
+  /* border: 1px solid black; */
+  border-radius: 50%;
+  background-color: #ffe7c2;
+}
+
+.eventIcon {
+  width: 40px;
+  height: 40px;
+  padding: 20px;
+  color: #545454;
+}
