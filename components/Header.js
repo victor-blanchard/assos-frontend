@@ -1,9 +1,8 @@
-import Link from "next/link"; 
-import Image from "next/image"; 
+import Link from "next/link";
+import Image from "next/image";
 import styles from "../styles/Header.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-	
 
 function Header() {
   return (
@@ -16,22 +15,22 @@ function Header() {
           width={50}
           height={50}
         />{" "}
-     
-        <input
-          className={styles.searchText}
-          placeholder="search..."
-          type="text"
-        />{" "}
-   
-        <input
-          className={styles.searchLocation}
-          placeholder="select the location..."
-          type="text" // input etiketine type özelliği ekleyin
-        />
-        <FontAwesomeIcon
-          className={styles.btnSearch}
-          icon={faMagnifyingGlass}
-        />
+        <div className={styles.searchContainers}>
+          <input
+            className={styles.searchText}
+            placeholder="search..."
+            type="text"
+          />{" "}
+          <input
+            className={styles.searchLocation}
+            placeholder="select the location..."
+            type="text"
+          />
+          <FontAwesomeIcon
+            className={styles.btnSearch}
+            icon={faMagnifyingGlass}
+          />
+        </div>
       </div>
       <div className={styles.signinSignupContainer}>
         <button className={styles.btnSignin}>Sign-in</button>
