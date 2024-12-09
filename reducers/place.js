@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 //definition of initialState
 const initialState = {
-  value: { placeName: null, latt: null, long: null },
+  value: { placeName: null, lattitude: null, longitude: null },
 };
 //export and definition of reducers
 export const placesSlice = createSlice({
