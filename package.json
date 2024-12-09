@@ -9,10 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-<<<<<<< HEAD
-=======
     "fontawesome": "^5.6.3",
->>>>>>> 99b477d2fe4933bfc970e88573c6beebe8fc8a6e
     "next": "^15.0.4",
     "react": "18.1.0",
     "react-dom": "18.1.0"
