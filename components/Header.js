@@ -5,6 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 function Header() {
+
+
+
+
+
+
+  
   return (
     <header className={styles.header}>
       <div className={styles.logoAndSearchContainer}>
