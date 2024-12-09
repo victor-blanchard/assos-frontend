@@ -20,3 +20,11 @@
 .title a:hover, .title a:focus, .title a:active {
   text-decoration: underline;
 }
+
+.mainCentra {
+  border: 1px solid black;
+}
+
+.mainEventsCategory {
+  border: 1px solid red;
+}

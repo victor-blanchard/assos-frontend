@@ -1,0 +1,18 @@
+.footer {
+    display: flex;
+    width: 100vw;
+    height: auto;
+}
+
+.footerInfos {
+    display: flex;
+    width: 100%;
+    padding: 20px;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    list-style-type: none;
+    border-top: 1px solid rgb(0, 0, 0);
+}
+
+
