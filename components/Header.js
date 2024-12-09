@@ -10,9 +10,9 @@ function Header() {
       <div className={styles.logoAndSearchContainer}>
         <Image
           className={styles.logo}
-          // src="/logo.png"
+          src="/logo.png"
           alt="Logo"
-          width={50}
+          width={100}
           height={50}
         />{" "}
         <div className={styles.searchContainers}>
