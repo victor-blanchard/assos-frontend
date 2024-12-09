@@ -1,6 +1,6 @@
 import styles from "../styles/Header.module.css";
 import Link from "next/link";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass } from '@fortawesome/react-fontawesome';
 
 function Header() {
   return (

@@ -15,7 +15,7 @@ function Home() {
           </div>
        </section>
        <section className={styles.mainEventsCategory}>
-        <Image src=''
+        <Image src='solidarité.jpeg'
           alt="image d'accueil"
           width={120}
           height={120}
