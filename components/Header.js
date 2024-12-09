@@ -14,13 +14,14 @@ function Header() {
           alt="Logo"
           width={100}
           height={50}
+          href="/"
         />{" "}
         <div className={styles.searchContainers}>
           <input
             className={styles.searchText}
             placeholder="search..."
             type="text"
-          />{" "}
+          />
           <input
             className={styles.searchLocation}
             placeholder="select the location..."

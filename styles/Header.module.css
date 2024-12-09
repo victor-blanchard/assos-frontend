@@ -1,29 +1,33 @@
 @font-face {
-    font-family: "Montserrat";
-    src: url("/fonts/Montserrat.woff2") format("woff2"),
-         url("/fonts/Montserrat.woff") format("woff"),
-         url("/fonts/Montserrat.ttf") format("truetype");
-  }
+  font-family: "Montserrat";
+  src: url("/fonts/Montserrat.woff2") format("woff2"),
+    url("/fonts/Montserrat.woff") format("woff"),
+    url("/fonts/Montserrat.ttf") format("truetype");
+}
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 20%
-  border-bottom-color: #D8D8D8;; 
+  height: 8%;
+  border-bottom-color: #d8d8d8;
   border-bottom-width: 1px;
-  border-bottom-style: solid; 
-  position: fixed; 
-  top: 0; 
-  width: 100%; 
-  z-index: 999; 
+  border-bottom-style: solid;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
   background-color: white;
+}
 
- 
+.logo{
+    cursor: pointer;
+    
 }
 .logoAndSearchContainer {
-margin-left: 30px;
-margin-right: 30px;
-  width: 60%;
+  margin-left: 30px;
+  margin-right: 30px;
+  width: 50%;
+  height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -31,63 +35,64 @@ margin-right: 30px;
 }
 
 .searchContainers {
-    width: 80%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-   
+  width: 90%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .searchText {
-
-    margin: 10px;
-    font-size: 16px;
-    width: 30%;
-    height: 30px;
-    height: 40px;
-    border-radius: 15px;
-    border-color: #D8D8D8;
-    padding: 10px;
-  
+  margin: 10px;
+  font-size: 16px;
+  width: 30%;
+  height: 50%;
+  border-radius: 15px;
+  border-color: #d8d8d8;
+  padding: 10px;
 }
 .searchLocation {
-    margin: 10px;
-    font-size: 16px;
-    width: 30%;
-    height: 40px;
-    border-radius: 15px;
-    border-color: #D8D8D8;
-    padding: 10px;
+  margin: 10px;
+  font-size: 16px;
+  width: 30%;
+  height: 50%;
+  border-radius: 15px;
+  border-color: #d8d8d8;
+  padding: 10px;
 }
 .btnSearch {
-    border-color: #D8D8D8;
-    color:#D8D8D8;
-    margin-left: 10px;
-    height: 30px;
-
+  border-color: #d8d8d8;
+  color: #d8d8d8;
+  margin-left: 10px;
+  height: 30px;
+  cursor: pointer;
+}
+.signinSignupContainer {
+  height: 100%;
+  width: 15%;
 }
 
 .btnSignin {
-    margin: 10px;
-    background-color: #0093E9;
-    color: white;
-    border-radius: 15px;
-    border-color: #0093E9;
-    width: 100px;
-    height: 40px;
-    font-size: 16px;
-    padding: 10px;
-  
+  margin: 10px;
+  background-color: #0093e9;
+  color: white;
+  border-radius: 15px;
+  border-color: #0093e9;
+  width: 40%;
+  height: 50%;
+  font-size: 16px;                  
+  padding: 10px;
+  cursor: pointer;
 }
 .btnSignup {
-    margin-right: 30px;
-    margin-left: 10px;
-    background-color: #0093E9;
-    color: white;
-    border-radius: 15px;
-    border-color: #0093E9;
-    width: 100px;
-    height: 40px;
-    font-size: 16px;
-    padding: 10px;
+  margin-left: 10px;
+  background-color: #0093e9;
+  color: white;
+  border-radius: 15px;
+  border-color: #0093e9;
+  width: 40%;
+  height: 50%;
+  font-size: 16px;
+  padding: 10px;
+  cursor: pointer;
 }
