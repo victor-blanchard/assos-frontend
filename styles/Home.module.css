@@ -56,6 +56,13 @@
  
 } */
 
+.divEVent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .cicleEvent {
   /* border: 1px solid black; */
   border-radius: 50%;
@@ -67,4 +74,13 @@
   height: 40px;
   padding: 20px;
   color: #545454;
+}
+
+.mainEventsCategory {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: row;
+  gap: 20px;
 }
