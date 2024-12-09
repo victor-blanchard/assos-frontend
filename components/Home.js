@@ -21,6 +21,10 @@ function Home() {
     {event: 'Anaimaux', icon: faDog}
   ];
   
+  /**
+   * Permet de récuperer via le setter d'etat setIcon les données du tableau dataEVent
+   * @param {object} event : les donnée du tableau dataEVent
+   */
   const handleIconEVent = (event) => {
     setIcon(event);
     console.log(event);
@@ -49,7 +53,7 @@ function Home() {
                 Explorez une large gamme d'événements, ateliers, et sorties organisés par des associations proches de vous. 
                 Que vous cherchiez à participer, apprendre, ou rencontrer, notre plateforme vous aide à trouver facilement 
                 des activités adaptées à vos envies.</p>
-            <button className={styles.btn}>Rejoindre La Sauce</button>
+            <button onClick={()=> console.log('click')} className={styles.btn}>Rejoindre La Sauce</button>
           </div>
           <div className={styles.divImg}>
             <Image src='/solidarité.jpeg'
