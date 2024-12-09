@@ -8,6 +8,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 20%
   border-bottom-color: #D8D8D8;; 
   border-bottom-width: 1px;
   border-bottom-style: solid; 
