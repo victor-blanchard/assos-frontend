@@ -52,7 +52,7 @@ function SignUpForm(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        //fetch api
+        //fetch api back
         props.onSignup(userInfo);
 
     }
