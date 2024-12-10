@@ -4,16 +4,15 @@ import { useState } from 'react';
 import { Modal, Button } from 'antd';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFutbol, faHandshakeAngle, faHeartPulse, faChildren, faDog, faPalette, faUserGraduate } from "@fortawesome/free-solid-svg-icons";
+import SignUpForm from './SignUpForm';
 
 
 
 function Home() {
   const [icon, setIcon] = useState(''); //Récupere le nom de l'evenement au clic sur l'icon;
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isAsso, setIsAsso] = useState(false);// Permet de vérifier si c'est une asso
-  const [isUser, setIsUSer] = useState(false);// Permet de vérifier si c'est un particulier
-  console.log('C\'est une association =>', isAsso);
-  console.log('C\'est un particulier =>', isUser);
+ 
+  
   
   
 //Tableau d'objets qui contient le nom d'un evenement associé à une icon
@@ -38,9 +37,12 @@ function Home() {
   // }
 
 //Ferme la modal
-  const handleSignCancel = () => {
+  const handleSignCancel = (reset) => {
     setIsModalVisible(false)
-  }
+    reset = false;
+  };
+
+ 
   
   /**
    * Permet de récuperer via le setter d'etat setIcon les données du tableau dataEVent
@@ -82,9 +84,7 @@ function Home() {
             onCancel={handleSignCancel} // Ferme la modal avec le bouton "Annuler"
             className={styles.modal}
           >
-            <h2>Je suis :</h2>
-            <Button>Association</Button>
-            <Button>Particulier</Button>
+            <SignUpForm handleSignCancel={handleSignCancel} isCancel={false}/>
             
           </Modal>
           <div className={styles.divImg}>
