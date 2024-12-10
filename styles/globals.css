@@ -1,9 +1,10 @@
-body {
-  padding: 0;
-  margin: 0;
+@font-face {
   font-family: "Montserrat";
+  src: url("/fonts/Montserrat.woff2") format("woff2"),
+    url("/fonts/Montserrat.woff") format("woff"),
+    url("/fonts/Montserrat.ttf") format("truetype");
 }
 
 * {
-  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif; 
 }
