@@ -1,0 +1,139 @@
+.associationMain {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 100vh;
+  }
+  
+  .imageAndTitleAndDescription {
+    margin-top: 10px;
+    width: 25%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px solid #d8d8d8;
+    padding: 20px; 
+  }
+  
+
+  
+  .identityCardAndLikeAndEvents {
+    margin-top: 10px;
+    width: 75%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px solid #d8d8d8;
+    padding: 20px; 
+  }
+  
+  .identityCardAndLike {
+    margin: 30px; 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    border: 1px solid #d8d8d8;
+    width: calc(100% - 60px); 
+    height: 30%;
+  }
+  
+  .identityCardDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+  }
+  
+  
+  
+  .eventsOfAssociation {
+    padding: 10px; 
+    height: 70%; 
+    width: 100%;
+  }
+  
+  .filterContainer {
+    display: flex;
+    justify-content: space-around;
+    list-style-type: none;
+    width: 100%;
+    margin-bottom: 20px; 
+  }
+  
+  .filterbox {
+    margin-bottom: 10px;
+    border: 1px solid #d8d8d8;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    width: 150px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .resultPageAndMap {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start; 
+    justify-content: space-around;
+  }
+  
+  .map {
+    margin: 10px; 
+    width: 30%;
+    height: 70%; 
+
+    border: 1px solid #d8d8d8;
+  }
+  
+  .resultPageContainer {
+    padding: 10px;
+    border: 1px solid #d8d8d8;
+    width: 70%;
+    height: calc(100% - 20px); 
+    margin: 10px; 
+    scroll-behavior: smooth;
+    overflow-y: auto; 
+  }
+  
+  .resultDefandIcons {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .resultContainer {
+    display: flex;
+    border: 1px solid #d8d8d8;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .imageContainer {
+    padding: 10px;
+    margin-right: 10px;
+  }
+  
+  .resultDetailsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 90%;
+    height: 100%;
+  }
+  
+  .EventDate {
+    font-weight: 600;
+  }
+  
+  .resultIcon {
+    color: #d9613d;
+    margin-left: 10px;
+  }
