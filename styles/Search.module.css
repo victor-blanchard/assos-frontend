@@ -2,10 +2,10 @@
     display: flex;
     width: 100vw;
     flex-direction: column;
-    justify-content: center; 
-    align-items: center; 
+    justify-content: top; 
+    align-items: left; 
     height: 100vh;
-    margin-top: 2rem;
+    margin-top: 3rem;
     flex-grow: 1;
   }
   
@@ -25,6 +25,7 @@
     flex-direction: row;
     justify-content: center;  
     margin-left: 0px; 
+    
   }
   
   .tab {
@@ -43,6 +44,7 @@
     margin-top: 20px;
     margin-bottom: 20px;
     border: 1px solid #d8d8d8;
+    background-color: #f0f0f0;
     border-radius: 10px;
     width: 150px;
     height: 30px;
@@ -51,15 +53,36 @@
     align-items: center;
   }
   
+  .resultPageAndMap{
+
+    display: flex;
+    flex-direction: row;
+    align-items: top;
+    justify-content: space-around;
+  }
+
+  .map {
+   
+    margin-top: 20px; 
+    padding: 10px;
+    width: 30%;
+    height: 100%;
+    border: 1px solid #d8d8d8;
+  }
+
+
   .resultPageContainer {
     padding: 10px;
     border: 1px solid #d8d8d8;
     width: 60%;
     height: 100%;
     margin-top: 20px; 
+    margin-bottom: 10px;
+    scroll-behavior: smooth;
+   
   }
   
-  .resultDefandIcons { /* resultDefandIcons ismini düzeltin, örneğin resultActions */
+  .resultDefandIcons { 
     display: flex;
     width: 100%;
     flex-direction: row; 
@@ -83,6 +106,14 @@
   .resultDetailsContainer {
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
+    width: 90%;
+    height: 100%;
+  }
+
+  .EventDate {
+
+    font-weight:600;
   }
   
   

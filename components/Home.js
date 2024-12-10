@@ -29,7 +29,7 @@ function Home() {
     {event: 'Solidarité', icon: faDog},
     {event: 'Art & Culture', icon: faPalette},
     {event: 'Education', icon: faUserGraduate},
-    {event: 'Anaimaux', icon: faDog}
+    {event: 'Animaux', icon: faDog}
   ];
 
   //Ouvre la modal 
