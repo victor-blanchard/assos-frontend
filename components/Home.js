@@ -1,6 +1,8 @@
 import styles from '../styles/Home.module.css';
 import Image from 'next/image';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { isReset } from '../reducers/users';
 import { Modal, Button } from 'antd';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFutbol, faHandshakeAngle, faHeartPulse, faChildren, faDog, faPalette, faUserGraduate } from "@fortawesome/free-solid-svg-icons";
@@ -11,11 +13,14 @@ import SignUpForm from './SignUpForm';
 function Home() {
   const [icon, setIcon] = useState(''); //Récupere le nom de l'evenement au clic sur l'icon;
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
+  console.log('La modal est visible ? => ', isModalVisible);
+  const dispatch = useDispatch();
  
   
   
   
-//Tableau d'objets qui contient le nom d'un evenement associé à une icon
+  //Tableau d'objets qui contient le nom d'un evenement associé à une icon
   const dataEvent = [ 
     {event: 'Aide à la personne', icon: faHandshakeAngle},
     {event: 'Sport', icon: faFutbol},
@@ -30,18 +35,24 @@ function Home() {
   //Ouvre la modal 
   const handleSign = () => {
     setIsModalVisible(true)
+    // dispatch(isReset(false))
   }
 
   // const handleSignOk = () => {
   //   setIsModalVisible(false)
   // }
 
-//Ferme la modal
-  const handleSignCancel = (reset) => {
+  //Ferme la modal
+  const handleSignCancel = () => {
     setIsModalVisible(false)
-    reset = false;
+    dispatch(isReset(true))
+
   };
 
+  const handleSignUp = (userInfo) => {
+    setUserInfo(userInfo);
+    setIsModalVisible(false);
+  };
  
   
   /**
@@ -54,8 +65,8 @@ function Home() {
   };
 
   const iconEvent = dataEvent.map((data, i) => { //On map sur le tableau d'objet afin de recuperer les infos de manière dynamique
-    return <div className={styles.divEVent}>
-        <div key={i} className={styles.cicleEvent}>
+    return <div className={styles.divEVent}  key={i}>
+        <div className={styles.cicleEvent}>
               <FontAwesomeIcon icon={data.icon}
                 className={styles.eventIcon}
                 onClick={()=> handleIconEVent(data.event)} />
@@ -80,11 +91,13 @@ function Home() {
           <Modal
             title="S'inscrire"
             open={isModalVisible} // Ouvre la modal
-            onOk={handleSign} // Ferme la modal avec le bouton "OK" prévoir une redirection
+            onClose={!isModalVisible}
+            // onOk={handleSign} // Ferme la modal avec le bouton "OK" prévoir une redirection
             onCancel={handleSignCancel} // Ferme la modal avec le bouton "Annuler"
+            footer={null}
             className={styles.modal}
           >
-            <SignUpForm handleSignCancel={handleSignCancel} isCancel={false}/>
+            <SignUpForm onSignUp={handleSignUp} onReset={isModalVisible}/>
             
           </Modal>
           <div className={styles.divImg}>
