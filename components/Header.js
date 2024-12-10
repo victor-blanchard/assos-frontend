@@ -13,22 +13,23 @@ function Header() {
   const [currentPlace, setcurrentPlace] = useState({});
   const places = useSelector((state) => state.places.value.placeName);
 
-  const handleSearchEvents = () => {
-    fetch(`https://api-adresse.data.gouv.fr/search/?q=${currentPlace}`)
-      .then((response) => response.json())
-      .then((data) => {
-        const longitude = data.features[0].geometry.coordinates[0];
-        const latitude = data.features[0].geometry.coordinates[1];
-        const citiesData = {
-          name: placeName,
-          longitude: longitude,
-          latitude: latitude,
-        };
+  // const handleSearchEvents = () => {
+  //   fetch(`https://api-adresse.data.gouv.fr/search/?q=${currentPlace}`)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       const longitude = data.features[0].geometry.coordinates[0];
+  //       const latitude = data.features[0].geometry.coordinates[1];
+  //       const citiesData = {
+  //         name: placeName,
+  //         longitude: longitude,
+  //         latitude: latitude,
+  //       };
 
-        dispatch(addPlaceToStore(citiesData));
-        console.log(citiesData);
-      });
-  };
+  //       dispatch(addPlaceToStore(citiesData));
+  //       console.log(citiesData);
+  //     });
+  // };
+
 
   return (
     <header className={styles.header}>
