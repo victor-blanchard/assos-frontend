@@ -8,40 +8,33 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { addPlaceToStore } from "../reducers/place";
 
+
 function Header() {
-  const dispatch = useDispatch();
-  const [currentPlace, setcurrentPlace] = useState({});
-  const places = useSelector((state) => state.places.value.placeName);
+  // const dispatch = useDispatch();
+  // const [currentPlace, setcurrentPlace] = useState({});
+  // const places = useSelector((state) => state.places.value.placeName);
 
-  // const handleSearchEvents = () => {
-  //   fetch(`https://api-adresse.data.gouv.fr/search/?q=${currentPlace}`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       const longitude = data.features[0].geometry.coordinates[0];
-  //       const latitude = data.features[0].geometry.coordinates[1];
-  //       const citiesData = {
-  //         name: placeName,
-  //         longitude: longitude,
-  //         latitude: latitude,
-  //       };
 
-  //       dispatch(addPlaceToStore(citiesData));
-  //       console.log(citiesData);
-  //     });
-  // };
 
+ 
+
+  const handleSearchEvents = () => {
+    window.location.href = '/search';
+   
+  };
 
   return (
     <header className={styles.header}>
       <div className={styles.logoAndSearchContainer}>
-        <Image
-          className={styles.logo}
-          src="/logo.png"
-          alt="Logo"
-          width={100}
-          height={50}
-          href="/"
-        />{" "}
+        <Link href="/">
+          <Image
+            className={styles.logo}
+            src="/logo.png"
+            alt="Logo"
+            width={100}
+            height={50}
+          />
+        </Link>
         <div className={styles.searchContainers}>
           <input
             className={styles.searchText}
@@ -52,8 +45,8 @@ function Header() {
             className={styles.searchLocation}
             placeholder="select the location..."
             type="text"
-            value={currentPlace}
-            onChange={(e) => setcurrentPlace(e.target.value)}
+            // value={currentPlace}
+            // onChange={(e) => setcurrentPlace(e.target.value)}
           />
           <FontAwesomeIcon
             className={styles.btnSearch}
