@@ -17,23 +17,23 @@ function Association() {
             height={50}
           />
         </div>
-        <h2 className={styles.headerOfAssociation}>Association Name</h2> {/* Başlık için h2 kullanımı */}
+        <h2 className={styles.headerOfAssociation}>Association Name</h2> 
         <p className={styles.descriptionOfAssociation}> 
           Association Detailed Information 
-        </p> {/* Paragraf için p kullanımı */}
+        </p> 
       </div>
 
       <div className={styles.identityCardAndLikeAndEvents}>
         <div className={styles.identityCardAndLike}>
           <div className={styles.identityCardDiv}>
-            <h3 className={styles.identityCardHeader}>Association Name</h3> {/* Alt başlık için h3 kullanımı */}
+            <h3 className={styles.identityCardHeader}>Association Name</h3> 
             <span className={styles.identityCardSecondInfo}>Association SIRET</span>
             <span className={styles.identityCardThirdInfo}>Association Adresse</span>
             <span className={styles.identityCardFourthInfo}>Association Contact</span>
             <div className={styles.identityCardThemeCont}></div> 
           </div>
           <div className={styles.iconCont}>
-            <FontAwesomeIcon className={styles.likeIcon} icon={faHeart} /> {/* Sınıf adını daha spesifik hale getirme */}
+            <FontAwesomeIcon className={styles.likeIcon} icon={faHeart} /> 
           </div>
         </div>
 
@@ -54,10 +54,10 @@ function Association() {
                     src="https://secure.meetupstatic.com/photos/event/c/0/9/a/600_514189306.webp?w=384"
                     width={80}
                     height={100}
-                    alt="Event Image" // Alternatif metin ekleme
+                    alt="Event Image" 
                   />
                 </div>
-                <div className={styles.resultContentAndIcons}> {/* resultDefandIcons yerine daha açıklayıcı bir isim */}
+                <div className={styles.resultContentAndIcons}>
                   <div className={styles.resultDetailsContainer}>
                     <span className={styles.EventDate}>Date</span>
                     <span className={styles.EventTitle}>Event Title</span>
@@ -69,7 +69,7 @@ function Association() {
                       Association Name
                     </span>
                   </div>
-                  <div className={styles.resultIcons}> {/* resultShareAndBookmarkContainer yerine daha kısa bir isim */}
+                  <div className={styles.resultIcons}> 
                     <FontAwesomeIcon
                       className={styles.resultIcon}
                       icon={faShare}
