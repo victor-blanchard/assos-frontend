@@ -4,6 +4,10 @@ const nextConfig = {
   images: {
     domains: ["secure.meetupstatic.com"],
   },
+  transpilePackages: ['antd', '@ant-design', 'rc-util', 'rc-pagination', 'rc-picker'],
+  webpack: (config) => {
+    return config;
+  },
 };
 
 module.exports = nextConfig;
