@@ -1,0 +1,17 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.form label {
+    /* border: 2px solid green;     */
+    width: 100%;
+}
+
+.form input {
+    width: 70%;
+    height:20px;
+    margin: 10px;
+    border-radius: 15px;
+}

@@ -97,7 +97,7 @@ function Home() {
             footer={null}
             className={styles.modal}
           >
-            <SignUpForm onSignUp={handleSignUp} onReset={isModalVisible}/>
+            <SignUpForm  onSignUp={handleSignUp} isModalVisible={isModalVisible}/>
             
           </Modal>
           <div className={styles.divImg}>
