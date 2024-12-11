@@ -69,7 +69,7 @@ function App({ Component, pageProps }) {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <Head>
-          <title>Next.js App</title>
+          <title>LaSauce.fr</title>
         </Head>
         <Header />
         <Component {...pageProps} />
