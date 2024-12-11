@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { isModalVisible } from '../reducers/users';
 import Image from "next/image";
 import styles from "../styles/Header.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,6 +13,7 @@ function Header() {
   // const dispatch = useDispatch();
   // const [currentPlace, setcurrentPlace] = useState({});
   // const places = useSelector((state) => state.places.value.placeName);
+  const dispatch = useDispatch();
 
 const [search, setSearch] = useState('')
 console.log(search)
@@ -29,6 +30,12 @@ const handleSearch = () => {
     window.location.href = '/search';
    
   };
+
+  const handleSignUp = async () => {
+    dispatch(isModalVisible(true));
+  };
+  const handleSign = async () => {};
+
 
   return (
     <header className={styles.header}>
@@ -65,8 +72,8 @@ const handleSearch = () => {
         </div>
       </div>
       <div className={styles.signinSignupContainer}>
-        <button className={styles.btnSignin}>Sign-in</button>
-        <button className={styles.btnSignup}>Sign-up</button>
+        <button  className={styles.btnSignin}>Sign-in</button>
+        <button onClick={handleSignUp} className={styles.btnSignup}>Sign-up</button>
       </div>
     </header>
   );

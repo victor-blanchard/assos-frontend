@@ -1,21 +1,22 @@
 import styles from '../styles/Home.module.css';
 import Image from 'next/image';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { isReset } from '../reducers/users';
+import { useDispatch, useSelector } from 'react-redux';
+import { isModalVisible } from '../reducers/users';
 import { Modal, Button } from 'antd';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFutbol, faHandshakeAngle, faHeartPulse, faChildren, faDog, faPalette, faUserGraduate } from "@fortawesome/free-solid-svg-icons";
-import SignUpForm from './SignUpForm';
+
+import ModalForm from './ModalForm';
 
 
 
 function Home() {
   const [icon, setIcon] = useState(''); //Récupere le nom de l'evenement au clic sur l'icon;
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
-  console.log('La modal est visible ? => ', isModalVisible);
+  // const [isModalVisible, setIsModalVisible] = useState(false);
   const dispatch = useDispatch();
+  const modal = useSelector((state) => state.users.value.formState);
+  console.log(modal);
  
   
   
@@ -34,8 +35,9 @@ function Home() {
 
   //Ouvre la modal 
   const handleSign = () => {
-    setIsModalVisible(true)
-    // dispatch(isReset(false))
+    // setIsModalVisible(true)
+    dispatch(isModalVisible(true));
+    console.log('open', modal)
   }
 
   // const handleSignOk = () => {
@@ -44,15 +46,7 @@ function Home() {
 
   //Ferme la modal
 
-  const handleSignCancel = () => {
-    setIsModalVisible(false);
-    dispatch(isReset(true)); // Réinitialiser l'état du formulaire
-};
-
-  const handleSignUp = (userInfo) => {
-    setUserInfo(userInfo);
-    setIsModalVisible(false);
-  };
+  
  
   
   /**
@@ -88,7 +82,7 @@ function Home() {
                 des activités adaptées à vos envies.</p>
             <Button type='primary' onClick={handleSign} className={styles.btn}>Rejoindre La Sauce</Button>
           </div>
-          <Modal
+          {/* <Modal
             title="S'inscrire"
             open={isModalVisible} // Ouvre la modal
             onClose={!isModalVisible}
@@ -99,7 +93,8 @@ function Home() {
           >
             <SignUpForm  onSignUp={handleSignUp} isModalVisible={isModalVisible}/>
             
-          </Modal>
+          </Modal> */}
+          <ModalForm />
           <div className={styles.divImg}>
             <Image src='/solidarité.jpeg'
               className={styles.imgAccueil}
