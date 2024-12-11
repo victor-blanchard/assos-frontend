@@ -28,24 +28,30 @@ function SignUpForm(props) {
         siret: ''
       });
 
+      //Réinitialise les valeurs
+      const resetForm = () => {
+        setIsAsso(false);
+        setIsUSer(false);
+        setUserInfo({
+          name: '',
+          firstName: '',
+          email: '',
+          password: '',
+          birthday: '',
+          zipcode: '',
+          acceptedTerms: false,
+          siret: ''
+        });
+        dispatch(isReset(true));
+      };
+      
       useEffect(() => {
-        if (!props.onReset) {
-            setIsAsso(false);
-            setIsUSer(false);
-            setUserInfo({
-                name: '',
-                firstName: '',
-                email: '',
-                password: '',
-                birthday: '',
-                zipcode: '',
-                acceptedTerms: false,
-                siret: ''
-            });
-            dispatch(isReset(true));
+        if (!props.isModalVisible) {
+          resetForm();
         }
-      }, [props.onReset]);
-      console.log('reset', props.onReset)
+      }, [props.isModalVisible]);
+
+      console.log('reset', props.isModalVisible)
     
 
     
@@ -55,10 +61,30 @@ function SignUpForm(props) {
         
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        //fetch api back
-        props.onSignup(userInfo);
+        // const data
+        
+        try {
+            const response = await fetch('http://localhost:3000/users/signup', {
+                methode: 'POST',
+                headers: { 'Content-Type' : 'application/json'},
+                body: JSON.stringify({userInfo})
+            });
+
+            if (!response.ok) {
+                throw new Error('Une erreur est survenue lors de la soumission.');
+              };
+
+              const data = await response.json();
+              console.log('data succès => ', data)
+            
+          } catch (error) {
+
+          }
+
+        // props.onSignUp(userInfo);
+        console.log(userInfo)
 
     }
 
@@ -84,14 +110,14 @@ function SignUpForm(props) {
     //  formulaire
     // } else 
     if (isUser ) {
-     formulaire = <form onSubmit={handleSubmit}>
+     formulaire = <form className={styles.form} onSubmit={handleSubmit}>
      <label>
           Prenom :
-         <input type="text" name="firstName" value={userInfo.name} onChange={handleChange} />
+         <input type="text" name="firstName" value={userInfo.firstName} onChange={handleChange} />
      </label>
      <label>
          Nom :
-         <input type="text" name="name" value={userInfo.firstName} onChange={handleChange} />
+         <input type="text" name="name" value={userInfo.name} onChange={handleChange} />
      </label>
      <label>
          Email :
@@ -113,7 +139,7 @@ function SignUpForm(props) {
          J'accepte les conditions d'utilisation :
          <input type="checkbox" name="acceptedTerms" checked={userInfo.acceptedTerms} onChange={handleChange} />
      </label>
-     <Button type='submit'>S'inscrire</Button>
+     <Button onClick={handleSubmit} >S'inscrire</Button>
    </form>
     } else if (isAsso) {
      
