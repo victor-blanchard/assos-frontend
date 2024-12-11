@@ -1,24 +1,25 @@
 import styles from '../styles/SignUpForm.module.css';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { isReset } from '../reducers/users';
+import { isReset, login } from '../reducers/users';
 import { Button } from 'antd';
 
-function SignUpForm(props) {
+function SignInForm(props) {
     const [isAsso, setIsAsso] = useState(false); // Permet de vérifier si c'est une asso
     const [isUser, setIsUser] = useState(false); // Permet de vérifier si c'est un particulier
     const dispatch = useDispatch();
     const user = useSelector((state) => state.users.value);
     console.log('etat =>', user.formState);
-    const [userInfo, setUserInfo] = useState({
-        firstname: '',
-        lastname: '',
-        email: '',
-        password: '',
-        birthday: '',
-        zipcode: '',
-        siret: ''
-    });
+    // const [userInfo, setUserInfo] = useState({
+    //     firstname: '',
+    //     lastname: '',
+    //     email: '',
+    //     password: '',
+    //     birthday: '',
+    //     zipcode: '',
+    //     siret: ''
+    // });
+    
     const [errors, setErrors] = useState([]);
 
     // Réinitialise les champs
@@ -35,14 +36,14 @@ function SignUpForm(props) {
             siret: ''
         });
         setErrors([]);
-        dispatch(isReset(true));
+        // dispatch(isReset(true));
     };
     // Utilisé pour réinitialiser le formulaire si la modal n'est pas visible
-    // useEffect(() => {
-    //     if (!isModalVisible) {
-    //         resetForm();
-    //     }
-    // }, [isModalVisible]);
+    useEffect(() => {
+        if (!props.isModalVisible) {
+            resetForm();
+        }
+    }, [props.isModalVisible]);
 
     const handleChange = (e) => {
         const { name, value } = e.target; // destructuration, permet d'assigné une même valeur à plusieurs éléments
@@ -92,20 +93,20 @@ function SignUpForm(props) {
     const handleAsso = () => {
         setIsAsso(true);
         setIsUser(false);
-        dispatch(isReset(false));
+        // dispatch(isReset(false));
     };
 
     const handleUser = () => {
         setIsAsso(false);
         setIsUser(true);
-        dispatch(isReset(false));
+        // dispatch(isReset(false));
     };
 
     let formulaire = (
         <div>
             <h2>Je suis :</h2>
-            <Button className={styles.btnAssociation} onClick={handleAsso}>Association</Button>
-            <Button className={styles.btnParticulier} onClick={handleUser}>Particulier</Button>
+            <Button onClick={handleAsso}>Association</Button>
+            <Button onClick={handleUser}>Particulier</Button>
         </div>
     );
 
@@ -201,4 +202,4 @@ function SignUpForm(props) {
     );
 }
 
-export default SignUpForm;
+export default SignInForm;
