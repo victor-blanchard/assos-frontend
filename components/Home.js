@@ -45,8 +45,6 @@ function Home() {
   //Ferme la modal
   const handleSignCancel = () => {
     setIsModalVisible(false)
-    dispatch(isReset(true))
-
   };
 
   const handleSignUp = (userInfo) => {

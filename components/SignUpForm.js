@@ -1,6 +1,6 @@
 import styles from '../styles/SignUpForm.module.css';
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isReset } from '../reducers/users';
 
@@ -21,14 +21,6 @@ function SignUpForm(props) {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.users.value)
     console.log('etat =>',user.formState)
-    // const [name, setName] = useState('');
-    // const [firstName, setfirstName] = useState('');
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
-    // const [birthday, setBirthday] = useState('');
-    // const [zipcode, setZipcode] = useState('');
-    // const [acceptedTerms, setAcceptedTerms] = useState(false);
-    // const [siret, setSiret] = useState('');
     const [userInfo, setUserInfo] = useState({
         name: '',
         firstName: '',
@@ -40,6 +32,23 @@ function SignUpForm(props) {
         siret: ''
       });
 
+      useEffect(() => {
+        if (!props.onReset) {
+            setIsAsso(false);
+            setIsUSer(false);
+            setUserInfo({
+                name: '',
+                firstName: '',
+                email: '',
+                password: '',
+                birthday: '',
+                zipcode: '',
+                acceptedTerms: false,
+                siret: ''
+            });
+            dispatch(isReset(true));
+        }
+      }, [props.onReset]);
       console.log('reset', !props.onReset)
     
 
