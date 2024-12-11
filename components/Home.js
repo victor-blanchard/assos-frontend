@@ -43,11 +43,11 @@ function Home() {
   // }
 
   //Ferme la modal
-  const handleSignCancel = () => {
-    setIsModalVisible(false)
-    dispatch(isReset(true))
 
-  };
+  const handleSignCancel = () => {
+    setIsModalVisible(false);
+    dispatch(isReset(true)); // Réinitialiser l'état du formulaire
+};
 
   const handleSignUp = (userInfo) => {
     setUserInfo(userInfo);
