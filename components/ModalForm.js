@@ -22,6 +22,7 @@ function ModalForm(props) {
     setUserInfo(userInfo);
     dispatch(isModalVisible(false));
   };
+
   return (
       <div >
         <Modal
@@ -33,6 +34,7 @@ function ModalForm(props) {
             footer={null}
             className={styles.modal}
           >
+        
             <SignUpForm  onSignUp={handleSignUp} isModalVisible={modal}/>
             
           </Modal>
