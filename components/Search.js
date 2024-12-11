@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShare, faBookmark } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import React from "react";
-import { Calendar, DatePicker, Input, Select, Switch } from "antd/lib";
+import { Calendar, DatePicker, Input, Select, Switch, Tabs } from "antd/lib";
 import { useState, useEffect } from "react";
 const categoriesOptions = [
   { label: "Sport", value: "Sport" },
@@ -16,6 +16,19 @@ const publicOptions = [
   { label: "Enfant", value: "Enfant" },
   { label: "Senior", value: "Senior" },
 ];
+const items = [
+  {
+    key: "1",
+    label: "Evenements",
+    children: "event search",
+  },
+  {
+    key: "2",
+    label: "Associations",
+    children: "asso search",
+  },
+];
+
 function Search() {
   const onChange = (date, dateString) => {
     console.log(date, dateString);
@@ -32,8 +45,7 @@ function Search() {
       <div className={styles.searchHeaders}>
         <h2 className={styles.searchTitle}>Événements à proximité</h2>
         <div className={styles.searchTabs}>
-          <span className={styles.tab}>Événements</span>
-          <span className={styles.tab}>Associations</span>
+          <Tabs defaultActiveKey="1" centered items={items} />
         </div>
       </div>
       <div className={styles.filterContainer}>

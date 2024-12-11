@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { isModalVisible } from '../reducers/users';
+import { isModalVisible } from "../reducers/users";
 import Image from "next/image";
 import styles from "../styles/Header.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,7 +12,6 @@ function Header() {
   const dispatch = useDispatch();
   // const [currentPlace, setcurrentPlace] = useState({});
   // const places = useSelector((state) => state.places.value.placeName);
-  const dispatch = useDispatch();
 
   const [search, setSearch] = useState("");
 
@@ -46,7 +45,6 @@ function Header() {
   };
   const handleSign = async () => {};
 
-
   return (
     <header className={styles.header}>
       <div className={styles.logoAndSearchContainer}>
@@ -78,8 +76,10 @@ function Header() {
         </div>
       </div>
       <div className={styles.signinSignupContainer}>
-        <button  className={styles.btnSignin}>Sign-in</button>
-        <button onClick={handleSignUp} className={styles.btnSignup}>Sign-up</button>
+        <button className={styles.btnSignin}>Sign-in</button>
+        <button onClick={handleSignUp} className={styles.btnSignup}>
+          Sign-up
+        </button>
       </div>
     </header>
   );
