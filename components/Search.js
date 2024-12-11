@@ -5,6 +5,7 @@ import { faShare, faBookmark } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 
 function Search() {
+  
   return (
     <div className={styles.searchMain}>
       <div className={styles.searchHeaders}>
