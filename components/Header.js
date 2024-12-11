@@ -14,7 +14,14 @@ function Header() {
   // const [currentPlace, setcurrentPlace] = useState({});
   // const places = useSelector((state) => state.places.value.placeName);
 
+const [search, setSearch] = useState('')
+console.log(search)
+const [location, setLocation] = useState('')
+console.log(location)
 
+const handleSearch = () => {
+  console.log(search);
+};
 
  
 
@@ -40,11 +47,13 @@ function Header() {
             className={styles.searchText}
             placeholder="search..."
             type="text"
+            onChange={(e) => setSearch(e.target.value)} value={search}
           />
           <input
             className={styles.searchLocation}
             placeholder="select the location..."
             type="text"
+            onChange={(e) => setLocation(e.target.value)} value={location}
             // value={currentPlace}
             // onChange={(e) => setcurrentPlace(e.target.value)}
           />

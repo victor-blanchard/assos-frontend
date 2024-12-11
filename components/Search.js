@@ -3,8 +3,19 @@ import styles from "../styles/Search.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShare, faBookmark } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
+import React from 'react';
+import { Calendar } from 'antd';
+import { useState, useEffect } from "react";
 
 function Search() {
+  const [selectedDate, setSelectedDate] = useState('')
+
+  const handleSelectedDate = () => {
+   
+  }
+  const onPanelChange = (value, mode) => {
+    console.log(value.format('YYYY-MM-DD'), mode);
+  }
   return (
     <div className={styles.searchMain}>
       <div className={styles.searchHeaders}>
@@ -15,7 +26,9 @@ function Search() {
         </div>
       </div>
       <div className={styles.filterContainer}>
-        <div className={styles.filterbox}>Date</div>
+        <div className={styles.filterbox}>Date
+        <Calendar className={styles.calendar} onPanelChange={onPanelChange} />
+        </div>
         <div className={styles.filterbox}>Location</div>
         <div className={styles.filterbox}>Category</div>
         <div className={styles.filterbox}>Targeted Public</div>

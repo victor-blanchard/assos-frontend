@@ -121,3 +121,10 @@
     color: #d9613d;
     margin-left: 10px;
   }
+
+  .calendar {
+    border: 1px solid black;
+    width: 10%;
+    height: 10%;
+    margin-right: 10px;
+  }
