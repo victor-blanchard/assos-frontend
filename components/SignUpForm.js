@@ -18,13 +18,13 @@ function SignUpForm(props) {
     const user = useSelector((state) => state.users.value)
     console.log('etat =>',user.formState)
     const [userInfo, setUserInfo] = useState({
-        name: '',
-        firstName: '',
+        firstname: '',
+        lastname: '',
         email: '',
         password: '',
         birthday: '',
         zipcode: '',
-        acceptedTerms: false,
+        // acceptedTerms: false,
         siret: ''
       });
 
@@ -33,14 +33,14 @@ function SignUpForm(props) {
         setIsAsso(false);
         setIsUSer(false);
         setUserInfo({
-          name: '',
-          firstName: '',
-          email: '',
-          password: '',
-          birthday: '',
-          zipcode: '',
-          acceptedTerms: false,
-          siret: ''
+            firstname: '',
+            lastname: '',
+            email: '',
+            password: '',
+            birthday: '',
+            zipcode: '',
+            // acceptedTerms: false,
+            siret: ''
         });
         dispatch(isReset(true));
       };
@@ -63,24 +63,23 @@ function SignUpForm(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // const data
-        
         try {
             const response = await fetch('http://localhost:3000/users/signup', {
-                methode: 'POST',
-                headers: { 'Content-Type' : 'application/json'},
-                body: JSON.stringify({userInfo})
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(userInfo)
             });
-
+            console.log('Données envoyées :', JSON.stringify(userInfo));
             if (!response.ok) {
                 throw new Error('Une erreur est survenue lors de la soumission.');
               };
 
               const data = await response.json();
-              console.log('data succès => ', data)
+              console.log('data succès => ', data);
+              resetForm();
             
           } catch (error) {
-
+                console.error('Cette erreur a été identifiée', error.message)
           }
 
         // props.onSignUp(userInfo);
@@ -113,11 +112,11 @@ function SignUpForm(props) {
      formulaire = <form className={styles.form} onSubmit={handleSubmit}>
      <label>
           Prenom :
-         <input type="text" name="firstName" value={userInfo.firstName} onChange={handleChange} />
+         <input type="text" name="firstname" value={userInfo.firstname} onChange={handleChange} />
      </label>
      <label>
          Nom :
-         <input type="text" name="name" value={userInfo.name} onChange={handleChange} />
+         <input type="text" name="lastname" value={userInfo.lastname} onChange={handleChange} />
      </label>
      <label>
          Email :
@@ -137,21 +136,21 @@ function SignUpForm(props) {
      </label>
      <label>
          J'accepte les conditions d'utilisation :
-         <input type="checkbox" name="acceptedTerms" checked={userInfo.acceptedTerms} onChange={handleChange} />
+         <input type="checkbox" name="acceptedTerms" checked={true/*userInfo.acceptedTerms*/} /*onChange={handleChange}*/ />
      </label>
      <Button onClick={handleSubmit} >S'inscrire</Button>
    </form>
     } else if (isAsso) {
      
         formulaire = 
-        <form>
+        <form className={styles.form} onSubmit={handleSubmit}>
         <label>
              Prenom :
-            <input type="text" name="firstName" value={userInfo.firstName} onChange={handleChange} />
+            <input type="text" name="firstname" value={userInfo.firstname} onChange={handleChange} />
         </label>
         <label>
             Nom :
-            <input type="text" name="name" value={userInfo.name} onChange={handleChange} />
+            <input type="text" name="lastname" value={userInfo.lastname} onChange={handleChange} />
         </label>
         <label>
             SIRET :
@@ -177,7 +176,7 @@ function SignUpForm(props) {
             J'accepte les conditions d'utilisation :
             <input type="checkbox" name="acceptedTerms" checked={userInfo.acceptedTerms} onChange={handleChange} />
         </label>
-        <Button type='submit'>S'inscrire</Button>
+        <Button onClick={handleSubmit}>S'inscrire</Button>
       </form>
     }
     
