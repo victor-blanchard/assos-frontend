@@ -67,22 +67,24 @@ function SignUpForm(props) {
     }
 
         const handleAsso = () => {
-            setIsAsso(userInfo);
+            setIsAsso(user.formState);
             setIsUSer(false);
         }
         const handleUser = () => {
             setIsAsso(false);
-            setIsUSer(true);
-        }
-    let formulaire;
+            setIsUSer(user.formState);
+        };
 
-    if (user.formState) {
-     formulaire = (<div>
-              <h2>Je suis :</h2>
-              <Button onClick={handleAsso}>Association</Button>
-              <Button onClick={handleUser}>Particulier</Button>
-            </div>)
-    } else if (!isAsso && isUser) {
+    let formulaire = (<div>
+        <h2>Je suis :</h2>
+        <Button onClick={handleAsso}>Association</Button>
+        <Button onClick={handleUser}>Particulier</Button>
+      </div>);
+
+    // if (user.formState) {
+    //  formulaire
+    // } else 
+    if (isUser ) {
      formulaire = <form onSubmit={handleSubmit}>
      <label>
           Prenom :
@@ -114,7 +116,7 @@ function SignUpForm(props) {
      </label>
      <Button type='submit'>S'inscrire</Button>
    </form>
-    } else if (isAsso && !isUser) {
+    } else if (isAsso) {
      
         formulaire = 
         <form>
