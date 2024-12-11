@@ -6,9 +6,8 @@
   align-items: center;
   height: 100vh;
   padding: 4rem 0;
-  flex-grow: 1; 
+  flex-grow: 1;
 }
-
 
 .mainCentral {
   display: flex;
@@ -21,23 +20,25 @@
   width: 50%;
 }
 .btn {
-  background-color: #0093E9;
+  background-color: #0093e9;
   color: #ffffff;
   font-size: 13px;
   font-weight: 400;
   border-radius: 15px;
-  border-color: #0093E9;
+  border-color: #0093e9;
   width: 142px;
   padding: 10px;
   margin: 10px;
-  -webkit-box-shadow: inset -1px 3px 8px 5px #1F87FF, 2px 5px 16px 0px #0B325E, -4px 5px 28px 1px rgba(6, 103, 122, 0); /*Permet l'utilisation avec firefox*/
-  box-shadow: inset -1px 3px 8px 5px #0093E9, 2px 5px 16px 0px #0B325E, -4px 5px 28px 1px rgba(6, 103, 122, 0);
+  -webkit-box-shadow: inset -1px 3px 8px 5px #1f87ff, 2px 5px 16px 0px #0b325e,
+    -4px 5px 28px 1px rgba(6, 103, 122, 0); /*Permet l'utilisation avec firefox*/
+  box-shadow: inset -1px 3px 8px 5px #0093e9, 2px 5px 16px 0px #0b325e,
+    -4px 5px 28px 1px rgba(6, 103, 122, 0);
   transition: 0.3 ease-in-out;
 }
 
 .btn:hover {
-  background-color: #0078C1; /* Couleur plus foncée au survol */
-  color: #e0e0e0;           /* Couleur du texte légèrement plus claire */
+  background-color: #0078c1; /* Couleur plus foncée au survol */
+  color: #e0e0e0; /* Couleur du texte légèrement plus claire */
   box-shadow: 0 8px 25px rgba(0, 147, 233, 0.7), 0 4px 10px rgba(11, 50, 94, 0.5);
   transform: translateY(-3px); /* Effet de levée */
   cursor: pointer;
@@ -47,8 +48,7 @@
   border-radius: 15px;
 }
 
-
-.imgAccueil{
+.imgAccueil {
   width: 100%;
   height: auto;
   border-radius: 15px;
