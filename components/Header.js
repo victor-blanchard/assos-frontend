@@ -15,7 +15,7 @@ function Header() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
   const token = user.token;
-  console.log('user : => ',token)
+  console.log('user : => ',user)
   // const [currentPlace, setcurrentPlace] = useState({});
   // const places = useSelector((state) => state.places.value.placeName);
 
@@ -81,12 +81,14 @@ function Header() {
         <button onClick={handleSignUp} className={styles.btnSignup}>Sign-up</button>
       </div>)
   } else {
-    signSection = (<div  className={styles.iconContainer}>
-      <h3>Bienvenu {user.username}</h3>
-      <FontAwesomeIcon onClick={handleCalendar} className={styles.headerIcon} icon={faCalendarDays} />
-      <FontAwesomeIcon onClick={handleContact} className={styles.headerIcon} icon={faAddressCard} />
-      <FontAwesomeIcon onClick={handleNotification} className={styles.headerIcon} icon={faBell} />
+    signSection = (<div className={styles.shortcut}>
+      <h3 className={styles.txtWelcome}>Bienvenu {user.username}</h3>
+      <div className={styles.iconContainer}>
+      <FontAwesomeIcon onClick={handleCalendar} className={`${styles.headerIcon} ${styles.calendarIcon}`} icon={faCalendarDays} />
+      <FontAwesomeIcon onClick={handleContact} className={`${styles.headerIcon} ${styles.contactIcon}`} icon={faAddressCard} />
+      <FontAwesomeIcon onClick={handleNotification} className={`${styles.headerIcon} ${styles.bellIcon}`} icon={faBell} />
       <DropMenu onLogout={handleLogout}/>  
+      </div>
       </div>)
   }
 

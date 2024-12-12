@@ -79,9 +79,15 @@
  
 }
 
+.shortcut {
+  display: flex;
+  width: 40%;
+  justify-content: space-between;
+}
+
 .iconContainer {
   display: flex;
-  width: 20%;
+  width: 40%;
   /* border: 1px solid black; */
   justify-content: space-between;
   align-items: center;
@@ -116,4 +122,17 @@
 
 .headerIcon {
   cursor: pointer;
+}
+
+.bellIcon {
+  color: burlywood;
+}
+
+.contactIcon {
+  color: dimgray;
+}
+
+.txtWelcome {
+  font-size: 16px;
+  color: #0093e9;
 }
