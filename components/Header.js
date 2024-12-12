@@ -56,10 +56,10 @@ function Header() {
     dispatch(isModalVisible(true));
   };
 
-  // const handleLogout = () => {
-  //   dispatch(logout());
-  //   console.log('Déconnexion user : => ',token)
-  // };
+  const handleLogout = () => {
+    dispatch(logout());
+    console.log('Déconnexion user : => ',token)
+  };
 
   const handleContact = () => {
     console.log('contact');
@@ -86,7 +86,7 @@ function Header() {
       <FontAwesomeIcon onClick={handleCalendar} className={styles.headerIcon} icon={faCalendarDays} />
       <FontAwesomeIcon onClick={handleContact} className={styles.headerIcon} icon={faAddressCard} />
       <FontAwesomeIcon onClick={handleNotification} className={styles.headerIcon} icon={faBell} />
-      <DropMenu /*onLogout={()=>handleLogout}*//>  
+      <DropMenu onLogout={handleLogout}/>  
       </div>)
   }
 

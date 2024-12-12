@@ -11,10 +11,10 @@ import { faUser, faRightFromBracket, faHeart } from "@fortawesome/free-solid-svg
 const DropMenu = (props) => {
   const dispatch = useDispatch(); // Déplacement de useDispatch ici
 
-  const handleLogout = () => {
-    dispatch(logout());
-    // console.log('Déconnexion user : => ',token)
-  };
+  // const handleLogout = () => {
+  //   dispatch(logout());
+  //   console.log('Déconnexion')
+  // };
   const items = [
     {
       label: (
@@ -38,9 +38,9 @@ const DropMenu = (props) => {
     },
     {
       label: (
-        <span className={styles.dropSpan}>
+        <span onClick={props.onLogout}className={styles.dropSpan}>
           Déconnexion
-          <FontAwesomeIcon onClick={() => handleLogout()} className={`${styles.logout} ${styles.iconInDrop}`} icon={faRightFromBracket} />  
+          <FontAwesomeIcon  className={`${styles.logout} ${styles.iconInDrop}`} icon={faRightFromBracket} />  
         </span>
       ),
       key: '3',
