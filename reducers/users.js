@@ -7,6 +7,7 @@ const initialState = {
         formReset: false,
         token: null,
         email: null,
+        username: null,
     },
 };
 
@@ -29,11 +30,13 @@ export const usersSlice = createSlice({
         login: (state, action) => {
             state.value.token = action.payload.token;
             state.value.email = action.payload.email;
+            state.value.username = action.payload.username;
           },
 
         logout: (state) => {
             state.value.token = null;
             state.value.email = null;
+            state.value.username = null;
         },
     }
 });

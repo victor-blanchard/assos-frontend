@@ -79,6 +79,17 @@
  
 }
 
+.iconContainer {
+  display: flex;
+  width: 20%;
+  /* border: 1px solid black; */
+  justify-content: space-between;
+  align-items: center;
+  font-size: 25px;
+  /* color: #0093e9; */
+  margin-right: 25px;
+}
+
 .btnSignin, .btnSignup {
   margin-right: 10px; 
 }
@@ -101,4 +112,8 @@
 .txtLogout {
   font-size: 12px;
   font-weight: 700;
+}
+
+.headerIcon {
+  cursor: pointer;
 }

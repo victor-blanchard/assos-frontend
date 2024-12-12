@@ -1,0 +1,9 @@
+.userIcon {
+    cursor: pointer;
+  }
+
+  .dropSpan {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }

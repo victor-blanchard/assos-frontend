@@ -60,7 +60,7 @@ function SignUpForm(props) {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         if (!validateForm()) return;
 
         try {

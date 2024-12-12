@@ -6,14 +6,16 @@ import { isModalVisible, setFormType, logout } from '../reducers/users';
 import Image from "next/image";
 import styles from "../styles/Header.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faRightFromBracket, faUser, faCalendarDays, faAddressCard, faBell } from "@fortawesome/free-solid-svg-icons";
 import { addEvents, deleteEvents } from "../reducers/searchResults";
+import DropMenu from "./DropMenu";
 
 function Header() {
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
   const token = user.token;
+  console.log('user : => ',token)
   // const [currentPlace, setcurrentPlace] = useState({});
   // const places = useSelector((state) => state.places.value.placeName);
 
@@ -54,11 +56,24 @@ function Header() {
     dispatch(isModalVisible(true));
   };
 
-  const handleLogout = () => {
-    dispatch(logout());
-    console.log('Déconnexion user : => ',token)
+  // const handleLogout = () => {
+  //   dispatch(logout());
+  //   console.log('Déconnexion user : => ',token)
+  // };
+
+  const handleContact = () => {
+    console.log('contact');
+    // router.push('/contact');
+  };
+  const handleCalendar = () => {
+   console.log('calendrier')
+  //  router.push('/event');
+  };
+  const handleNotification = () => {
+    console.log('Notification');
   };
 
+  
   let signSection;
   if (!token) {
     signSection = (<div className={styles.signinSignupContainer}>
@@ -66,11 +81,19 @@ function Header() {
         <button onClick={handleSignUp} className={styles.btnSignup}>Sign-up</button>
       </div>)
   } else {
-    signSection = (<div onClick={handleLogout} className={styles.logoutContainer}>
-      <p className={styles.txtLogout}>Se déconnecter</p>
-      <FontAwesomeIcon className={styles.logout} icon={faRightFromBracket} />
+    signSection = (<div  className={styles.iconContainer}>
+      <h3>Bienvenu {user.username}</h3>
+      <FontAwesomeIcon onClick={handleCalendar} className={styles.headerIcon} icon={faCalendarDays} />
+      <FontAwesomeIcon onClick={handleContact} className={styles.headerIcon} icon={faAddressCard} />
+      <FontAwesomeIcon onClick={handleNotification} className={styles.headerIcon} icon={faBell} />
+      <DropMenu /*onLogout={()=>handleLogout}*//>  
       </div>)
   }
+
+  // <div onClick={handleLogout}>
+  //     <p className={styles.txtLogout}>Se déconnecter</p>
+  //     <FontAwesomeIcon className={styles.logout} icon={faRightFromBracket} />
+  //     </div>
 
   return (
     <header className={styles.header}>

@@ -78,7 +78,7 @@ function SignInForm(props) {
 
             const data = await response.json();
             if (data.result) {
-                dispatch(login({email: data.email, token: data.token}));
+                dispatch(login({email: data.email, token: data.token, username: data.firstnanme}));
                 dispatch(isModalVisible(false));
                 dispatch(setFormType(''));
                 console.log('data succès => ', data);
@@ -94,7 +94,6 @@ function SignInForm(props) {
             console.error('Erreur :', error.message);
         }
 
-        // props.onSignUp(userInfo);
         console.log('Données soumises :', userInfo);
         resetForm();
     };
