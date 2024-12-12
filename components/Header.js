@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { isModalVisible, setFormType, logout } from '../reducers/users';
 import Image from "next/image";
 import styles from "../styles/Header.module.css";
+import { Button } from 'antd';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faRightFromBracket, faUser, faCalendarDays, faAddressCard, faBell } from "@fortawesome/free-solid-svg-icons";
 import { addEvents, deleteEvents } from "../reducers/searchResults";
@@ -77,8 +78,8 @@ function Header() {
   let signSection;
   if (!token) {
     signSection = (<div className={styles.signinSignupContainer}>
-        <button onClick={handleSignIn} className={styles.btnSignin}>Sign-in</button>
-        <button onClick={handleSignUp} className={styles.btnSignup}>Sign-up</button>
+        <Button onClick={handleSignIn} className={styles.btnSignin}>Sign-in</Button>
+        <Button onClick={handleSignUp} className={styles.btnSignup}>Sign-up</Button>
       </div>)
   } else {
     signSection = (<div className={styles.shortcut}>

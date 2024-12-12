@@ -67,7 +67,7 @@
 
 .btnSignin, 
 .btnSignup {
-  background-color: #0093e9;
+  /* background-color: #0093e9;
   color: white;
   border-radius: 15px;
   border: none; 
@@ -76,8 +76,32 @@
   cursor: pointer;
   white-space: nowrap; 
   width: 40%;
- 
+  padding: 10px; */
+  background-color: #0093e9;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 400;
+  border-radius: 15px;
+  border-color: #0093e9;
+  width: 142px;
+  padding: 10px;
+  margin: 10px;
+  -webkit-box-shadow: inset -1px 3px 8px 5px #1f87ff, 2px 5px 16px 0px #0b325e,
+    -4px 5px 28px 1px rgba(6, 103, 122, 0); /*Permet l'utilisation avec firefox*/
+  box-shadow: inset -1px 3px 8px 5px #0093e9, 2px 5px 16px 0px #0b325e,
+    -4px 5px 28px 1px rgba(6, 103, 122, 0);
+  transition: 0.2 ease-in-out;
 }
+.btnSignin:hover, 
+.btnSignup:hover {
+  background-color: #0078c1; /* Couleur plus foncée au survol */
+  color: #e0e0e0; /* Couleur du texte légèrement plus claire */
+  box-shadow: 0 8px 25px rgba(0, 147, 233, 0.7), 0 4px 10px rgba(11, 50, 94, 0.5);
+  transform: translateY(-3px); /* Effet de levée */
+  cursor: pointer;
+}
+
+
 
 .shortcut {
   display: flex;
@@ -128,8 +152,22 @@
   color: burlywood;
 }
 
+.bellIcon:hover {
+  color: #e4cda9; 
+  box-shadow: 0 8px 25px rgba(0, 147, 233, 0.7), 0 4px 10px rgba(11, 50, 94, 0.5);
+  transform: translateY(-2px);
+  cursor: pointer;
+}
+
 .contactIcon {
   color: dimgray;
+}
+
+.contactIcon:hover {
+  color: #cacaca; 
+  box-shadow: 0 8px 25px rgba(0, 147, 233, 0.7), 0 4px 10px rgba(11, 50, 94, 0.5);
+  transform: translateY(-2px);
+  cursor: pointer;
 }
 
 .txtWelcome {
