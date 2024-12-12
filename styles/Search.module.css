@@ -1,130 +1,129 @@
 .searchMain {
-    display: flex;
-    width: 100vw;
-    flex-direction: column;
-    justify-content: top; 
-    align-items: left; 
-    height: 100vh;
-    margin-top: 3rem;
-    flex-grow: 1;
-  }
-  
-  .searchHeaders {
-    margin-top: 5px;
-    text-align: center; 
-  }
-  
-  
-  /* .searchTitle {  
+  display: flex;
+  width: 100vw;
+  flex-direction: column;
+  justify-content: top;
+  align-items: left;
+  height: 100vh;
+  margin-top: 3rem;
+  flex-grow: 1;
+}
+
+.searchHeaders {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* .searchTitle {  
  
   } */
-  
-  .searchTabs { 
-    display: flex;
-    list-style-type: none;
-    flex-direction: row;
-    justify-content: center;  
-    margin-left: 0px; 
-    
-  }
-  
-  .tab {
-    margin-right: 20px;
-  }
-  
-  .filterContainer {
-    display: flex;
-    justify-content: space-evenly;
-    list-style-type: none;
-    width: 60%;
-    margin-top: 20px; 
-  }
-  
-  .filterbox {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border: 1px solid #d8d8d8;
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    width: 150px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .resultPageAndMap{
 
-    display: flex;
-    flex-direction: row;
-    align-items: top;
-    justify-content: space-around;
-  }
+.searchTabs {
+  display: flex;
+  list-style-type: none;
+  flex-direction: row;
+  justify-content: center;
+  margin-left: 0px;
+  width: 100%;
+}
 
-  .map {
-   
-    margin-top: 20px; 
-    padding: 10px;
-    width: 30%;
-    height: 100%;
-    border: 1px solid #d8d8d8;
-  }
+.tab {
+  margin-right: 20px;
+}
 
+.filterContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  list-style-type: none;
+  width: 100%;
+  height: 10%;
+  margin-top: 20px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
 
-  .resultPageContainer {
-    padding: 10px;
-    border: 1px solid #d8d8d8;
-    width: 60%;
-    height: 100%;
-    margin-top: 20px; 
-    margin-bottom: 10px;
-    scroll-behavior: smooth;
-   
-  }
-  
-  .resultDefandIcons { 
-    display: flex;
-    width: 100%;
-    flex-direction: row; 
-    justify-content: space-between; 
-    align-items: center; 
-  }
-  
-  .resultContainer {
-    display: flex;
-    border: 1px solid #d8d8d8;
-    padding: 10px; 
-    margin-bottom: 10px; 
-  }
-  
-  .imageContainer {
-    padding: 10px;
-    /* border: 1px solid #d8d8d8; */
-    margin-right: 10px; 
-  }
-  
-  .resultDetailsContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 90%;
-    height: 100%;
-  }
+.filterbox {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  /* border: 1px solid #d8d8d8; */
+  /* background-color: #f0f0f0; */
+  border-radius: 10px;
+  width: 30%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+}
 
-  .EventDate {
+.resultPageAndMap {
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  justify-content: space-around;
+}
 
-    font-weight:600;
-  }
-  
-  
-  .resultIcon {
-    color: #d9613d;
-    margin-left: 10px;
-  }
+.map {
+  margin-top: 20px;
+  padding: 10px;
+  width: 30%;
+  height: 100%;
+  border: 1px solid #d8d8d8;
+}
 
-  .calendar {
-    border: 1px solid black;
-    width: 10%;
-    height: 10%;
-    margin-right: 10px;
-  }
+.resultPageContainer {
+  padding: 10px;
+  border: 1px solid #d8d8d8;
+  width: 60%;
+  height: 100%;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  scroll-behavior: smooth;
+}
+
+.resultDefandIcons {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resultContainer {
+  display: flex;
+  border: 1px solid #d8d8d8;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.imageContainer {
+  padding: 10px;
+  /* border: 1px solid #d8d8d8; */
+  margin-right: 10px;
+}
+
+.resultDetailsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 90%;
+  height: 100%;
+}
+
+.EventDate {
+  font-weight: 600;
+}
+
+.resultIcon {
+  color: #d9613d;
+  margin-left: 10px;
+}
+
+.calendar {
+  border: 1px solid black;
+  width: 10%;
+  height: 10%;
+  margin-right: 10px;
+}

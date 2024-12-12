@@ -1,51 +1,81 @@
-import '../styles/globals.css';
-import Head from 'next/head';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
-//Redux
-import { Provider } from 'react-redux';
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import "../styles/globals.css";
+import Head from "next/head";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+import { Calendar, DatePicker, Input } from "antd";
+
+// Redux imports
+import { Provider } from "react-redux";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+
+// Reducers
 import places from "../reducers/place";
-import users from '../reducers/users';
+import users from "../reducers/users";
+import searchResults from "../reducers/searchResults";
 
-// Redux-persist imports
-import { persistStore, persistReducer } from 'redux-persist';
-import { PersistGate } from 'redux-persist/integration/react';
-import storage from 'redux-persist/lib/storage';
+// Redux Persist imports
+import { persistStore, persistReducer } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 
+// Define fallback storage for server-side rendering
+const createNoopStorage = () => ({
+  getItem() {
+    return Promise.resolve(null);
+  },
+  setItem() {
+    return Promise.resolve();
+  },
+  removeItem() {
+    return Promise.resolve();
+  },
+});
 
-//Define the store
-// const store = configureStore({
-//   reducer: {places, users},
-//  });
+const storage =
+  typeof window !== "undefined"
+    ? createWebStorage("local") // Use localStorage in the browser
+    : createNoopStorage(); // Fallback for SSR
 
-// Définissez le ou les reducer(s) de votre application avec la fonction combineReducers 
-const reducers = combineReducers({places, users})
+// Combine reducers
+const rootReducer = combineReducers({
+  places,
+  users,
+  searchResults,
+});
 
-// Utilisez une clé de stockage pour définir un nom à votre store à l’intérieur du local storage 
-const persistConfig = { key: 'LaSauce', storage };
+// Persist configuration
+const persistConfig = {
+  key: "LaSauce", // Key for local storage
+  storage, // Use the defined storage
+};
 
-// Mise à jour du contenu de votre store avec la fonction configureStore 
+// Create a persisted reducer
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+// Configure the store with Redux Toolkit
 const store = configureStore({
-  reducer: persistReducer(persistConfig, reducers),
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
- });
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false, // Disables serializability checks for Redux Persist
+    }),
+});
 
-//  Rendre le store persistant
- const persistor = persistStore(store);
+// Create a persistor to persist the store
+const persistor = persistStore(store);
 
 function App({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-      <Head>
-        <title>Next.js App</title>
-      </Head>
-      <Header />
-      <Component {...pageProps} />
-      <Footer/>
+        <Head>
+          <title>LaSauce.fr</title>
+        </Head>
+        <Header />
+        <Component {...pageProps} />
+        <Footer />
       </PersistGate>
-      </Provider>
+    </Provider>
   );
 }
 
