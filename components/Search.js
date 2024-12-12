@@ -6,6 +6,7 @@ import Image from "next/image";
 import React from 'react';
 import { Calendar } from 'antd';
 import { useState, useEffect } from "react";
+import ModalForm from './ModalForm';
 
 function Search() {
   const [selectedDate, setSelectedDate] = useState('')
@@ -63,6 +64,7 @@ function Search() {
         </div>
       </div>
       <div className={styles.map}></div></div>
+      <ModalForm/>
     </div>
   );
 }

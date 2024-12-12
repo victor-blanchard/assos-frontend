@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { isModalVisible } from '../reducers/users';
+import { isModalVisible, setFormType } from '../reducers/users';
 import Image from "next/image";
 import styles from "../styles/Header.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -31,10 +31,14 @@ const handleSearch = () => {
    
   };
 
-  const handleSignUp = async () => {
+  const handleSignUp = () => {
+    dispatch(setFormType('signup'));
     dispatch(isModalVisible(true));
   };
-  const handleSign = async () => {};
+  const handleSignIn = () => {
+    dispatch(setFormType('signin'));
+    dispatch(isModalVisible(true));
+  };
 
 
   return (
@@ -72,7 +76,7 @@ const handleSearch = () => {
         </div>
       </div>
       <div className={styles.signinSignupContainer}>
-        <button  className={styles.btnSignin}>Sign-in</button>
+        <button onClick={handleSignIn} className={styles.btnSignin}>Sign-in</button>
         <button onClick={handleSignUp} className={styles.btnSignup}>Sign-up</button>
       </div>
     </header>

@@ -2,9 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     value: {
-        formState: true,
+        modalState: false,
+        formType: '', //Signin ou Signup
         formReset: false,
         token: '',
+        email: '',
     },
 };
 
@@ -13,7 +15,11 @@ export const usersSlice = createSlice({
     initialState,
     reducers: {
         isModalVisible: (state, action) => {
-            state.value.formState = action.payload;
+            state.value.modalState = action.payload;
+        },
+
+        setFormType: (state, action) => {
+            state.value.formType = action.payload;
         },
 
         isReset: (state, action) => {
@@ -27,5 +33,5 @@ export const usersSlice = createSlice({
     }
 });
 
-export const { isModalVisible, isReset, login } = usersSlice.actions;
+export const { isModalVisible, isReset, login, setFormType } = usersSlice.actions;
 export default usersSlice.reducer;

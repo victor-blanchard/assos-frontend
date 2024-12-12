@@ -1,7 +1,7 @@
 import styles from '../styles/SignUpForm.module.css';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { isReset } from '../reducers/users';
+import { isModalVisible, isReset, setFormType } from '../reducers/users';
 import { Button } from 'antd';
 
 function SignUpForm(props) {
@@ -9,7 +9,7 @@ function SignUpForm(props) {
     const [isUser, setIsUser] = useState(false); // Permet de vérifier si c'est un particulier
     const dispatch = useDispatch();
     const user = useSelector((state) => state.users.value);
-    console.log('etat =>', user.formState);
+    console.log('etat =>', user.modalState);
     const [userInfo, setUserInfo] = useState({
         firstname: '',
         lastname: '',
@@ -76,6 +76,8 @@ function SignUpForm(props) {
 
             const data = await response.json();
             if (data.result) {
+                dispatch(isModalVisible(false));
+                dispatch(setFormType(''));
                 resetForm();
             }
             console.log('data succès => ', data);

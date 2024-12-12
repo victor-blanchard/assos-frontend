@@ -2,20 +2,21 @@ import { Modal, Button } from 'antd';
 import styles from '../styles/Modal.module.css';
 import Link from 'next/link';
 import SignUpForm from './SignUpForm';
+import SignInForm from './SignInForm';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { isModalVisible } from '../reducers/users';
+import { isModalVisible, setFormType } from '../reducers/users';
 
 function ModalForm(props) {
   const [userInfo, setUserInfo] = useState(null);
-  const modal = useSelector((state) => state.users.value.formState);
-  const dispatch = useDispatch();
-  
+  const modal = useSelector((state) => state.users.value.modalState);
+  const formType = useSelector((state) => state.users.value.formType);
+  const dispatch = useDispatch();  
   console.log('La modal est visible ? => ', modal);
 
   const handleSignCancel = () => {
-    // setIsModalVisible(false);
     dispatch(isModalVisible(false)); // Réinitialiser l'état du formulaire
+    dispatch(setFormType('')); //Réinitialise le formType du formulaire
 };
 
   const handleSignUp = (userInfo) => {
@@ -23,10 +24,18 @@ function ModalForm(props) {
     dispatch(isModalVisible(false));
   };
 
+  
+  const handleSignIn = (userInfo) => {
+    setUserInfo(userInfo);
+    dispatch(isModalVisible(false));
+  };
+
+
+
   return (
       <div >
         <Modal
-            title="S'inscrire"
+            title={formType === 'signin' ? 'Se connecter' : "S'inscrire"}
             open={modal} // Ouvre la modal
             // onClose={!props.isModalVisible}
             // onOk={handleSign} // Ferme la modal avec le bouton "OK" prévoir une redirection
@@ -34,8 +43,11 @@ function ModalForm(props) {
             footer={null}
             className={styles.modal}
           >
-        
-            <SignUpForm  onSignUp={handleSignUp} isModalVisible={modal}/>
+        {formType === 'signin' 
+            ? <SignInForm  /*onSignIn={handleSignIn}*/ isModalVisible={modal}/>
+            : <SignUpForm  /*onSignUp={handleSignUp}*/ isModalVisible={modal}/>}
+            
+            
             
           </Modal>
       </div>

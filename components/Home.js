@@ -17,9 +17,6 @@ function Home() {
   const dispatch = useDispatch();
   const modal = useSelector((state) => state.users.value.formState);
   console.log(modal);
- 
-  
-  
   
   //Tableau d'objets qui contient le nom d'un evenement associé à une icon
   const dataEvent = [ 
@@ -39,15 +36,6 @@ function Home() {
     dispatch(isModalVisible(true));
     console.log('open', modal)
   }
-
-  // const handleSignOk = () => {
-  //   setIsModalVisible(false)
-  // }
-
-  //Ferme la modal
-
-  
- 
   
   /**
    * Permet de récuperer via le setter d'etat setIcon les données du tableau dataEVent
@@ -82,18 +70,6 @@ function Home() {
                 des activités adaptées à vos envies.</p>
             <Button type='primary' onClick={handleSign} className={styles.btn}>Rejoindre La Sauce</Button>
           </div>
-          {/* <Modal
-            title="S'inscrire"
-            open={isModalVisible} // Ouvre la modal
-            onClose={!isModalVisible}
-            // onOk={handleSign} // Ferme la modal avec le bouton "OK" prévoir une redirection
-            onCancel={handleSignCancel} // Ferme la modal avec le bouton "Annuler"
-            footer={null}
-            className={styles.modal}
-          >
-            <SignUpForm  onSignUp={handleSignUp} isModalVisible={isModalVisible}/>
-            
-          </Modal> */}
           <ModalForm />
           <div className={styles.divImg}>
             <Image src='/solidarité.jpeg'
