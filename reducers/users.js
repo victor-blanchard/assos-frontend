@@ -5,8 +5,8 @@ const initialState = {
         modalState: false,
         formType: '', //Signin ou Signup
         formReset: false,
-        token: '',
-        email: '',
+        token: null,
+        email: null,
     },
 };
 
@@ -30,8 +30,13 @@ export const usersSlice = createSlice({
             state.value.token = action.payload.token;
             state.value.email = action.payload.email;
           },
+
+        logout: (state) => {
+            state.value.token = null;
+            state.value.email = null;
+        },
     }
 });
 
-export const { isModalVisible, isReset, login, setFormType } = usersSlice.actions;
+export const { isModalVisible, isReset, login, logout, setFormType } = usersSlice.actions;
 export default usersSlice.reducer;

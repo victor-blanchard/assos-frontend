@@ -82,8 +82,6 @@ function SignInForm(props) {
                 dispatch(isModalVisible(false));
                 dispatch(setFormType(''));
                 console.log('data succès => ', data);
-
-                router.push('/about');
                 resetForm();
 
 

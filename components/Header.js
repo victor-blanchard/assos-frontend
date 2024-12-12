@@ -2,16 +2,18 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { isModalVisible, setFormType } from '../reducers/users';
+import { isModalVisible, setFormType, logout } from '../reducers/users';
 import Image from "next/image";
 import styles from "../styles/Header.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { addEvents, deleteEvents } from "../reducers/searchResults";
 
 function Header() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.users.value);
+  const token = user.token;
   // const [currentPlace, setcurrentPlace] = useState({});
   // const places = useSelector((state) => state.places.value.placeName);
 
@@ -52,6 +54,24 @@ function Header() {
     dispatch(isModalVisible(true));
   };
 
+  const handleLogout = () => {
+    dispatch(logout());
+    console.log('Déconnexion user : => ',token)
+  };
+
+  let signSection;
+  if (!token) {
+    signSection = (<div className={styles.signinSignupContainer}>
+        <button onClick={handleSignIn} className={styles.btnSignin}>Sign-in</button>
+        <button onClick={handleSignUp} className={styles.btnSignup}>Sign-up</button>
+      </div>)
+  } else {
+    signSection = (<div onClick={handleLogout} className={styles.logoutContainer}>
+      <p className={styles.txtLogout}>Se déconnecter</p>
+      <FontAwesomeIcon className={styles.logout} icon={faRightFromBracket} />
+      </div>)
+  }
+
   return (
     <header className={styles.header}>
       <div className={styles.logoAndSearchContainer}>
@@ -82,10 +102,7 @@ function Header() {
           />
         </div>
       </div>
-      <div className={styles.signinSignupContainer}>
-        <button onClick={handleSignIn} className={styles.btnSignin}>Sign-in</button>
-        <button onClick={handleSignUp} className={styles.btnSignup}>Sign-up</button>
-      </div>
+      {signSection}
     </header>
   );
 }
