@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { isModalVisible, setFormType } from '../reducers/users';
@@ -9,6 +10,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { addEvents, deleteEvents } from "../reducers/searchResults";
 
 function Header() {
+  const router = useRouter();
   const dispatch = useDispatch();
   // const [currentPlace, setcurrentPlace] = useState({});
   // const places = useSelector((state) => state.places.value.placeName);
@@ -37,7 +39,8 @@ function Header() {
       });
     setSearch("");
     setLocation("");
-    window.location.href = "/search";
+    router.push('/search'); //gere la navigation au click vers la page search en évitant la page blanche
+    // window.location.href = "/search";
   };
 
   const handleSignUp = () => {
