@@ -6,25 +6,34 @@ import Image from "next/image";
 import styles from "../styles/Header.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { addEvents, deleteEvents } from "../reducers/searchResults";
+import { addEvents, deleteEvents, addFilters, deleteFilters } from "../reducers/searchResults";
 
 function Header() {
   const dispatch = useDispatch();
   // const [currentPlace, setcurrentPlace] = useState({});
   // const places = useSelector((state) => state.places.value.placeName);
 
-  const [search, setSearch] = useState("");
+  const [keyword, setKeyword] = useState("");
 
   const [location, setLocation] = useState("");
 
   // let events = useSelector((state) => state.searchResults?.value.events);
 
   const handleSearch = () => {
-    const params = new URLSearchParams({
-      keyword: search,
-      location: location,
-    });
-    fetch(`http://localhost:3000/events/filtered?${params.toString()}`, {
+    dispatch(addFilters({ keyword: keyword, location: location }));
+
+    const params = new URLSearchParams(
+      Object.fromEntries(
+        Object.entries({
+          keyword: keyword,
+          location: location,
+        }).filter(([_, value]) => value !== undefined && value !== null && value !== "")
+      )
+    );
+    // Remplacer %2C par ,
+    const queryString = params.toString().replace(/%2C/g, ",");
+
+    fetch(`http://localhost:3000/events/filtered?${queryString}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
@@ -33,9 +42,10 @@ function Header() {
         if (data.result) {
           dispatch(addEvents(data.events));
           console.log(`${data.events.length} events ajoutés au reducer searchResult`);
+          console.log(data);
         }
       });
-    setSearch("");
+    setKeyword("");
     setLocation("");
     window.location.href = "/search";
   };
@@ -54,14 +64,14 @@ function Header() {
         <div className={styles.searchContainers}>
           <input
             className={styles.searchText}
-            placeholder="search..."
+            placeholder="Une activité ? "
             type="text"
-            onChange={(e) => setSearch(e.target.value)}
-            value={search}
+            onChange={(e) => setKeyword(e.target.value)}
+            value={keyword}
           />
           <input
             className={styles.searchLocation}
-            placeholder="select the location..."
+            placeholder="Ou ?"
             type="text"
             onChange={(e) => setLocation(e.target.value)}
             value={location}

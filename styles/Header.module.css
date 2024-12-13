@@ -2,24 +2,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 9%;
-  border-bottom: 1px solid #d8d8d8; 
+  height: 9vh;
+  border-bottom: 1px solid #d8d8d8;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 999;
   background-color: white;
   margin-bottom: 10px;
- 
 }
 
 .logo {
   cursor: pointer;
-  
 }
 
 .logoAndSearchContainer {
-  margin: 0 10px; 
+  margin: 0 10px;
   width: 50%;
   height: 100%;
   display: flex;
@@ -35,19 +33,19 @@
   justify-content: center;
 }
 
-.searchText, 
+.searchText,
 .searchLocation {
   margin: 10px;
   font-size: 16px;
   width: 30%;
   height: 40%;
   border-radius: 15px;
-  border: 1px solid #d8d8d8; 
+  border: 1px solid #d8d8d8;
   padding: 10px;
 }
 
 .btnSearch {
-  border: none; 
+  border: none;
   color: #d8d8d8;
   margin-left: 10px;
   height: 30px;
@@ -57,27 +55,26 @@
 .signinSignupContainer {
   height: 100%;
   width: 15%;
-  display: flex; 
-  align-items: center; 
-  justify-content: flex-end; 
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   margin-right: 10px;
- 
 }
 
-.btnSignin, 
+.btnSignin,
 .btnSignup {
   background-color: #0093e9;
   color: white;
   border-radius: 15px;
-  border: none; 
-  font-size: 16px;                  
+  border: none;
+  font-size: 16px;
   padding: 10px;
   cursor: pointer;
-  white-space: nowrap; 
+  white-space: nowrap;
   width: 40%;
- 
 }
 
-.btnSignin, .btnSignup {
-  margin-right: 10px; 
+.btnSignin,
+.btnSignup {
+  margin-right: 10px;
 }
