@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  value: { events: [], associations: [], filters: [] },
+  value: { events: [], associations: [], filters: {} },
 };
 
 export const searchResultSlice = createSlice({
@@ -29,6 +29,12 @@ export const searchResultSlice = createSlice({
   },
 });
 
-export const { addEvents, deleteEvents, addAssociations, deleteAssociations } =
-  searchResultSlice.actions;
+export const {
+  addEvents,
+  deleteEvents,
+  addAssociations,
+  deleteAssociations,
+  addFilters,
+  deleteFilters,
+} = searchResultSlice.actions;
 export default searchResultSlice.reducer;

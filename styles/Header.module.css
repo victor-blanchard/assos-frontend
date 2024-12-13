@@ -2,8 +2,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 9%;
-  border-bottom: 1px solid #d8d8d8; 
+  height: 9vh;
+  border-bottom: 1px solid #d8d8d8;
   position: fixed;
   top: 0;
   width: 100%;
@@ -11,16 +11,14 @@
   background-color: white;
   margin-bottom: 10px;
   /* padding: 10px; */
- 
 }
 
 .logo {
   cursor: pointer;
-  
 }
 
 .logoAndSearchContainer {
-  margin: 0 10px; 
+  margin: 0 10px;
   width: 50%;
   height: 100%;
   display: flex;
@@ -36,19 +34,19 @@
   justify-content: center;
 }
 
-.searchText, 
+.searchText,
 .searchLocation {
   margin: 10px;
   font-size: 16px;
   width: 30%;
   height: 40%;
   border-radius: 15px;
-  border: 1px solid #d8d8d8; 
+  border: 1px solid #d8d8d8;
   padding: 10px;
 }
 
 .btnSearch {
-  border: none; 
+  border: none;
   color: #d8d8d8;
   margin-left: 10px;
   height: 30px;
@@ -58,23 +56,22 @@
 .signinSignupContainer {
   height: 100%;
   width: 15%;
-  display: flex; 
-  align-items: center; 
-  justify-content: flex-end; 
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   margin-right: 10px;
- 
 }
 
-.btnSignin, 
+.btnSignin,
 .btnSignup {
   /* background-color: #0093e9;
   color: white;
   border-radius: 15px;
-  border: none; 
-  font-size: 16px;                  
+  border: none;
+  font-size: 16px;
   padding: 10px;
   cursor: pointer;
-  white-space: nowrap; 
+  white-space: nowrap;
   width: 40%;
   padding: 10px; */
   background-color: #0093e9;
@@ -92,7 +89,7 @@
     -4px 5px 28px 1px rgba(6, 103, 122, 0);
   transition: 0.2 ease-in-out;
 }
-.btnSignin:hover, 
+.btnSignin:hover,
 .btnSignup:hover {
   background-color: #0078c1; /* Couleur plus foncée au survol */
   color: #e0e0e0; /* Couleur du texte légèrement plus claire */
@@ -100,8 +97,6 @@
   transform: translateY(-3px); /* Effet de levée */
   cursor: pointer;
 }
-
-
 
 .shortcut {
   display: flex;
@@ -120,8 +115,9 @@
   margin-right: 25px;
 }
 
-.btnSignin, .btnSignup {
-  margin-right: 10px; 
+.btnSignin,
+.btnSignup {
+  margin-right: 10px;
 }
 
 .logoutContainer {
@@ -153,7 +149,7 @@
 }
 
 .bellIcon:hover {
-  color: #e4cda9; 
+  color: #e4cda9;
   box-shadow: 0 8px 25px rgba(0, 147, 233, 0.7), 0 4px 10px rgba(11, 50, 94, 0.5);
   transform: translateY(-2px);
   cursor: pointer;
@@ -164,7 +160,7 @@
 }
 
 .contactIcon:hover {
-  color: #cacaca; 
+  color: #cacaca;
   box-shadow: 0 8px 25px rgba(0, 147, 233, 0.7), 0 4px 10px rgba(11, 50, 94, 0.5);
   transform: translateY(-2px);
   cursor: pointer;
