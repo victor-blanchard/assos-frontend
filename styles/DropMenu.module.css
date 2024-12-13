@@ -1,5 +1,17 @@
 .userIcon {
     cursor: pointer;
+    transition: 0.3 ease-in-out;
+    
+  }
+
+  .userIcon:hover {
+    /* background-color: #67a2e6; Couleur plus foncée au survol */
+
+     border: none;
+    /* color: #e0e0e0; Couleur du texte légèrement plus claire */
+    box-shadow: 0 8px 25px rgba(0, 147, 233, 0.7), 0 4px 10px rgba(11, 50, 94, 0.5);
+    transform: translateY(-3px); /* Effet de levée */
+    cursor: pointer;
   }
 
   .dropSpan {

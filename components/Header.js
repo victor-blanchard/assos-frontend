@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { isModalVisible, setFormType, logout } from '../reducers/users';
 import Image from "next/image";
 import styles from "../styles/Header.module.css";
+import { Button } from 'antd';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faRightFromBracket, faUser, faCalendarDays, faAddressCard, faBell } from "@fortawesome/free-solid-svg-icons";
 import { addEvents, deleteEvents } from "../reducers/searchResults";
@@ -15,7 +16,7 @@ function Header() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
   const token = user.token;
-  console.log('user : => ',token)
+  console.log('user : => ',user)
   // const [currentPlace, setcurrentPlace] = useState({});
   // const places = useSelector((state) => state.places.value.placeName);
 
@@ -77,16 +78,18 @@ function Header() {
   let signSection;
   if (!token) {
     signSection = (<div className={styles.signinSignupContainer}>
-        <button onClick={handleSignIn} className={styles.btnSignin}>Sign-in</button>
-        <button onClick={handleSignUp} className={styles.btnSignup}>Sign-up</button>
+        <Button onClick={handleSignIn} className={styles.btnSignin}>Sign-in</Button>
+        <Button onClick={handleSignUp} className={styles.btnSignup}>Sign-up</Button>
       </div>)
   } else {
-    signSection = (<div  className={styles.iconContainer}>
-      <h3>Bienvenu {user.username}</h3>
-      <FontAwesomeIcon onClick={handleCalendar} className={styles.headerIcon} icon={faCalendarDays} />
-      <FontAwesomeIcon onClick={handleContact} className={styles.headerIcon} icon={faAddressCard} />
-      <FontAwesomeIcon onClick={handleNotification} className={styles.headerIcon} icon={faBell} />
+    signSection = (<div className={styles.shortcut}>
+      <h3 className={styles.txtWelcome}>Bienvenu {user.username}</h3>
+      <div className={styles.iconContainer}>
+      <FontAwesomeIcon title='Evenement à venir' onClick={handleCalendar} className={`${styles.headerIcon} ${styles.calendarIcon}`} icon={faCalendarDays} />
+      <FontAwesomeIcon title='Contact' onClick={handleContact} className={`${styles.headerIcon} ${styles.contactIcon}`} icon={faAddressCard} />
+      <FontAwesomeIcon title='Notification' onClick={handleNotification} className={`${styles.headerIcon} ${styles.bellIcon}`} icon={faBell} />
       <DropMenu onLogout={handleLogout}/>  
+      </div>
       </div>)
   }
 
