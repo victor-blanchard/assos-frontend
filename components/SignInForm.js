@@ -54,16 +54,23 @@ function SignInForm(props) {
     };
 
     const validateForm = () => {
-        const requiredFields = isUser && ['email', 'password'];
+        const requiredFields = (isUser || isAsso) && ['email', 'password'];
 
-        const missingFields = requiredFields.filter((field) => !userInfo[field].trim());
+        if (!requiredFields) {
+            console.log('Champ pas correct');
+            setErrors([]);
+            return true;
+        }
+        const missingFields = requiredFields.filter((field) => !userInfo[field]?.trim());
         setErrors(missingFields);
         return missingFields.length === 0;
     };
-
     const handleConnect = async (e) => {
         e.preventDefault();
-        if (!validateForm()) return;
+        if (!validateForm()) {
+
+            return;
+        } 
 
         try {
             const response = await fetch('http://localhost:3000/users/signin', {

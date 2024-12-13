@@ -85,9 +85,9 @@ function Header() {
     signSection = (<div className={styles.shortcut}>
       <h3 className={styles.txtWelcome}>Bienvenu {user.username}</h3>
       <div className={styles.iconContainer}>
-      <FontAwesomeIcon onClick={handleCalendar} className={`${styles.headerIcon} ${styles.calendarIcon}`} icon={faCalendarDays} />
-      <FontAwesomeIcon onClick={handleContact} className={`${styles.headerIcon} ${styles.contactIcon}`} icon={faAddressCard} />
-      <FontAwesomeIcon onClick={handleNotification} className={`${styles.headerIcon} ${styles.bellIcon}`} icon={faBell} />
+      <FontAwesomeIcon title='Evenement à venir' onClick={handleCalendar} className={`${styles.headerIcon} ${styles.calendarIcon}`} icon={faCalendarDays} />
+      <FontAwesomeIcon title='Contact' onClick={handleContact} className={`${styles.headerIcon} ${styles.contactIcon}`} icon={faAddressCard} />
+      <FontAwesomeIcon title='Notification' onClick={handleNotification} className={`${styles.headerIcon} ${styles.bellIcon}`} icon={faBell} />
       <DropMenu onLogout={handleLogout}/>  
       </div>
       </div>)
