@@ -8,6 +8,7 @@ const initialState = {
         token: null,
         email: null,
         username: null,
+        isAssociationOwner: false,
     },
 };
 
@@ -31,12 +32,14 @@ export const usersSlice = createSlice({
             state.value.token = action.payload.token;
             state.value.email = action.payload.email;
             state.value.username = action.payload.username;
+            state.value.isAssociationOwner = action.payload.isAssociationOwner;
           },
 
         logout: (state) => {
             state.value.token = null;
             state.value.email = null;
             state.value.username = null;
+            state.value.isAssociationOwner = false;
         },
     }
 });
