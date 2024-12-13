@@ -255,18 +255,18 @@ const items = [
 ];
 
 function Search() {
-  useEffect(() => {
-    (async () => {
-      // const result = await ;
-      const status = result?.status;
+  // useEffect(() => {
+  //   (async () => {
+  //     // const result = await ;
+  //     const status = result?.status;
 
-      if (status === "granted") {
-        Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
-          setCurrentPosition(location.coords);
-        });
-      }
-    })();
-  }, []);
+  //     if (status === "granted") {
+  //       Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
+  //         setCurrentPosition(location.coords);
+  //       });
+  //     }
+  //   })();
+  // }, []);
 
   const onChange = (date, dateString) => {
     console.log(date, dateString);
