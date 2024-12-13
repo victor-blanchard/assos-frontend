@@ -17,7 +17,7 @@ export const associationsSlice = createSlice({
 
         isModalCreateOpen: (state, action) => {
             state.value.modalCreateState = action.payload;
-        }
+        },
 
 
     }
