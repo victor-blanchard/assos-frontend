@@ -19,16 +19,16 @@ function ModalForm(props) {
     dispatch(setFormType('')); //Réinitialise le formType du formulaire
 };
 
-  const handleSignUp = (userInfo) => {
-    setUserInfo(userInfo);
-    dispatch(isModalVisible(false));
-  };
+  // const handleSignUp = (userInfo) => {
+  //   setUserInfo(userInfo);
+  //   dispatch(isModalVisible(false));
+  // };
 
   
-  const handleSignIn = (userInfo) => {
-    setUserInfo(userInfo);
-    dispatch(isModalVisible(false));
-  };
+  // const handleSignIn = (userInfo) => {
+  //   setUserInfo(userInfo);
+  //   dispatch(isModalVisible(false));
+  // };
 
 
 
