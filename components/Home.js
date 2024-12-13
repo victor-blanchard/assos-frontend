@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFutbol, faHandshakeAngle, faHeartPulse, faChildren, faDog, faPalette, faUserGraduate } from "@fortawesome/free-solid-svg-icons";
 
 import ModalForm from './ModalForm';
+import ModalCreate from './ModalCreate';
 
 
 
@@ -71,6 +72,7 @@ function Home() {
             <Button type='primary' onClick={handleSign} className={styles.btn}>Rejoindre La Sauce</Button>
           </div>
           <ModalForm />
+          <ModalCreate />
           <div className={styles.divImg}>
             <Image src='/solidarité.jpeg'
               className={styles.imgAccueil}

@@ -12,6 +12,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import places from "../reducers/place";
 import users from "../reducers/users";
 import searchResults from "../reducers/searchResults";
+import associations from "../reducers/associations";
 
 // Redux Persist imports
 import { persistStore, persistReducer } from "redux-persist";
@@ -40,7 +41,8 @@ const storage =
 const rootReducer = combineReducers({
   places,
   users,
-  searchResults,
+  searchResults, 
+  associations
 });
 
 // Persist configuration

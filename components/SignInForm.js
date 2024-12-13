@@ -12,7 +12,7 @@ function SignInForm(props) {
     //Gestion du store
     const dispatch = useDispatch();
     const user = useSelector((state) => state.users.value);
-    console.log('etat =>', user.modalState);
+    // console.log('etat modal =>', user.modalState);
 
     const router = useRouter();
 
@@ -85,7 +85,7 @@ function SignInForm(props) {
 
             const data = await response.json();
             if (data.result) {
-                dispatch(login({email: data.email, token: data.token, username: data.firstname}));
+                dispatch(login({email: data.email, token: data.token, username: data.firstname, isAssociationOwner: data.isAssociationOwner}));
                 dispatch(isModalVisible(false));
                 dispatch(setFormType(''));
                 console.log('data succès => ', data);
@@ -93,7 +93,7 @@ function SignInForm(props) {
 
 
             }else {
-                console.error('Erreur de connexion : ', data.result)
+                console.error('Erreur de connexion : ', data.result);
             }
             
 
