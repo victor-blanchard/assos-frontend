@@ -124,31 +124,31 @@ function SignUpForm(props) {
     if (isUser) {
         formulaire = (
             <form className={styles.form} onSubmit={handleSubmit}>
-                <label>
+                <label htmlFor='firstname'>
                     Prénom :
                     <input type="text" name="firstname" value={userInfo.firstname} onChange={handleChange} />
                     {errors.includes('firstname') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
                 </label>
-                <label>
+                <label htmlFor='lastname'>
                     Nom :
                     <input type="text" name="lastname" value={userInfo.lastname} onChange={handleChange} />
                     {errors.includes('lastname') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
                 </label>
-                <label>
+                <label htmlFor='email'>
                     Email :
                     <input type="email" name="email" value={userInfo.email} onChange={handleChange} />
                     {errors.includes('email') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
                 </label>
-                <label>
+                <label htmlFor='password'>
                     Mot de passe :
                     <input type="password" name="password" value={userInfo.password} onChange={handleChange} />
                     {errors.includes('password') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
                 </label>
-                <label>
+                <label htmlFor='birthday'>
                     Date de naissance :
                     <input type='date' name='birthday' value={userInfo.birthday} onChange={handleChange}/>
                 </label>
-                <label>
+                <label htmlFor='zipcode'>
                     Code postal :
                     <input type='text' name='zipcode' value={userInfo.zipcode} onChange={handleChange}/>
                     {errors.includes('zipcode') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
@@ -163,12 +163,12 @@ function SignUpForm(props) {
     } else if (isAsso) {
         formulaire = (
             <form className={styles.form} onSubmit={handleSubmit}>
-                <label>
+                <label htmlFor='firstname'>
                     Prénom :
                     <input type="text" name="firstname" value={userInfo.firstname} onChange={handleChange} />
                     {errors.includes('firstname') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
                 </label>
-                <label>
+                <label htmlFor='lastname'>
                     Nom :
                     <input type="text" name="lastname" value={userInfo.lastname} onChange={handleChange} />
                     {errors.includes('lastname') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
@@ -178,21 +178,21 @@ function SignUpForm(props) {
                     <input type="text" name="siret" value={userInfo.siret} onChange={handleChange} />
                     {errors.includes('siret') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
                 </label> */}
-                <label>
+                <label htmlFor='email'>
                     Email :
                     <input type="email" name="email" value={userInfo.email} onChange={handleChange} />
                     {errors.includes('email') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
                 </label>
-                <label>
+                <label htmlFor='password'>
                     Mot de passe :
                     <input type="password" name="password" value={userInfo.password} onChange={handleChange} />
                     {errors.includes('password') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
                 </label>
-                <label>
+                <label htmlFor='birthday'>
                     Date de naissance :
                     <input type='date' name='birthday' value={userInfo.birthday} onChange={handleChange}/>
                 </label>
-                <label>
+                <label htmlFor='zipcode'>
                     Code postal :
                     <input type='text' name='zipcode' value={userInfo.zipcode} onChange={handleChange}/>
                     {errors.includes('zipcode') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}

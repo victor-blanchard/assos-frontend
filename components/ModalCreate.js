@@ -15,19 +15,14 @@ function ModalCreate() {
     street: '',
     city: '',
     zipcode: '',
-    categories: '',
+    categories: [],
   });
-  
-  const modal = useSelector((state) => state.associations.value.modalCreateState);
+  const [errors, setErrors] = useState([]);
+
   const dispatch = useDispatch();
+  const modal = useSelector((state) => state.associations.value.modalCreateState);
 
-  // Gestion des changements dans les champs du formulaire
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setAssoInfo((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  // Réinitialisation du formulaire
+  // Réinitialisation des champs du formulaire
   const resetForm = () => {
     setAssoInfo({
       name: '',
@@ -39,8 +34,23 @@ function ModalCreate() {
       street: '',
       city: '',
       zipcode: '',
-      categories: '',
+      categories: [],
     });
+    setErrors([]);
+  };
+
+  // Gestion des changements dans les champs du formulaire
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setAssoInfo((prevState) => ({ ...prevState, [name]: value }));
+  };
+  //Verifie qu'il n'y a aucun champ manquant
+  const validateForm = () => {
+    const requiredFields = ['name', 'owner', 'description', 'siret', 'email', 'phone', 'street', 'city', 'zipcode'];
+
+    const missingFields = requiredFields.filter((field) => !assoInfo[field].trim());//on filtre le tableau dans la variable missing
+    setErrors(missingFields);//on stock le tableau dans l'etat
+    return missingFields.length === 0;//on vide le tableau missing
   };
 
   // Fermeture de la modal
@@ -52,8 +62,12 @@ function ModalCreate() {
   // Soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!assoInfo.email || !assoInfo.name || !assoInfo.phone) {
-      console.log('Les champs obligatoires ne sont pas remplis.');
+    // if (!assoInfo.email || !assoInfo.name || !assoInfo.phone) {
+    //   console.log('Les champs obligatoires ne sont pas remplis.');
+    //   return;
+    // }
+    if (!validateForm()) {
+      console.log('Les champs obligatoires ne sont pas remplis');
       return;
     }
 
@@ -67,12 +81,11 @@ function ModalCreate() {
       if (!response.ok) {
         throw new Error('Une erreur est survenue lors de la soumission.');
       }
-
       const data = await response.json();
-
       if (data.result) {
         console.log('Association créée avec succès :', data);
         handleCancel(); // Ferme la modal et réinitialise
+        dispatch(isModalCreateOpen(false));
       } else {
         console.log('Erreur lors de la création de l\'association.');
       }
@@ -80,16 +93,8 @@ function ModalCreate() {
       console.error('Erreur :', error.message);
     }
   };
-
-  return (
-    <Modal
-      title="Création de votre association"
-      open={modal}
-      onCancel={handleCancel}
-      footer={null}
-      className={styles.modal}
-    >
-      <form className={styles.form} onSubmit={handleSubmit}>
+  let formulaire = (
+    <form className={styles.form} onSubmit={handleSubmit}>
         <label htmlFor="name">
           Nom de l'association :
           <input
@@ -100,6 +105,7 @@ function ModalCreate() {
             onChange={handleChange}
             required
           />
+          {errors.includes('name') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
         </label>
         <label htmlFor="siret">
           Siret :
@@ -111,6 +117,7 @@ function ModalCreate() {
             onChange={handleChange}
             required
           />
+          {errors.includes('siret') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
         </label>
         <label htmlFor="email">
           Email :
@@ -122,6 +129,7 @@ function ModalCreate() {
             onChange={handleChange}
             required
           />
+          {errors.includes('email') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
         </label>
         <label htmlFor="phone">
           Téléphone :
@@ -133,6 +141,7 @@ function ModalCreate() {
             onChange={handleChange}
             required
           />
+          {errors.includes('phone') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
         </label>
         <label htmlFor="street">
           Adresse :
@@ -143,6 +152,7 @@ function ModalCreate() {
             value={assoInfo.street}
             onChange={handleChange}
           />
+          {errors.includes('street') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
         </label>
         <label htmlFor="city">
           Ville :
@@ -154,6 +164,7 @@ function ModalCreate() {
             onChange={handleChange}
             required
           />
+          {errors.includes('city') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
         </label>
         <label htmlFor="zipcode">
           Code postal :
@@ -165,6 +176,7 @@ function ModalCreate() {
             onChange={handleChange}
             required
           />
+          {errors.includes('zipcode') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
         </label>
         <label htmlFor="categories">
           Secteurs d'activités :
@@ -176,11 +188,22 @@ function ModalCreate() {
             onChange={handleChange}
             required
           />
+          {errors.includes('categories') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
         </label>
-        <Button type="submit" className={styles.submitButton}>
+        <Button type="submit" onClick={handleSubmit} className={styles.submitButton}>
           Je finalise la création de mon association
         </Button>
       </form>
+  );
+  return (
+    <Modal
+      title="Création de votre association"
+      open={modal}
+      onCancel={handleCancel}
+      footer={null}
+      className={styles.modal}
+    >
+      {formulaire}
     </Modal>
   );
 }
