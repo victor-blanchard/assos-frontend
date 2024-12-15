@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import styles from "../styles/Search.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShare, faBookmark } from "@fortawesome/free-solid-svg-icons";
@@ -8,7 +9,16 @@ import { Calendar, DatePicker, Input, Select, Switch, Tabs, List, Avatar } from 
 import { useState, useEffect } from "react";
 import { Button } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { addEvents, deleteEvents, addFilters, deleteFilters } from "../reducers/searchResults";
+import {
+  addEvents,
+  deleteEvents,
+  addFilters,
+  deleteFilters,
+  addAssociations,
+  deleteAssociations,
+  addEventKey,
+  addAssociationKey,
+} from "../reducers/searchResults";
 const categoriesOptions = [
   { label: "Aide à la personne", value: "Aide à la personne" },
   { label: "Sport", value: "Sport" },
@@ -28,7 +38,9 @@ const publicOptions = [
 ];
 
 const EventSearchContent = () => {
+  const router = useRouter();
   const events = useSelector((state) => state.searchResults.value.events);
+  const eventSelectedKey = useSelector((state) => state.searchResults.value.selectedEventKey);
 
   const eventsToDisplay = events.map((data, i) => {
     const categoriesToDisplay = data.categories.map((data, i) => {
@@ -42,7 +54,7 @@ const EventSearchContent = () => {
     }).format(new Date(data.startDate));
 
     return (
-      <div className={styles.card}>
+      <div onClick={() => handleEventDisplay(i)} key={i} className={styles.card}>
         <Image
           src="https://secure.meetupstatic.com/photos/event/2/1/7/600_525000535.webp?w=750"
           width={180}
@@ -116,6 +128,13 @@ const EventSearchContent = () => {
       });
   };
 
+  const handleEventDisplay = (i) => {
+    console.log(`event selected${i}`);
+    dispatch(addEventKey(i));
+    console.log({ eventSelectedKey });
+    router.push("/event"); //gere la navigation au click vers la page search en évitant la page blanche
+  };
+
   const openOnlyChange = (openOnly) => {
     console.log("Display open events only:", openOnly);
   };
@@ -130,19 +149,28 @@ const EventSearchContent = () => {
   //   keywordValue = keyword;
   // }
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
     <div>
+      <h2 className={styles.searchTitle}>Événements à proximité</h2>
       <div className={styles.filterContainer}>
         <Input
           className={styles.filterbox}
           placeholder="Mot clé"
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
         <Input
           className={styles.filterbox}
           placeholder="Lieu"
           onChange={(e) => setLocation(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
         <DatePicker
           className={styles.filterbox}
@@ -157,7 +185,9 @@ const EventSearchContent = () => {
           placeholder="Categories"
           defaultValue={[]}
           options={categoriesOptions}
-          onChange={(value) => setCategories(value.join(","))}
+          onChange={(value) => {
+            setCategories(value.join(","));
+          }}
         />
         <Select
           className={styles.filterbox}
@@ -179,41 +209,139 @@ const EventSearchContent = () => {
           </Button>
         </div>
       </div>
-      <div className={styles.resultContainer}>
-        {eventsToDisplay}
-        {/* <div className={styles.imageContainer}>
-              <Image
-                src="https://secure.meetupstatic.com/photos/event/c/0/9/a/600_514189306.webp?w=384"
-                width={80}
-                height={100}
-              />
-            </div>
-            <div className={styles.resultDefandIcons}>
-              <div className={styles.resultDetailsContainer}>
-                <span className={styles.EventDate}>Date</span>
-
-                <span className={styles.EventTitle}>Event Title</span>
-                <span className={styles.EventDescription}>Event Description</span>
-                <span className={styles.EventCity}>Event City</span>
-                <span className={styles.EventAssociationName}>Association Name</span>
-              </div>
-              <div className={styles.resultShareAndBookmarkContainer}>
-                <FontAwesomeIcon className={styles.resultIcon} icon={faShare} />
-                <FontAwesomeIcon className={styles.resultIcon} icon={faBookmark} />
-              </div>
-            </div> */}
-      </div>
+      <div className={styles.resultContainer}>{eventsToDisplay}</div>
 
       {/* <div className={styles.map}></div> */}
     </div>
   );
 };
 const AssociationSearchContent = () => {
+  const router = useRouter();
+  const associationSelectedKey = useSelector(
+    (state) => state.searchResults.value.associationSelectedKey
+  );
+  const associations = useSelector((state) => state.searchResults.value.associations);
+
+  const handleAssociationDisplay = (i) => {
+    console.log(`event selected${i}`);
+    dispatch(addEventKey(i));
+    console.log({ associationSelectedKey });
+    router.push("/association"); //gere la navigation au click vers la page search en évitant la page blanche
+  };
+
+  const eventsToDisplay = associations.map((data, i) => {
+    const categoriesToDisplay = data.categories.map((data, i) => {
+      return <div className={styles.cardCategory}>{data}</div>;
+    });
+
+    function sliceByWords(text, maxLength) {
+      if (text.length <= maxLength) return text;
+      const words = text.split(" ");
+      let result = "";
+      for (const word of words) {
+        if (result.length + word.length + 1 > maxLength) break;
+        result += (result.length ? " " : "") + word;
+      }
+      return result + "...";
+    }
+
+    return (
+      <div onClick={() => handleAssociationDisplay(i)} key={i} className={styles.card}>
+        <Image
+          src="https://secure.meetupstatic.com/photos/event/2/1/7/600_525000535.webp?w=750"
+          width={180}
+          height={100}
+          className={styles.cardImage}
+        />
+        <div className={styles.cardInfos}>
+          <div className={styles.cardName}>{data.name}</div>
+          {/* <div className={styles.cardOrganiser}>{data.organiser.name}</div> */}
+          <div className={styles.cardDescription}>{sliceByWords(data.description, 150)}</div>
+        </div>
+        <div className={styles.cardType}>
+          <div className={styles.cardCategories}>{categoriesToDisplay}</div>
+          {/* <div className={styles.cardTarget}>{data.target.join(" ")}</div> */}
+          {/* <div className={styles.cardCity}>{data.address.city}</div> */}
+          <div className={styles.cardZipcode}>{data.address.zipcode}</div>
+        </div>
+      </div>
+    );
+  });
+
+  const dispatch = useDispatch();
+
+  const [keyword, setKeyword] = useState("");
+  const [location, setLocation] = useState("");
+  const [categories, setCategories] = useState("");
+
+  const handleSearch = () => {
+    dispatch(
+      addFilters({
+        keyword: keyword,
+        location: location,
+        categories: categories,
+      })
+    );
+
+    const params = new URLSearchParams(
+      Object.fromEntries(
+        Object.entries({
+          keyword: keyword,
+          location: location,
+          categories: categories,
+        }).filter(([_, value]) => value !== undefined && value !== null && value !== "")
+      )
+    );
+    // Remplacer %2C par ,
+    const queryString = params.toString().replace(/%2C/g, ",");
+
+    fetch(`http://localhost:3000/associations/filtered?${queryString}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.result) {
+          dispatch(addAssociations(data.associations));
+          console.log(`${data.associations.length} associations ajoutés au reducer searchResult`);
+        }
+      });
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
+
+  // const locationReducer = useSelector((state) => state.searchResults.value.filters.location);
+  // let locationValue;
+  // if (locationReducer) {
+  //   locationValue = location;
+  // }
+  // const keywordReducer = useSelector((state) => state.searchResults.value.filters.keyword);
+  // let keywordValue;
+  // if (keywordReducer) {
+  //   keywordValue = keyword;
+  // }
+
   return (
     <div>
+      <h2 className={styles.searchTitle}>Associations à proximité</h2>
       <div className={styles.filterContainer}>
-        <Input className={styles.filterbox} placeholder="Location" />
-
+        <Input
+          className={styles.filterbox}
+          placeholder="Mot clé"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
+        <Input
+          className={styles.filterbox}
+          placeholder="Lieu"
+          onChange={(e) => setLocation(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
         <Select
           className={styles.filterbox}
           mode="multiple"
@@ -222,31 +350,24 @@ const AssociationSearchContent = () => {
           placeholder="Categories"
           defaultValue={[]}
           options={categoriesOptions}
+          onChange={(value) => setCategories(value.join(","))}
         />
-
-        <div className={styles.filterbox}></div>
-      </div>
-      <div className={styles.resultPageAndMap}>
-        <div className={styles.resultPageContainer}>
-          <div className={styles.resultContainer}>
-            <div className={styles.imageContainer}>
-              <Image
-                src="https://secure.meetupstatic.com/photos/event/c/0/9/a/600_514189306.webp?w=384"
-                width={80}
-                height={100}
-              />
-            </div>
-          </div>
+        <div className={styles.openOnlyBox}>
+          <Button className={styles.filterbox} onClick={() => handleSearch()}>
+            Actualiser
+          </Button>
         </div>
-        <div className={styles.map}></div>
       </div>
+      <div className={styles.resultContainer}>{eventsToDisplay}</div>
+
+      {/* <div className={styles.map}></div> */}
     </div>
   );
 };
 const items = [
   {
     key: "1",
-    label: "Evenements",
+    label: "Événements",
     children: <EventSearchContent />,
   },
   {
@@ -283,7 +404,6 @@ function Search() {
   return (
     <div className={styles.searchMain}>
       <div className={styles.searchHeaders}>
-        <h2 className={styles.searchTitle}>Événements à proximité</h2>
         <div className={styles.searchTabs}>
           <Tabs defaultActiveKey="1" centered items={items} />
         </div>

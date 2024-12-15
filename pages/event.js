@@ -1,7 +1,14 @@
-import React from "react";
+import Event from "../components/Event";
+import styles from "../styles/Search.module.css";
+import Link from "next/link";
+import Header from "../components/Header";
 
-const EventPage = () => {
-    return <div>Hello, Event Page!</div>;
-  };
-  
-  export default EventPage;
+function EventPage() {
+  return (
+    <>
+      <Event />
+    </>
+  );
+}
+
+export default EventPage;
