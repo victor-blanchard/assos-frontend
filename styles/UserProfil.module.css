@@ -21,8 +21,8 @@
 .sectionRightSide {
     display: flex;
     flex-wrap: wrap;
-    border: 1px solid black;
-    background-color: rgb(181, 209, 19);
+    border-left: 1px solid #d8d8d8;
+    /* background-color: rgb(240, 240, 240); */
     width: 65%;
     height: auto;
     padding-bottom: 15px;
@@ -31,10 +31,10 @@
 .assoCard {
     display: flex;
     flex-direction: column;
-    border: none;
+    border: 1px solid #d8d8d8;
     border-radius: 5% 5% 0 0;
-    background-color: rgb(255, 255, 255);
-    width: 45%;
+    background-color: rgb(216,216,216, 0.1);
+    width: 25%;
     /* height: 200px; */
     margin: 20px;
     cursor: pointer;
@@ -62,7 +62,7 @@
 }
 
 .assoCardImg:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
 }
 
 .assoCardTxt {
@@ -75,6 +75,14 @@
     margin: 0;
     color: black;
     transform: color 0.3s ease-out ;
+}
+
+.assoCardTxt h4 {
+    font-size: 1rem;
+}
+
+.assoCardTxt p {
+    font-size: 0.75rem;
 }
 
 .assoCardTxt h4:hover, .assoCard p:hover {
