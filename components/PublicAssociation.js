@@ -1,5 +1,5 @@
 import Link from "next/link";
-import styles from "../styles/AdminAssociation.module.css";
+import styles from "../styles/PublicAssociation.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Select } from "antd/lib";
 import {
@@ -16,20 +16,13 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-function AdminAssociation() {
+function PublicAssociation() {
   const [association, setAssociation] = useState(null);
   const [editingAsso, setEditingAsso] = useState(null);
   const [name, setName] = useState(association?.name);
   const [nameEditable, setNameEditable] = useState(false);
   const [siret, setSiret] = useState(association?.siret);
   const [siretEditable, setSiretEditable] = useState(false);
-  const [street, setStreet] = useState(association?.address.street);
-
-  const [streetEditable, setStreetEditable] = useState(false);
-  const [zipcode, setZipcode] = useState(association?.address.zipcode);
-  const [zipcodeEditable, setZipcodeEditable] = useState(false);
-  const [city, setCity] = useState(association?.address.city);
-  const [cityEditable, setCityEditable] = useState(false);
   const [photoFile, setPhotoFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
   const [description, setDescription] = useState(association?.description);
@@ -72,8 +65,6 @@ function AdminAssociation() {
       const data = await response.json();
 
       setAssociation(data.association);
-      setCity(data.association.address.city);
-
     } catch (error) {
       console.error("Error during the fetch of association:", error);
     }
@@ -107,7 +98,6 @@ function AdminAssociation() {
             name: name,
             description: description,
             siret: siret,
-            address:{street:street, zipcode:zipcode, city:city},
             token: token,
           }),
         }
@@ -375,21 +365,20 @@ function AdminAssociation() {
   ///////////END - SORT THE EVENTS TABLE ///////////////
 
   return (
+    
     <div className={styles.adminMain}>
       <div className={styles.identitySection}>
         <form onSubmit={handleSubmitAsso}>
-          <div className={styles.assoEditInput}>
-            <label htmlFor="photo"></label>
-            <input type="file" id="photo" onChange={handlePhotoChange} />
-            {photoPreview && (
+          <div>
+            
               <img
                 src={photoPreview}
                 alt="Photo Preview"
                 style={{ maxWidth: "200px" }}
               />
-            )}
+        
           </div>
-          <div className={styles.assoEditInput}>
+          <div>
             <h1 htmlFor="name">{association?.name}</h1>
             {nameEditable ? (
               <input
@@ -400,12 +389,10 @@ function AdminAssociation() {
               />
             ) : (
               <span>{name}</span>
-            )}  {!editingAsso && 
-            <button className={styles.editAsso} onClick={() => setNameEditable(!nameEditable)}>
-              {nameEditable ? "Cancel" : "Edit"}
-            </button>}
+            )}  
+       
           </div>
-          <div className={styles.assoEditInput}>
+          <div>
             <label htmlFor="description">{association?.description}</label>
             {descriptionEditable ? (
               <textarea
@@ -416,16 +403,10 @@ function AdminAssociation() {
             ) : (
               <span>{description}</span>
             )}
-            {!editingAsso && 
-            <button
-            className={styles.editAsso}
-              onClick={() => setDescriptionEditable(!descriptionEditable)}
-            >
-              {descriptionEditable ? "Cancel" : "Edit"}
-            </button>}
+            
           </div>
-          <div className={styles.assoEditInput}>
-            <label htmlFor="siret">{association?.siret}</label>
+          <div>
+            <label htmlFor="name">{association?.siret}</label>
             {siretEditable ? (
               <input
                 type="text"
@@ -436,70 +417,10 @@ function AdminAssociation() {
             ) : (
               <span>{siret}</span>
             )}
-            {!editingAsso && 
-            <button className={styles.editAsso} onClick={() => setSiretEditable(!siretEditable)}>
-              {siretEditable ? "Cancel" : "Edit"}
-            </button>}
-          </div>
-          <div className={styles.assoEditInput}>
-            <label htmlFor="street">{association?.address.street}</label>
-            {streetEditable ? (
-              <input
-                type="text"
-                id="street"
-                defaultValue={association?.address.street}
-                onChange={(e) => setStreet(e.target.value)}
-              />
-            ) : (
-              <span>{street}</span>
-            )}
-            {!editingAsso && 
-            <button className={styles.editAsso} onClick={() => setStreetEditable(!streetEditable)}>
-              {streetEditable ? "Cancel" : "Edit"}
-            </button>}
+           
           </div>
 
-          <div className={styles.assoEditInput}>
-           <label htmlFor="zipcode">{association?.address.zipcode}</label>
-           {zipcodeEditable ? (
-             <input
-               type="text"
-               id="zipcode"
-               defaultValue={association?.address.zipcode}
-               onChange={(e) => setZipcode(e.target.value)}
-             />
-           ) : (
-             <span>{zipcode}</span>
-           )}
-           {!editingAsso &&
-           <button className={styles.editAsso} onClick={() => setZipcodeEditable(!zipcodeEditable)}>
-             {zipcodeEditable ? "Cancel" : "Edit"}
-           </button>}
-         </div>
-
-         <div className={styles.assoEditInput}>
-           <label htmlFor="city">{association?.address.city}</label>
-           {cityEditable ? (
-             <input
-               type="text"
-               id="city"
-               defaultValue={association?.address.city}
-               onChange={(e) => setCity(e.target.value)}
-             />
-           ) : (
-             <span>{city}</span>
-           )}
-           {!editingAsso &&
-           <button className={styles.editAsso} onClick={() => setCityEditable(!cityEditable)}>
-             {cityEditable ? "Cancel" : "Edit"}
-           </button>}
-         </div>
-
-
-
-          {(nameEditable || descriptionEditable || siretEditable || streetEditable || zipcodeEditable) && (
-            <button className={styles.editAsso} type="submit">Save </button>
-          )}
+          
         </form>
       </div>
 
@@ -514,6 +435,7 @@ function AdminAssociation() {
             >
               <div>
                 <label htmlFor="eventName">Name:</label>
+             
                 <input
                   type="text"
                   id="eventName"
@@ -652,19 +574,22 @@ function AdminAssociation() {
                   required
                 />
               </div>
-              <button type="submit">
-                {editingEvent ? "Save Changes" : "Create Event"}
-              </button>
+           
             </form>
           </div>
         </div>
       )}
 
       <div className={styles.eventsSection}>
+        <div className={styles.eventsAndLove}>
         <h1>Events</h1>
-        <button className={styles.eventButton} onClick={handleCreateEvent}>
-          Create
-        </button>
+        <FontAwesomeIcon
+                    className={styles.assoLoveIcon}
+                    icon={faHeart}
+                
+                  />
+      
+      </div>
 
         <table className={styles.tableOfEvents}>
           <thead>
@@ -752,20 +677,8 @@ function AdminAssociation() {
                 <td>{event.categories.join(", ")}</td>
                 <td>{event.target.join(", ")}</td>
                 <td>{event.slotsAvailable}</td>
-                <td>
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faTrash}
-                    onClick={() => handleDeleteEvent(token, event._id)}
-                  />
-                </td>
-                <td>
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faPen}
-                    onClick={() => handleEditEvent(event)} //
-                  />
-                </td>
+                
+               
               </tr>
             ))}
           </tbody>
@@ -775,4 +688,4 @@ function AdminAssociation() {
   );
 }
 
-export default AdminAssociation;
+export default PublicAssociation;
