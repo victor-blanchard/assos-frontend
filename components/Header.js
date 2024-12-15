@@ -106,7 +106,7 @@ function Header() {
   } else {
     signSection = (
       <div className={styles.shortcut}>
-        <h3 className={styles.txtWelcome}>Bienvenu {user.username}</h3>
+        <h3 className={styles.txtWelcome}>Bienvenue {user.username}</h3>
         <div className={styles.iconContainer}>
           <FontAwesomeIcon
             title="Evenement à venir"
@@ -153,7 +153,7 @@ function Header() {
           />
           <input
             className={styles.searchLocation}
-            placeholder="Ou ?"
+            placeholder="Où ?"
             type="text"
             onChange={(e) => setLocation(e.target.value)}
             value={location}
