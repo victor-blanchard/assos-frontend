@@ -199,6 +199,8 @@ const EventSearchContent = () => {
           options={publicOptions}
           onChange={(value) => setTarget(value.join(","))}
         />
+
+        
         <div className={styles.openOnlyBox}>
           <div className={styles.openOnlyText}> Inscriptions ouvertes uniquement </div>
           <Switch onChange={(checked) => setOpenOnly(checked)} defaultChecked />

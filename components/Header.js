@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { isModalVisible, setFormType, logout } from "../reducers/users";
+import { isModalCreateOpen } from "../reducers/associations";
+import { isCreateAsso } from "../reducers/associations";
 import Image from "next/image";
 import styles from "../styles/Header.module.css";
 import { Button } from "antd";
@@ -14,16 +16,22 @@ import {
   faCalendarDays,
   faAddressCard,
   faBell,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { addEvents, deleteEvents, addFilters, deleteFilters } from "../reducers/searchResults";
 import DropMenu from "./DropMenu";
+import ModalCreate from "./ModalCreate";
 
 function Header() {
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
   const token = user.token;
+  const isAssociationOwner = useSelector((state) => state.users.value.isAssociationOwner);
+  const isExistingAssociaiton = useSelector((state) => state.associations.assosCreate);
+  console.log("L'association exist", isExistingAssociaiton);
   console.log("user : => ", user);
+  console.log("IsAssociaitonOwner =>", isAssociationOwner);
   // const [currentPlace, setcurrentPlace] = useState({});
   // const places = useSelector((state) => state.places.value.placeName);
 
@@ -91,6 +99,10 @@ function Header() {
     console.log("Notification");
   };
 
+  const handleCreateAsso = () => {
+    console.log("click");
+    dispatch(isModalCreateOpen(true));
+  };
   let signSection;
   if (!token) {
     signSection = (
@@ -106,7 +118,14 @@ function Header() {
   } else {
     signSection = (
       <div className={styles.shortcut}>
-        <h3 className={styles.txtWelcome}>Bienvenue {user.username}</h3>
+        <div className={styles.infoSession}>
+          <h3 className={styles.txtWelcome}>Bienvenu {user.username} </h3>
+          {isAssociationOwner && !isExistingAssociaiton && (
+            <p onClick={handleCreateAsso} className={styles.createAssoMsg}>
+              Creez votre association <FontAwesomeIcon icon={faPlus} color={"blue"} />
+            </p>
+          )}
+        </div>
         <div className={styles.iconContainer}>
           <FontAwesomeIcon
             title="Evenement à venir"

@@ -1,0 +1,32 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.form label {
+    width: 100%;
+    font-weight: 700;
+}
+
+.form input {
+    width: 70%;
+    height:30px;
+    margin: 10px;
+    border-radius: 15px;
+    border: 1px solid #D8D8D8;
+    text-align: center;
+}
+
+.txtEmptyChamp {
+    font-size: 8px;
+    color: red;
+    margin: 0;
+    padding: 0;
+
+}
+
+.btnParticulier {
+    background-color: #0093E9;
+    color: white;
+}
