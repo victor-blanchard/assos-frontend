@@ -1,0 +1,85 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
+.section {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    border: 1px solid black;
+}
+
+.sectionLeftSIde {
+    border: 1px solid black;
+    background-color: aqua;
+    width: 30%;
+    height: 300px;
+}
+
+.sectionRightSide {
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid black;
+    background-color: rgb(181, 209, 19);
+    width: 65%;
+    height: auto;
+    padding-bottom: 15px;
+}
+
+.assoCard {
+    display: flex;
+    flex-direction: column;
+    border: none;
+    border-radius: 5% 5% 0 0;
+    background-color: rgb(255, 255, 255);
+    width: 45%;
+    /* height: 200px; */
+    margin: 20px;
+    cursor: pointer;
+    overflow: hidden;
+    color: black;
+}
+
+
+.assCardFigure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    margin: 0;
+    padding: 0;
+    aspect-ratio: 16 / 9 ;
+    overflow: hidden;
+}
+.assoCardImg {
+    width: 100%;
+    border-radius: 5% 5% 0 0;
+    transform-origin: center;
+    /* transform: scale(2); */
+    transition: all 0.4s ease-in-out;
+}
+
+.assoCardImg:hover {
+    transform: scale(1.2);
+}
+
+.assoCardTxt {
+    margin: 0;
+    padding: 0;
+}
+
+.assoCardTxt h4, .assoCard p {
+    padding: 0;
+    margin: 0;
+    color: black;
+    transform: color 0.3s ease-out ;
+}
+
+.assoCardTxt h4:hover, .assoCard p:hover {
+    color: rgb(111, 197, 234);
+    /* transform: color 0.3s ease-out ; */
+}
+
+

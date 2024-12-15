@@ -21,7 +21,8 @@ function ModalCreate() {
   });
   const [errors, setErrors] = useState([]);
   console.log('champ manquant =>', errors);
-  console.log('champs', assoInfo)
+  console.log('champs =>', assoInfo)
+  console.log('address.street =>', assoInfo.address.street)
 
   const dispatch = useDispatch();
   const modal = useSelector((state) => state.associations.value.modalCreateState);
@@ -49,6 +50,24 @@ function ModalCreate() {
   // Gestion des changements dans les champs du formulaire
   const handleChange = (e) => {
     const { name, value } = e.target;
+    const addressFields = ['street', 'city', 'zipcode']
+    const [firstKey , secondKey] = 'zipcode'.split('.')
+
+    // name : address.street
+    if(addressFields.includes(name) ) {
+      console.log(assoInfo['address']['zipcode'], "assoInfo['address']['zipcode']")
+      console.log(assoInfo['address.zipcode'], "assoInfo['address.zipcode']")
+      setAssoInfo((prevState) => ({ 
+        ...prevState, 
+        address: {
+        ...prevState.address, 
+        [name]: value
+        }
+      }));
+      return 
+    }
+    console.log(assoInfo)
+
     setAssoInfo((prevState) => ({ ...prevState, [name]: value }));
   };
 
@@ -90,15 +109,16 @@ function ModalCreate() {
           owner: user.firstname,
         }),
       });
-      console.log('Payload envoyé :', JSON.stringify({
-        ...assoInfo,
-        adresse: {
-          street: assoInfo.address.street,
-          city: assoInfo.address.city,
-          zipcode: assoInfo.address.zipcode,
-        }, 
-        owner: user.firstname,
-      }));
+      // console.log(response)
+      // console.log('Payload envoyé :', JSON.stringify({
+      //   ...assoInfo,
+      //   adresse: {
+      //     street: assoInfo.address.street,
+      //     city: assoInfo.address.city,
+      //     zipcode: assoInfo.address.zipcode,
+      //   }, 
+      //   owner: user.firstname,
+      // }));
       console.log('Statut de la réponse :', response.status);
       
       const data = await response.json();
@@ -168,22 +188,22 @@ function ModalCreate() {
           />
           {errors.includes('phone') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
         </label>
-        <label htmlFor="street">
+        <label htmlFor="address.street">
           Adresse :
           <input
             type="text"
-            id="street"
+            id="address.street"
             name="street"
             value={assoInfo.address.street}
             onChange={handleChange}
           />
           {errors.includes('street') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
         </label>
-        <label htmlFor="city">
+        <label htmlFor="address.city">
           Ville :
           <input
             type="text"
-            id="city"
+            id="address.city"
             name="city"
             value={assoInfo.address.city}
             onChange={handleChange}
@@ -191,11 +211,11 @@ function ModalCreate() {
           />
           {errors.includes('city') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
         </label>
-        <label htmlFor="zipcode">
+        <label htmlFor="address.zipcode">
           Code postal :
           <input
             type="text"
-            id="zipcode"
+            id="address.zipcode"
             name="zipcode"
             value={assoInfo.address.zipcode}
             onChange={handleChange}

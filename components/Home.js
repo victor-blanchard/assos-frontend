@@ -18,6 +18,7 @@ function Home() {
   const dispatch = useDispatch();
   const modal = useSelector((state) => state.users.value.formState);
   console.log(modal);
+  const token = useSelector((state) => state.users.value.token);
   
   //Tableau d'objets qui contient le nom d'un evenement associé à une icon
   const dataEvent = [ 
@@ -69,7 +70,7 @@ function Home() {
                 Explorez une large gamme d'événements, ateliers, et sorties organisés par des associations proches de vous. 
                 Que vous cherchiez à participer, apprendre, ou rencontrer, notre plateforme vous aide à trouver facilement 
                 des activités adaptées à vos envies.</p>
-            <Button type='primary' onClick={handleSign} className={styles.btn}>Rejoindre La Sauce</Button>
+            {!token && <Button type='primary' onClick={handleSign} className={styles.btn}>Rejoindre La Sauce</Button>}
           </div>
           <ModalForm />
           <ModalCreate />
