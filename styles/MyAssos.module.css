@@ -1,0 +1,85 @@
+.main {
+    display: flex;
+    height: 100vh;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+  }
+  
+
+  .leftSection {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding: 20px;
+  }
+  
+  .homeLink {
+    text-decoration: none;
+    color: rgb(15, 64, 113);
+    font-size: 18px;
+    font-weight: bold;
+    transition: color 0.2s ease-in-out;
+    margin-bottom: 520px;
+  }
+  
+  .homeLink:hover {
+    color: #e0e0e0;
+  }
+  
+  .rightSection {
+    flex: 3;
+    padding: 40px;
+    background-color: white;
+    overflow-y: auto;
+    border-radius: 1px solid black;
+  }
+  
+  .title {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .associationBox {
+    display: flexbox; 
+    justify-content: space-between; 
+    background-color: #f1f1f1;
+    width: 300Px;
+    height: 200px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    font-size: 16px;
+    color: #555;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;
+  padding: 20px;
+  width: 45%; /* Chaque bloc occupe 45% de la largeur */
+  justify-content: space-between; /* Espace entre les blocs */
+  gap: 20px; /* Ajoute de l'espace entre les blocs */
+  padding: 20px;
+
+  }
+
+
+  /* .myAssosItem {
+    background-color: #f1f1f1;
+    width: 300Px;
+    height: 200px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    font-size: 16px;
+    color: #555;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    
+  } */
+  
+  .associationBox:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }

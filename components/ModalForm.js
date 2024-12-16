@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isModalVisible, setFormType } from '../reducers/users';
 
+
 function ModalForm(props) {
   const [userInfo, setUserInfo] = useState(null);
   const modal = useSelector((state) => state.users.value.modalState);
