@@ -67,7 +67,7 @@ function Contact() {
                             />
                         </div>
                         <div className={styles.subRow}>
-                            <label htmlFor="email">Votre email:</label>
+                            <label htmlFor="email">Votre email</label>
                             <input
                                 type="email"
                                 className={styles.formControl}
