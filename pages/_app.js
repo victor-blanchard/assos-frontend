@@ -2,6 +2,8 @@ import "../styles/globals.css";
 import Head from "next/head";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import ModalCreate from '../components/ModalCreate';
+import ModalForm from '../components/ModalForm';
 import { Calendar, DatePicker, Input } from "antd";
 
 // Redux imports
@@ -12,6 +14,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import places from "../reducers/place";
 import users from "../reducers/users";
 import searchResults from "../reducers/searchResults";
+import associations from "../reducers/associations";
 
 // Redux Persist imports
 import { persistStore, persistReducer } from "redux-persist";
@@ -40,7 +43,8 @@ const storage =
 const rootReducer = combineReducers({
   places,
   users,
-  searchResults,
+  searchResults, 
+  associations
 });
 
 // Persist configuration
@@ -73,6 +77,8 @@ function App({ Component, pageProps }) {
         </Head>
         <Header />
         <Component {...pageProps} />
+        <ModalForm />
+          <ModalCreate />
         <Footer />
       </PersistGate>
     </Provider>

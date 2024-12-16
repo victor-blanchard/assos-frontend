@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from "../styles/DropMenu.module.css";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../reducers/users';
 import Link from 'next/link';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
@@ -9,7 +9,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faRightFromBracket, faHeart } from "@fortawesome/free-solid-svg-icons";
 
 const DropMenu = (props) => {
-  const dispatch = useDispatch(); // Déplacement de useDispatch ici
+  const dispatch = useDispatch();
+  const isAssociationOwner = useSelector((state) => state.users.value.isAssociationOwner);
 
   // const handleLogout = () => {
   //   dispatch(logout());
@@ -18,9 +19,10 @@ const DropMenu = (props) => {
   const items = [
     {
       label: (
-        <Link className={styles.link} href='/admin_association'>
-          Mon compte
+        <Link className={styles.link} href={isAssociationOwner ? '/admin_association': '/userProfil'}>
+          {isAssociationOwner ? 'Mon compte' : 'Ma page'}
         </Link>
+        
       ),
       key: '0',
     },

@@ -69,6 +69,12 @@
   border-radius: 50%;
   background-color: #ffe7c2;
 }
+.cicleEvent:hover {
+  color: #cacaca;
+  box-shadow: 0 8px 25px rgba(0, 147, 233, 0.7), 0 4px 10px rgba(11, 50, 94, 0.5);
+  transform: translateY(-2px);
+  cursor: pointer;
+}
 
 .eventIcon {
   width: 40px;

@@ -10,14 +10,16 @@ function SignUpForm(props) {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.users.value);
     console.log('etat =>', user.modalState);
+    console.log('c\'est une association', isAsso)
     const [userInfo, setUserInfo] = useState({
+        isAssociationOwner: isAsso,
         firstname: '',
         lastname: '',
         email: '',
         password: '',
         birthday: '',
         zipcode: '',
-        siret: ''
+        // siret: ''
     });
     const [errors, setErrors] = useState([]);
 
@@ -26,13 +28,14 @@ function SignUpForm(props) {
         setIsAsso(false);
         setIsUser(false);
         setUserInfo({
+            isAssociationOwner: isAsso,
             firstname: '',
             lastname: '',
             email: '',
             password: '',
             birthday: '',
             zipcode: '',
-            siret: ''
+            // siret: ''
         });
         setErrors([]);
         dispatch(isReset(true));
@@ -52,7 +55,7 @@ function SignUpForm(props) {
     const validateForm = () => {
         const requiredFields = isUser
             ? ['firstname', 'lastname', 'email', 'password', 'zipcode']
-            : ['firstname', 'lastname', 'email', 'password', 'zipcode', 'siret'];
+            : ['firstname', 'lastname', 'email', 'password', 'zipcode', /*'siret'*/];
 
         const missingFields = requiredFields.filter((field) => !userInfo[field].trim());
         setErrors(missingFields);
@@ -61,7 +64,10 @@ function SignUpForm(props) {
 
     const handleSubmit = async (e) => {
         // e.preventDefault();
-        if (!validateForm()) return;
+        if (!validateForm()) {
+            console.log('Les champs ne sont pas conforme')
+            return;
+        } 
 
         try {
             const response = await fetch('http://localhost:3000/users/signup', {
@@ -69,6 +75,7 @@ function SignUpForm(props) {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(userInfo)
             });
+            console.log(userInfo.isAssociationOwner)
             console.log('Données envoyées :', JSON.stringify(userInfo));
             if (!response.ok) {
                 throw new Error('Une erreur est survenue lors de la soumission.');
@@ -79,14 +86,15 @@ function SignUpForm(props) {
                 dispatch(isModalVisible(false));
                 dispatch(setFormType(''));
                 resetForm();
+                console.log('data succès => ', data);
+            } else {
+                console.log('erreur lors de l\'inscription')
             }
-            console.log('data succès => ', data);
+            
 
         } catch (error) {
             console.error('Erreur :', error.message);
         }
-
-        // props.onSignUp(userInfo);
         console.log('Données soumises :', userInfo);
         resetForm();
     };
@@ -94,103 +102,105 @@ function SignUpForm(props) {
     const handleAsso = () => {
         setIsAsso(true);
         setIsUser(false);
+        setUserInfo((prevState) => ({ ...prevState, isAssociationOwner: true }));
         dispatch(isReset(false));
     };
 
     const handleUser = () => {
         setIsAsso(false);
         setIsUser(true);
+        setUserInfo((prevState) => ({ ...prevState, isAssociationOwner: false}));
         dispatch(isReset(false));
     };
 
     let formulaire = (
         <div>
             <h2>Je suis :</h2>
-            <Button className={styles.btnAssociation} onClick={handleAsso}>Association</Button>
-            <Button className={styles.btnParticulier} onClick={handleUser}>Particulier</Button>
+            <Button className={styles.btnAssociation} onClick={()=>handleAsso()}>Association</Button>
+            <Button className={styles.btnParticulier} onClick={() =>handleUser()}>Particulier</Button>
         </div>
     );
 
     if (isUser) {
         formulaire = (
             <form className={styles.form} onSubmit={handleSubmit}>
-                <label>
+                <label htmlFor='firstname'>
                     Prénom :
                     <input type="text" name="firstname" value={userInfo.firstname} onChange={handleChange} />
                     {errors.includes('firstname') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
                 </label>
-                <label>
+                <label htmlFor='lastname'>
                     Nom :
                     <input type="text" name="lastname" value={userInfo.lastname} onChange={handleChange} />
                     {errors.includes('lastname') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
                 </label>
-                <label>
+                <label htmlFor='email'>
                     Email :
                     <input type="email" name="email" value={userInfo.email} onChange={handleChange} />
                     {errors.includes('email') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
                 </label>
-                <label>
+                <label htmlFor='password'>
                     Mot de passe :
                     <input type="password" name="password" value={userInfo.password} onChange={handleChange} />
                     {errors.includes('password') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
                 </label>
-                <label>
+                <label htmlFor='birthday'>
                     Date de naissance :
                     <input type='date' name='birthday' value={userInfo.birthday} onChange={handleChange}/>
                 </label>
-                <label>
+                <label htmlFor='zipcode'>
                     Code postal :
                     <input type='text' name='zipcode' value={userInfo.zipcode} onChange={handleChange}/>
                     {errors.includes('zipcode') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
                 </label>
-                <label>
+                {/* <label>
                     J'accepte les conditions d'utilisation :
-                    <input type="checkbox" name="acceptedTerms" checked={true/*userInfo.acceptedTerms*/} /*onChange={handleChange}*/ />
-                </label>
+                    <input type="checkbox" name="acceptedTerms" checked={true}  />
+                </label> */}
                 <Button onClick={handleSubmit}>S'inscrire</Button>
             </form>
         );
     } else if (isAsso) {
         formulaire = (
             <form className={styles.form} onSubmit={handleSubmit}>
-                <label>
+                <label htmlFor='firstname'>
                     Prénom :
                     <input type="text" name="firstname" value={userInfo.firstname} onChange={handleChange} />
                     {errors.includes('firstname') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
                 </label>
-                <label>
+                <label htmlFor='lastname'>
                     Nom :
                     <input type="text" name="lastname" value={userInfo.lastname} onChange={handleChange} />
                     {errors.includes('lastname') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
                 </label>
-                <label>
+                {/* <label>
                     SIRET :
                     <input type="text" name="siret" value={userInfo.siret} onChange={handleChange} />
                     {errors.includes('siret') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
-                </label>
-                <label>
+                </label> */}
+                <label htmlFor='email'>
                     Email :
                     <input type="email" name="email" value={userInfo.email} onChange={handleChange} />
                     {errors.includes('email') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
                 </label>
-                <label>
+                <label htmlFor='password'>
                     Mot de passe :
                     <input type="password" name="password" value={userInfo.password} onChange={handleChange} />
                     {errors.includes('password') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
                 </label>
-                <label>
+                <label htmlFor='birthday'>
                     Date de naissance :
                     <input type='date' name='birthday' value={userInfo.birthday} onChange={handleChange}/>
                 </label>
-                <label>
+                <label htmlFor='zipcode'>
                     Code postal :
                     <input type='text' name='zipcode' value={userInfo.zipcode} onChange={handleChange}/>
                     {errors.includes('zipcode') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
                 </label>
-                <label>
+                {/* <label>
                     J'accepte les conditions d'utilisation :
                     <input type="checkbox" name="acceptedTerms" checked={userInfo.acceptedTerms} onChange={handleChange} />
-                </label>
+                </label> */}
                 <Button onClick={handleSubmit}>S'inscrire</Button>
             </form>
         );
