@@ -1,4 +1,5 @@
 import { Modal, Button } from 'antd';
+import { Calendar, DatePicker, Input, Select, Switch, Tabs, List, Avatar } from "antd/lib";
 import styles from '../styles/ModalCreate.module.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,9 +21,10 @@ function ModalCreate() {
     categories: '',
   });
   const [errors, setErrors] = useState([]);
-  console.log('champ manquant =>', errors);
-  console.log('champs =>', assoInfo)
-  console.log('address.street =>', assoInfo.address.street)
+  const [categories, setCategories] = useState("");
+  // console.log('champs remplis =>', assoInfo);
+  // console.log('address.street =>', assoInfo.address.street)
+  console.log('Categories', assoInfo.categories);
 
   const dispatch = useDispatch();
   const modal = useSelector((state) => state.associations.value.modalCreateState);
@@ -47,11 +49,21 @@ function ModalCreate() {
     setErrors([]);
   };
 
+  const categoriesOptions = [
+    { label: "Aide à la personne", value: "Aide à la personne" },
+    { label: "Sport", value: "Sport" },
+    { label: "Santé", value: "Santé" },
+    { label: "Enfant", value: "Enfant" },
+    { label: "Solidarité", value: "Solidarité" },
+    { label: "Art & Culture", value: "Art & Culture" },
+    { label: "Education", value: "Education" },
+    { label: "Animaux", value: "Animaux" },
+  ];
   // Gestion des changements dans les champs du formulaire
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const addressFields = ['street', 'city', 'zipcode']
-    const [firstKey , secondKey] = 'zipcode'.split('.')
+    const addressFields = ['street', 'city', 'zipcode'];
+    // const [firstKey , secondKey] = 'zipcode'.split('.')
 
     // name : address.street
     if(addressFields.includes(name) ) {
@@ -71,15 +83,38 @@ function ModalCreate() {
     setAssoInfo((prevState) => ({ ...prevState, [name]: value }));
   };
 
+  const handleCategoriesChange = (value) => { 
+    setAssoInfo((prevState) => ({ ...prevState, categories: value.join(',') })); 
+  };
+
   // Vérifie qu'il n'y a aucun champ manquant
   const validateForm = () => {
-    const requiredFields = ['name', 'description', 'siret', 'email', 'phone', 'street', 'city', 'zipcode', 'categories'];
-
-    const missingFields = requiredFields.filter((field) => !assoInfo[field]?.trim() || !assoInfo.address[field]?.trim()); // Vérifie si une chaîne est vide après trim
-
-    setErrors(missingFields); // Stocke les champs manquants dans l'état des erreurs
-    return missingFields.length === 0; // Retourne true si tous les champs requis sont remplis
+    const requiredFields = ['name', 'description', 'siret', 'email', 'phone'];
+    const addressFields = ['street', 'city', 'zipcode'];
+    let missingFields = [];
+  
+    requiredFields.forEach(field => {
+      if (!assoInfo[field] || (typeof assoInfo[field] === 'string' && assoInfo[field].trim() === '')) {
+        missingFields.push(field);
+      }
+    });
+  
+    addressFields.forEach(field => {
+      if (!assoInfo.address[field] || (typeof assoInfo.address[field] === 'string' && assoInfo.address[field].trim() === '')) {
+        missingFields.push(`address.${field}`);
+      }
+    });
+  
+    // Vérification spéciale pour le champ 'categories'
+    if (assoInfo.categories.length === 0) {
+      missingFields.push('categories');
+    }
+  
+    console.log('MissingFields =>', missingFields);
+    setErrors(missingFields);
+    return missingFields.length === 0;
   };
+  
 
   // Fermeture de la modal
   const handleCancel = () => {
@@ -94,13 +129,15 @@ function ModalCreate() {
       console.log('Les champs obligatoires ne sont pas remplis');
       return;
     }
-     
+    const categoriesArray = assoInfo.categories.split(',');
+
     try {
       const response = await fetch('http://localhost:3000/associations/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...assoInfo,
+          categories: categoriesArray,
           adresse: {
             street: assoInfo.address.street,
             city: assoInfo.address.city,
@@ -109,7 +146,15 @@ function ModalCreate() {
           owner: user.firstname,
         }),
       });
-      // console.log(response)
+      console.log('Body =>', JSON.stringify({
+        ...assoInfo,
+        adresse: {
+          street: assoInfo.address.street,
+          city: assoInfo.address.city,
+          zipcode: assoInfo.address.zipcode,
+        }, 
+        owner: user.firstname,
+      }))
       // console.log('Payload envoyé :', JSON.stringify({
       //   ...assoInfo,
       //   adresse: {
@@ -120,7 +165,6 @@ function ModalCreate() {
       //   owner: user.firstname,
       // }));
       console.log('Statut de la réponse :', response.status);
-      
       const data = await response.json();
 
       if (!response.ok) {
@@ -237,13 +281,23 @@ function ModalCreate() {
         </label>
         <label htmlFor="categories">
           Secteurs d'activités :
-          <input
+          {/* <input
             type="text"
             id="categories"
             name="categories"
-            value={assoInfo.categories}
+            value={assoInfo.categories.split(',')}
             onChange={handleChange}
             required
+          /> */}
+           <Select
+              className={styles.filterbox}
+              mode="multiple"
+              allowClear
+              style={{ width: "100%" }}
+              placeholder="Categories"
+              defaultValue={[]}
+              options={categoriesOptions}
+              onChange={handleCategoriesChange}
           />
           {errors.includes('categories') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
         </label>

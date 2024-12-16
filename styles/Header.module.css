@@ -167,6 +167,16 @@
   cursor: pointer;
 }
 
+.calendarIcon {
+  color: rgb(114, 42, 42);
+}
+
+.calendarIcon:hover {
+  box-shadow: 0 8px 25px rgba(0, 147, 233, 0.7), 0 4px 10px rgba(11, 50, 94, 0.5);
+  transform: translateY(-2px);
+  cursor: pointer;
+}
+
 .txtWelcome {
   font-size: 16px;
   color: #0093e9;

@@ -13,6 +13,7 @@ import {
   faMagnifyingGlass,
   faRightFromBracket,
   faUser,
+  faUsers,
   faCalendarDays,
   faAddressCard,
   faBell,
@@ -83,6 +84,7 @@ function Header() {
   };
 
   const handleLogout = () => {
+    router.push('/');
     dispatch(logout());
     console.log("Déconnexion user : => ", token);
   };
@@ -98,6 +100,10 @@ function Header() {
   const handleNotification = () => {
     console.log("Notification");
   };
+
+  const handleMyasso = () => {
+    console.log("Mes association")
+  }
 
   const handleCreateAsso = () => {
     console.log('click');
@@ -129,12 +135,17 @@ function Header() {
             className={`${styles.headerIcon} ${styles.calendarIcon}`}
             icon={faCalendarDays}
           />
-          <FontAwesomeIcon
+          {isAssociationOwner ? <FontAwesomeIcon
             title="Contact"
             onClick={handleContact}
             className={`${styles.headerIcon} ${styles.contactIcon}`}
             icon={faAddressCard}
-          />
+          />: <FontAwesomeIcon 
+                title="Mes associations"
+                onClick={handleMyasso}
+                className={`${styles.headerIcon} ${styles.contactIcon}`}
+                icon={faUsers}
+                 />}
           <FontAwesomeIcon
             title="Notification"
             onClick={handleNotification}
