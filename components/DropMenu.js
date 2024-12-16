@@ -19,9 +19,10 @@ const DropMenu = (props) => {
   const items = [
     {
       label: (
-        <Link className={styles.link} href={isAssociationOwner ? '/admin_association': '/about'}>
+        <Link className={styles.link} href={isAssociationOwner ? '/admin_association': '/userProfil'}>
           {isAssociationOwner ? 'Mon compte' : 'Ma page'}
         </Link>
+        
       ),
       key: '0',
     },

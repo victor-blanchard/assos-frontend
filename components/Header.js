@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { isModalVisible, setFormType, logout } from "../reducers/users";
 import { isModalCreateOpen } from "../reducers/associations";
-import { isCreateAsso } from "../reducers/associations"
+import { isCreateAsso } from "../reducers/associations";
 import Image from "next/image";
 import styles from "../styles/Header.module.css";
 import { Button } from "antd";
@@ -13,6 +13,7 @@ import {
   faMagnifyingGlass,
   faRightFromBracket,
   faUser,
+  faUsers,
   faCalendarDays,
   faAddressCard,
   faBell,
@@ -20,7 +21,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { addEvents, deleteEvents, addFilters, deleteFilters } from "../reducers/searchResults";
 import DropMenu from "./DropMenu";
-import ModalCreate from './ModalCreate';
+import ModalCreate from "./ModalCreate";
 
 function Header() {
   const router = useRouter();
@@ -29,9 +30,9 @@ function Header() {
   const token = user.token;
   const isAssociationOwner = useSelector((state) => state.users.value.isAssociationOwner);
   const isExistingAssociaiton = useSelector((state) => state.associations.assosCreate);
-  console.log('L\'association exist', isExistingAssociaiton);
+  console.log("L'association exist", isExistingAssociaiton);
   console.log("user : => ", user);
-  console.log('IsAssociaitonOwner =>', isAssociationOwner)
+  console.log("IsAssociaitonOwner =>", isAssociationOwner);
   // const [currentPlace, setcurrentPlace] = useState({});
   // const places = useSelector((state) => state.places.value.placeName);
 
@@ -83,6 +84,7 @@ function Header() {
   };
 
   const handleLogout = () => {
+    router.push('/');
     dispatch(logout());
     console.log("Déconnexion user : => ", token);
   };
@@ -99,10 +101,14 @@ function Header() {
     console.log("Notification");
   };
 
-  const handleCreateAsso = () => {
-    console.log('click');
-    dispatch(isModalCreateOpen(true));
+  const handleMyasso = () => {
+    console.log("Mes association")
   }
+
+  const handleCreateAsso = () => {
+    console.log("click");
+    dispatch(isModalCreateOpen(true));
+  };
   let signSection;
   if (!token) {
     signSection = (
@@ -120,7 +126,11 @@ function Header() {
       <div className={styles.shortcut}>
         <div className={styles.infoSession}>
           <h3 className={styles.txtWelcome}>Bienvenu {user.username} </h3>
-          {(isAssociationOwner && !isExistingAssociaiton) && <p onClick={handleCreateAsso} className={styles.createAssoMsg}>Creez votre association <FontAwesomeIcon icon={faPlus} color={'blue'}/></p>}
+          {isAssociationOwner && !isExistingAssociaiton && (
+            <p onClick={handleCreateAsso} className={styles.createAssoMsg}>
+              Creez votre association <FontAwesomeIcon icon={faPlus} color={"blue"} />
+            </p>
+          )}
         </div>
         <div className={styles.iconContainer}>
           <FontAwesomeIcon
@@ -129,12 +139,17 @@ function Header() {
             className={`${styles.headerIcon} ${styles.calendarIcon}`}
             icon={faCalendarDays}
           />
-          <FontAwesomeIcon
+          {isAssociationOwner ? <FontAwesomeIcon
             title="Contact"
             onClick={handleContact}
             className={`${styles.headerIcon} ${styles.contactIcon}`}
             icon={faAddressCard}
-          />
+          />: <FontAwesomeIcon 
+                title="Mes associations"
+                onClick={handleMyasso}
+                className={`${styles.headerIcon} ${styles.contactIcon}`}
+                icon={faUsers}
+                 />}
           <FontAwesomeIcon
             title="Notification"
             onClick={handleNotification}
@@ -168,7 +183,7 @@ function Header() {
           />
           <input
             className={styles.searchLocation}
-            placeholder="Ou ?"
+            placeholder="Où ?"
             type="text"
             onChange={(e) => setLocation(e.target.value)}
             value={location}

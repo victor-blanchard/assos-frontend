@@ -1,0 +1,119 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: auto;
+}
+
+.section {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.sectionLeftSIde {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+    height: auto;
+    min-height: 600px;
+}
+
+.userImgProfil {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.imgProfil {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.sectionRightSide {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-left: 1px solid #d8d8d8;
+    /* background-color: rgb(240, 240, 240); */
+    width: 65%;
+    height: auto;
+    padding-bottom: 15px;
+}
+
+.assoCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #d8d8d8;
+    border-radius: 5% 5% 0 0;
+    background-color: rgba(216,216,216, 0.1);
+    width: 35%;
+    height: 160px;
+    min-height: 100px;
+    /* height: 200px; */
+    margin: 20px;
+    cursor: pointer;
+    overflow: hidden;
+    color: black;
+}
+
+
+.assCardFigure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    /* justify-content: center; */
+    margin: 0;
+    padding: 0;
+    aspect-ratio: 16 / 9 ;
+    overflow: hidden;
+}
+.assoCardImg {
+    width: 100%;
+    border-radius: 5% 5% 0 0;
+    transform-origin: center;
+    /* transform: scale(2); */
+    transition: all 0.4s ease-in-out;
+}
+
+.assoCardImg:hover {
+    transform: scale(1.1);
+}
+
+.assoCardTxt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: auto;
+}
+
+.assoCardTxt h4, .assoCard p {
+    padding: 0;
+    margin: 0;
+    color: black;
+    transform: color 0.3s ease-out ;
+}
+
+.assoCardTxt h4 {
+    font-size: 1rem;
+}
+
+.assoCardTxt p {
+    font-size: 0.75rem;
+}
+
+.assoCardTxt h4:hover, .assoCard p:hover {
+    color: rgb(111, 197, 234);
+    /* transform: color 0.3s ease-out ; */
+}
+
+

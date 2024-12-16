@@ -4,10 +4,11 @@
   align-items: center;
   height: 9vh;
   border-bottom: 1px solid #d8d8d8;
-  position: fixed;
+  /* position: fixed; */
+  position: sticky;
   top: 0;
   width: 100%;
-  z-index: 999;
+  z-index: 1;
   background-color: white;
   margin-bottom: 10px;
   /* padding: 10px; */
@@ -161,6 +162,16 @@
 
 .contactIcon:hover {
   color: #cacaca;
+  box-shadow: 0 8px 25px rgba(0, 147, 233, 0.7), 0 4px 10px rgba(11, 50, 94, 0.5);
+  transform: translateY(-2px);
+  cursor: pointer;
+}
+
+.calendarIcon {
+  color: rgb(114, 42, 42);
+}
+
+.calendarIcon:hover {
   box-shadow: 0 8px 25px rgba(0, 147, 233, 0.7), 0 4px 10px rgba(11, 50, 94, 0.5);
   transform: translateY(-2px);
   cursor: pointer;
