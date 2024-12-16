@@ -2,6 +2,8 @@ import "../styles/globals.css";
 import Head from "next/head";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import ModalCreate from '../components/ModalCreate';
+import ModalForm from '../components/ModalForm';
 import { Calendar, DatePicker, Input } from "antd";
 
 // Redux imports
@@ -75,6 +77,8 @@ function App({ Component, pageProps }) {
         </Head>
         <Header />
         <Component {...pageProps} />
+        <ModalForm />
+          <ModalCreate />
         <Footer />
       </PersistGate>
     </Provider>

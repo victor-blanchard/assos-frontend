@@ -16,6 +16,7 @@
     list-style-type: none;
     text-decoration: none;
     border-top: 1px solid #d8d8d8;
+    box-shadow: -10px 5 5 grey;
 
     
 }
