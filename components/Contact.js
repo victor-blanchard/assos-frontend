@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as emailjs from "emailjs-com";
+import styles from "../styles/Contact.module.css";
 
 function Contact() {
 
@@ -48,40 +49,40 @@ function Contact() {
     };
 
     return (
-        <div className="row m-5">
+        <div className={styles.All}>
             <div className="col-md-6 col-md">
                 <h2>Contact</h2>
-                <p>Contact us!</p>
-                <form onSubmit={handleSubmit}>
-                    <div className="row">
-                        <div className="col-sm-6 form-group">
-                            <label htmlFor="name">Name:</label>
+                <p>L'équipe La Sauce est à votre entière disposition ! </p>
+                <form className={styles.form} onSubmit={handleSubmit}>
+                    <div className={styles.row}>
+                        <div className={styles.subRow}>
+                            <label htmlFor="name">Votre nom</label>
                             <input
                                 type="text"
-                                className="form-control"
+                                className={styles.formControl}
                                 name="name"
                                 value={contactData.name}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
-                        <div className="col-sm-6 form-group">
-                            <label htmlFor="email">Email:</label>
+                        <div className={styles.subRow}>
+                            <label htmlFor="email">Votre email:</label>
                             <input
                                 type="email"
-                                className="form-control"
+                                className={styles.formControl}
                                 name="email"
                                 value={contactData.email}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-sm-12">
-                            <label htmlFor="message">Message:</label>
+                   
+                    
+                        <div className={styles.subRow}>
+                            <label htmlFor="message">Votre message</label>
                             <textarea
-                                className="form-control"
+                                 className={styles.formControl}
                                 type="text"
                                 name="message"
                                 maxLength="6000"
@@ -92,10 +93,10 @@ function Contact() {
                             ></textarea>
                         </div>
                     </div>
-                    <div className="row mt-2">
-                        <div className="col-sm-12 form-group">
-                            <button type="submit" className="btn btn-primary">
-                                Send
+                    <div className={styles.row}>
+                        <div className={styles.subRow}>
+                            <button type="submit" className={styles.button}>
+                                Envoyer
                             </button>
                         </div>
                     </div>
