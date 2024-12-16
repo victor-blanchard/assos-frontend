@@ -29,7 +29,7 @@ function Header() {
   const user = useSelector((state) => state.users.value);
   const token = user.token;
   const isAssociationOwner = useSelector((state) => state.users.value.isAssociationOwner);
-  const isExistingAssociaiton = useSelector((state) => state.associations.assosCreate);
+  const isExistingAssociaiton = useSelector((state) => state.associations.value.assosCreate);
 
   console.log("L'association exist", isExistingAssociaiton);
   // console.log("user : => ", user);

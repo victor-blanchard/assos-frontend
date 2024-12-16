@@ -83,7 +83,7 @@ function SignInForm(props) {
                 dispatch(login({email: data.email, token: data.token, username: data.firstname, isAssociationOwner: data.isAssociationOwner}));
                 dispatch(isModalVisible(false));
                 dispatch(setFormType(''));
-                console.log('data succès => ', data);
+                console.log('Connected data succès => ', data);
                 resetForm();
 
 

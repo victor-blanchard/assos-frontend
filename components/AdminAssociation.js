@@ -67,8 +67,46 @@ function AdminAssociation() {
 
   const token = user.token;
   console.log("token===>" + token);
-  const id = "67602d2b2df39615a1822bac";
+  const [ids, setIds] = useState([]);
+  console.log('Associaiton ids ====>', ids)
+  useEffect(() => {
+    const fetchIdsAssociation = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/associations/filtered');
 
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        };
+
+        const contentType = response.headers.get('Content-Type');
+        if (!contentType || !contentType.includes('application/json')) {
+          throw new Error('Server did not return JSON.');
+        };
+
+        const allAssociaitonData = await response.json();
+        console.log('Response associations =============>',response);
+
+        if (allAssociaitonData .result) {
+          console.log(allAssociaitonData.associations)
+          setIds(allAssociaitonData.associations)
+        }
+        
+      } catch(error) {
+        console.error('Erreur de fetch', error)
+      }
+    };
+  fetchIdsAssociation();
+
+  },[])
+
+const id = ids.map((data, i) => {
+  console.log('Les données ===>',data._id)
+  console.log('data =>', data)
+  if (owner === user.token) {
+
+  }
+  return data._id
+})
  
 
   const fetchAssociation = async () => {
