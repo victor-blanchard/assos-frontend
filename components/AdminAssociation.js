@@ -10,7 +10,7 @@ import {
   faSortUp,
   faSortDown,
   faTrash,
-  faPen,
+  faPen, 
 } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -62,8 +62,10 @@ function AdminAssociation() {
 
   ///START - GET THE ASSOCIATION DATA ////
 
-  const token = "PG9qIyoAWfYcec8LOjSMOjbo4MjMawEd";
-  const id = "675ff6b162a890bb336769a5";
+  const token = "J_cPuiEJwgZQw4p2m4Mpvq1r1VzFSbbf";
+  const id = "67602d2b2df39615a1822bac";
+
+ 
 
   const fetchAssociation = async () => {
     console.log("fetch start");
@@ -75,29 +77,18 @@ function AdminAssociation() {
       const data = await response.json();
 
       setAssociation(data.association);
-      setAddress(data.association.address);
+      setAddress(data.association.address)
+     
     } catch (error) {
       console.error("Error during the fetch of association:", error);
     }
   };
 
+  
+
   useEffect(() => {
-    !nameEditable &&
-      !descriptionEditable &&
-      !siretEditable &&
-      !streetEditable &&
-      !zipcodeEditable &&
-      !cityEditable &&
-      fetchAssociation();
-  }, [
-    id,
-    nameEditable,
-    descriptionEditable,
-    siretEditable,
-    streetEditable,
-    zipcodeEditable,
-    cityEditable,
-  ]);
+    !nameEditable && !descriptionEditable && !siretEditable &&!streetEditable&& !zipcodeEditable&& !cityEditable&& fetchAssociation();
+  }, [id, nameEditable, descriptionEditable, siretEditable, streetEditable, zipcodeEditable, cityEditable]);
 
   //// END - GET THE ASSOCIATION DATA ////
 
@@ -105,14 +96,15 @@ function AdminAssociation() {
   //   setStreet(address?.street);
   //   setZipcode(address?.zipcode);
   //   setCity(address?.city);
-  // }, [address]);
+  // }, [address]); 
 
   ////// START - EDIT THE ASSOCIATION DATA ////
-
+  
   const handleAddressChange = (field, value) => {
     setAddress((prevAddress) => ({ ...prevAddress, [field]: value }));
-    console.log("adress =====>", value);
-  };
+    console.log('adress =====>', value);
+  };  
+  
 
   const handleSubmitAsso = async () => {
     console.log("submit clicked");
@@ -148,8 +140,8 @@ function AdminAssociation() {
       if (response.ok) {
         const data = await response.json();
 
-        // Update association with the new address
-        setAssociation((prevAssociation) => ({
+         // Update association with the new address
+         setAssociation((prevAssociation) => ({
           ...prevAssociation,
           name: name,
           description: description,
@@ -157,28 +149,31 @@ function AdminAssociation() {
           address: address, // Use the updated address state
         }));
 
-        const updatedAddress = {
-          street: address.street,
-          zipcode: address.zipcode,
-          city: address.city,
+
+        const updatedAddress = { 
+          street: address.street, 
+          zipcode: address.zipcode, 
+          city: address.city 
         };
 
         console.log(updatedAddress);
-        setAssociation(data.association);
-        setAddress(data.association.address);
-
+        setAssociation(data.association); 
+        setAddress(data.association.address); 
+  
         // Immediately update individual address variables
         setStreet(data.association.address.street);
         setZipcode(data.association.address.zipcode);
-        setCity(data.association.address.city);
-
-        setNameEditable(false);
-        setDescriptionEditable(false);
-        setSiretEditable(false);
-        setStreetEditable(false);
-        setZipcodeEditable(false);
-        setCityEditable(false);
-
+        setCity(data.association.address.city); 
+        
+  
+  
+          setNameEditable(false);
+          setDescriptionEditable(false);
+          setSiretEditable(false);
+          setStreetEditable(false);
+          setZipcodeEditable(false);
+          setCityEditable(false);
+ 
         console.log("Asso updated:", data);
       } else {
         const errorData = await response.json();
@@ -436,6 +431,7 @@ function AdminAssociation() {
       <div className={styles.identitySection}>
         <div>
           <div className={styles.assoEditInput}>
+            <label htmlFor="photo"></label>
             <input type="file" id="photo" onChange={handlePhotoChange} />
             {photoPreview && (
               <img
@@ -469,6 +465,7 @@ function AdminAssociation() {
           </div>
           <text className={styles.assoTitle}>Activity Description</text>
           <div className={styles.assoEditInput}>
+            <label htmlFor="description">{association?.description}</label>
             {descriptionEditable ? (
               <textarea
                 id="description"
@@ -489,6 +486,7 @@ function AdminAssociation() {
           </div>
           <text className={styles.assoTitle}>SIRET</text>
           <div className={styles.assoEditInput}>
+            <label htmlFor="siret">{association?.siret}</label>
             {siretEditable ? (
               <input
                 type="text"
@@ -510,12 +508,13 @@ function AdminAssociation() {
           </div>
           <text className={styles.assoTitle}>STREET</text>
           <div className={styles.assoEditInput}>
+            <label htmlFor="street">{address?.street}</label>
             {streetEditable ? (
               <input
                 type="text"
                 id="street"
                 defaultValue={association?.address.street}
-                onChange={(e) => handleAddressChange("street", e.target.value)}
+                onChange={(e) => handleAddressChange('street', e.target.value)}
               />
             ) : (
               <span>{association?.address.street}</span>
@@ -531,12 +530,13 @@ function AdminAssociation() {
           </div>
           <text className={styles.assoTitle}>ZIPCODE</text>
           <div className={styles.assoEditInput}>
+            <label htmlFor="zipcode">{association?.address.zipcode}</label>
             {zipcodeEditable ? (
               <input
                 type="text"
                 id="zipcode"
                 defaultValue={address?.zipcode}
-                onChange={(e) => handleAddressChange("zipcode", e.target.value)}
+                onChange={(e) => handleAddressChange('zipcode', e.target.value)}
               />
             ) : (
               <span>{association?.address.zipcode}</span>
@@ -552,12 +552,13 @@ function AdminAssociation() {
           </div>
           <text className={styles.assoTitle}>CITY</text>
           <div className={styles.assoEditInput}>
+            <label htmlFor="city">{association?.address.city}</label>
             {cityEditable ? (
               <input
                 type="text"
                 id="city"
                 defaultValue={address?.city}
-                onChange={(e) => handleAddressChange("city", e.target.value)}
+                onChange={(e) => handleAddressChange('city', e.target.value)}
               />
             ) : (
               <span>{association?.address.city}</span>
