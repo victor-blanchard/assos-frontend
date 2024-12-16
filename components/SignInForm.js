@@ -29,13 +29,8 @@ function SignInForm(props) {
         setIsAsso(false);
         setIsUser(false);
         setUserInfo({
-            // firstname: '',
-            // lastname: '',
             email: '',
             password: '',
-            // birthday: '',
-            // zipcode: '',
-            // siret: ''
         });
         setErrors([]);
         // dispatch(isReset(true));
@@ -118,17 +113,8 @@ function SignInForm(props) {
     };
 
     let formulaire = (
-        <div>
-            <h2>Je suis :</h2>
-            <Button className={styles.btnAssociation} onClick={handleAsso}>Association</Button>
-            <Button className={styles.btnParticulier} onClick={handleUser}>Particulier</Button>
-        </div>
-    );
-
-    if (isUser) {
-        formulaire = (
             <form className={styles.form} onSubmit={handleConnect}>
-                <h2>Particulier</h2>
+                <h2>J'ai déjà un compte</h2>
                 <label>
                     Email :
                     <input type="email" name="email" value={userInfo.email} onChange={handleChange} />
@@ -143,25 +129,6 @@ function SignInForm(props) {
                 <Button onClick={handleConnect}>Se connecter</Button>
             </form>
         );
-    } else if (isAsso) {
-        formulaire = (
-            
-            <form className={styles.form} onSubmit={handleConnect}>
-                <h2>Association</h2>
-                <label>
-                    Email :
-                    <input type="email" name="email" value={userInfo.email} onChange={handleChange} />
-                    {errors.includes('email') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
-                </label>
-                <label>
-                    Mot de passe :
-                    <input type="password" name="password" value={userInfo.password} onChange={handleChange} />
-                    {errors.includes('password') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
-                </label>
-                <Button onClick={handleConnect}>Se connecter</Button>
-            </form>
-        );
-    }
 
     return (
         <div>

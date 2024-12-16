@@ -3,28 +3,28 @@ import { Calendar, DatePicker, Input, Select, Switch, Tabs, List, Avatar } from 
 import styles from '../styles/ModalCreate.module.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { isModalCreateOpen } from '../reducers/associations';
+import { isModalCreateOpen, isCreateAsso } from '../reducers/associations';
 
 function ModalCreate() {
   const [assoInfo, setAssoInfo] = useState({
     name: '',
-    owner: '',
+    token: '',
     description: '',
     siret: '',
     email: '',
     phone: '',
-    address: {
-      street: '',
-      city: '',
-      zipcode: '',
-    },   
+    // address: {
+    street: '',
+    city: '',
+    zipcode: '',
+    // },   
     categories: '',
   });
   const [errors, setErrors] = useState([]);
   const [categories, setCategories] = useState("");
   // console.log('champs remplis =>', assoInfo);
   // console.log('address.street =>', assoInfo.address.street)
-  console.log('Categories', assoInfo.categories);
+  // console.log('Categories', assoInfo.categories);
 
   const dispatch = useDispatch();
   const modal = useSelector((state) => state.associations.value.modalCreateState);
@@ -34,16 +34,16 @@ function ModalCreate() {
   const resetForm = () => {
     setAssoInfo({
       name: '',
-      owner: '',
+      token: '',
       description: '',
       siret: '',
       email: '',
       phone: '',
-      address: {
-        street: '',
-        city: '',
-        zipcode: '',
-      },      
+      // address: {
+      street: '',
+      city: '',
+      zipcode: '',
+      // },      
       categories: '',
     });
     setErrors([]);
@@ -62,35 +62,37 @@ function ModalCreate() {
   // Gestion des changements dans les champs du formulaire
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const addressFields = ['street', 'city', 'zipcode'];
+    // const addressFields = ['street', 'city', 'zipcode'];
     // const [firstKey , secondKey] = 'zipcode'.split('.')
 
     // name : address.street
-    if(addressFields.includes(name) ) {
-      console.log(assoInfo['address']['zipcode'], "assoInfo['address']['zipcode']")
-      console.log(assoInfo['address.zipcode'], "assoInfo['address.zipcode']")
-      setAssoInfo((prevState) => ({ 
-        ...prevState, 
-        address: {
-        ...prevState.address, 
-        [name]: value
-        }
-      }));
-      return 
-    }
+    // if(addressFields.includes(name) ) {
+    //   console.log(assoInfo['address']['zipcode'], "assoInfo['address']['zipcode']")
+    //   console.log(assoInfo['address.zipcode'], "assoInfo['address.zipcode']")
+    //   setAssoInfo((prevState) => ({ 
+    //     ...prevState, 
+    //     address: {
+    //     ...prevState.address, 
+    //     [name]: value
+    //     }
+    //   }));
+    //   return 
+    // }
     console.log(assoInfo)
 
     setAssoInfo((prevState) => ({ ...prevState, [name]: value }));
   };
 
   const handleCategoriesChange = (value) => { 
-    setAssoInfo((prevState) => ({ ...prevState, categories: value.join(',') })); 
+    setAssoInfo((prevState) => ({ ...prevState, categories: value })); 
+    console.log('Value ====>>>>', value);
   };
+  
 
   // Vérifie qu'il n'y a aucun champ manquant
   const validateForm = () => {
-    const requiredFields = ['name', 'description', 'siret', 'email', 'phone'];
-    const addressFields = ['street', 'city', 'zipcode'];
+    const requiredFields = ['name', 'description', 'siret', 'email', 'phone', 'street', 'city', 'zipcode'];
+    // const addressFields = ['street', 'city', 'zipcode'];
     let missingFields = [];
   
     requiredFields.forEach(field => {
@@ -99,18 +101,18 @@ function ModalCreate() {
       }
     });
   
-    addressFields.forEach(field => {
-      if (!assoInfo.address[field] || (typeof assoInfo.address[field] === 'string' && assoInfo.address[field].trim() === '')) {
-        missingFields.push(`address.${field}`);
-      }
-    });
+    // addressFields.forEach(field => {
+    //   if (!assoInfo.address[field] || (typeof assoInfo.address[field] === 'string' && assoInfo.address[field].trim() === '')) {
+    //     missingFields.push(`address.${field}`);
+    //   }
+    // });
   
     // Vérification spéciale pour le champ 'categories'
     if (assoInfo.categories.length === 0) {
       missingFields.push('categories');
     }
   
-    console.log('MissingFields =>', missingFields);
+    // console.log('MissingFields =>', missingFields);
     setErrors(missingFields);
     return missingFields.length === 0;
   };
@@ -120,6 +122,7 @@ function ModalCreate() {
   const handleCancel = () => {
     resetForm();
     dispatch(isModalCreateOpen(false));
+    dispatch(isCreateAsso(true));
   };
 
   // Soumission du formulaire
@@ -129,7 +132,7 @@ function ModalCreate() {
       console.log('Les champs obligatoires ne sont pas remplis');
       return;
     }
-    const categoriesArray = assoInfo.categories.split(',');
+    // const categoriesArray = assoInfo.categories.split(',');
 
     try {
       const response = await fetch('http://localhost:3000/associations/create', {
@@ -137,33 +140,14 @@ function ModalCreate() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...assoInfo,
-          categories: categoriesArray,
-          adresse: {
-            street: assoInfo.address.street,
-            city: assoInfo.address.city,
-            zipcode: assoInfo.address.zipcode,
-          }, 
-          owner: user.firstname,
+          token: user.token,
         }),
       });
       console.log('Body =>', JSON.stringify({
         ...assoInfo,
-        adresse: {
-          street: assoInfo.address.street,
-          city: assoInfo.address.city,
-          zipcode: assoInfo.address.zipcode,
-        }, 
         owner: user.firstname,
       }))
-      // console.log('Payload envoyé :', JSON.stringify({
-      //   ...assoInfo,
-      //   adresse: {
-      //     street: assoInfo.address.street,
-      //     city: assoInfo.address.city,
-      //     zipcode: assoInfo.address.zipcode,
-      //   }, 
-      //   owner: user.firstname,
-      // }));
+     
       console.log('Statut de la réponse :', response.status);
       const data = await response.json();
 
@@ -232,36 +216,36 @@ function ModalCreate() {
           />
           {errors.includes('phone') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
         </label>
-        <label htmlFor="address.street">
+        <label htmlFor="street">
           Adresse :
           <input
             type="text"
-            id="address.street"
+            id="street"
             name="street"
-            value={assoInfo.address.street}
+            value={assoInfo.street}
             onChange={handleChange}
           />
           {errors.includes('street') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
         </label>
-        <label htmlFor="address.city">
+        <label htmlFor="city">
           Ville :
           <input
             type="text"
             id="address.city"
             name="city"
-            value={assoInfo.address.city}
+            value={assoInfo.city}
             onChange={handleChange}
             required
           />
           {errors.includes('city') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
         </label>
-        <label htmlFor="address.zipcode">
+        <label htmlFor="zipcode">
           Code postal :
           <input
             type="text"
-            id="address.zipcode"
+            id="zipcode"
             name="zipcode"
-            value={assoInfo.address.zipcode}
+            value={assoInfo.zipcode}
             onChange={handleChange}
             required
           />

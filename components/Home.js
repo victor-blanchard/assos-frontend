@@ -19,7 +19,7 @@ function Home() {
   // const [isModalVisible, setIsModalVisible] = useState(false);
   const dispatch = useDispatch();
   const modal = useSelector((state) => state.users.value.formState);
-  console.log(modal);
+  // console.log(modal);
   const token = useSelector((state) => state.users.value.token);
   const router = useRouter();
   
@@ -39,7 +39,7 @@ function Home() {
   const handleSign = () => {
     // setIsModalVisible(true)
     dispatch(isModalVisible(true));
-    console.log('open', modal)
+    // console.log('open', modal)
   }
   
   /**
@@ -79,7 +79,7 @@ function Home() {
     const params = new URLSearchParams({ keyword: event }); // Ajoute uniquement le mot-clé
     const queryString = params.toString().replace(/%2C/g, ",");
 
-    fetch(`http://localhost:3000/events/filtered?${queryString}`, {
+    fetch(`http://localhost:3000/events/filtered?categories=${queryString}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
     })
@@ -88,7 +88,9 @@ function Home() {
             if (data.result) {
                 dispatch(addEvents(data.events));
                 console.log(`${data.events.length} events ajoutés au reducer searchResult`);
-                console.log(data);
+                console.log('Données Event ====>', data);
+            } else {
+              console.log('Il n\'y a rien à voir')
             }
         });
 
