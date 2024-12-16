@@ -1,0 +1,143 @@
+.mainContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100vw;
+  height: 82vh;
+  /* background-color: rgb(123, 187, 39); */
+  margin-top: 9vh;
+}
+
+.leftContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin-top: 2%;
+  margin-left: 5%;
+  max-width: 50vw;
+  width: 60vw;
+}
+
+.eventTitle {
+  font-size: 250%;
+}
+
+.eventImage {
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.eventLabelDetails {
+  font-weight: 600;
+  margin-left: 1vw;
+  margin-top: 2vh;
+}
+
+.eventDescription {
+  width: 95%;
+  font-weight: 500;
+  margin-left: 1vw;
+  margin-top: 1vh;
+  flex-wrap: wrap;
+  justify-self: start;
+  text-align: justify;
+}
+
+.rightContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  margin-top: 2%;
+  margin-right: 5%;
+}
+
+.contactButton {
+  margin-top: 4vh;
+  margin-bottom: 4vh;
+  background-color: rgba(158, 92, 225, 0.832);
+  color: white;
+  width: 20vw;
+  height: 5vh;
+  font-size: large;
+}
+
+.associationCard {
+  display: flex;
+  flex-direction: row;
+  /* border: 1px solid rgb(135, 135, 135); */
+  justify-content: start;
+  align-items: start;
+  width: 28vw;
+  padding: 5%;
+  border-radius: 10px;
+  background-color: rgba(214, 214, 214, 0.276);
+  cursor: pointer;
+}
+
+.associationName {
+  margin-left: 5%;
+  margin-top: 2%;
+  font-weight: 500;
+  font-size: 120%;
+}
+
+.associationImage {
+  object-fit: cover;
+  height: auto;
+  border-radius: 8px;
+}
+
+.eventSlot {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 120%;
+  margin-bottom: 2vh;
+}
+
+.eventLabel {
+  display: flex;
+  flex-direction: row;
+  font-weight: 600;
+  margin-right: 1%;
+}
+.eventLocation {
+  margin-left: 4%;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: end;
+}
+.eventTarget {
+  margin-left: 4%;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: end;
+  text-align: end;
+  align-items: end;
+}
+.eventCategories {
+  margin-left: 4%;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  text-align: end;
+  align-items: end;
+}
+
+.eventInfos {
+  padding: 5%;
+  margin-top: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  /* border: 1px solid rgb(115, 115, 115); */
+  width: 28vw;
+  border-radius: 10px;
+  background-color: rgba(214, 214, 214, 0.276);
+}
