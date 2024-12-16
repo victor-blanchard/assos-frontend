@@ -15,6 +15,7 @@ import {
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { login } from "../reducers/users";
 
 function AdminAssociation() {
   const [association, setAssociation] = useState(null);
@@ -37,6 +38,8 @@ function AdminAssociation() {
   const [photoPreview, setPhotoPreview] = useState(null);
   const [showModal, setShowModal] = useState(false); // State for modal visibility
   const [editingEvent, setEditingEvent] = useState(null);
+  const user = useSelector((state) => state.users.value);
+ 
   const categoriesOptions = [
     { label: "Aide à la personne", value: "Aide à la personne" },
     { label: "Sport", value: "Sport" },
@@ -62,7 +65,8 @@ function AdminAssociation() {
 
   ///START - GET THE ASSOCIATION DATA ////
 
-  const token = "J_cPuiEJwgZQw4p2m4Mpvq1r1VzFSbbf";
+  const token = user.token;
+  console.log("token===>" + token);
   const id = "67602d2b2df39615a1822bac";
 
  
