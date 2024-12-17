@@ -30,11 +30,11 @@ function AdminAssociation() {
   const [siret, setSiret] = useState(infosAsso[0].siret);
   const [siretEditable, setSiretEditable] = useState(false);
   const [address, setAddress] = useState(infosAsso[0].address);
-  const [street, setStreet] = useState();
+  const [street, setStreet] = useState(infosAsso[0].address.street);
   const [streetEditable, setStreetEditable] = useState(false);
-  const [zipcode, setZipcode] = useState();
+  const [zipcode, setZipcode] = useState(infosAsso[0].address.zipcode);
   const [zipcodeEditable, setZipcodeEditable] = useState(false);
-  const [city, setCity] = useState();
+  const [city, setCity] = useState(infosAsso[0].address.city);
   const [cityEditable, setCityEditable] = useState(false);
   // const { street, city, zipcode } = address;
   console.log("State address :", address);
@@ -74,7 +74,6 @@ function AdminAssociation() {
 
   const token = user.token;
   console.log("token===>" + token);
-  const id = "67602d2b2df39615a1822bac";
 
   const fetchAssociation = async () => {
     console.log("fetch start");
@@ -85,8 +84,8 @@ function AdminAssociation() {
       );
       const data = await response.json();
 
-      setAssociation(data.association);
-      setAddress(data.association.address);
+      // setAssociation(data.association);
+      // setAddress(data.association.address);
     } catch (error) {
       console.error("Error during the fetch of association:", error);
     }
@@ -133,7 +132,11 @@ function AdminAssociation() {
 
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ token: token }),
+          body: JSON.stringify({ 
+            name: name,
+            siret: siret,
+            token: token, 
+          }),
         },
       );
 
