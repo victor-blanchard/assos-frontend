@@ -5,8 +5,8 @@ const initialState = {
     events: [],
     associations: [],
     filters: {},
-    selectedEventKey: "",
-    selectedAssociationKey: "",
+    selectedEventId: "",
+    selectedAssociationId: "",
   },
 };
 
@@ -32,11 +32,12 @@ export const searchResultSlice = createSlice({
     deleteFilters: (state, action) => {
       state.value.filters = [];
     },
-    addEventKey: (state, action) => {
-      state.value.selectedEventKey = action.payload;
+    addEventId: (state, action) => {
+      state.value.selectedEventId = action.payload;
     },
-    addAssociationKey: (state, action) => {
-      state.value.selectedAssociationKey = action.payload;
+    addAssociationId: (state, action) => {
+      state.value.selectedAssociationId = action.payload;
+      console.log("id de l'asso ajouté au reducer");
     },
   },
 });
@@ -48,7 +49,7 @@ export const {
   deleteAssociations,
   addFilters,
   deleteFilters,
-  addEventKey,
-  addAssociationKey,
+  addEventId,
+  addAssociationId,
 } = searchResultSlice.actions;
 export default searchResultSlice.reducer;

@@ -10,7 +10,7 @@ import {
   faSortUp,
   faSortDown,
   faTrash,
-  faPen, 
+  faPen,
 } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -46,7 +46,7 @@ function AdminAssociation() {
   const [showModal, setShowModal] = useState(false); // State for modal visibility
   const [editingEvent, setEditingEvent] = useState(null);
   const user = useSelector((state) => state.users.value);
- 
+
   const categoriesOptions = [
     { label: "Aide à la personne", value: "Aide à la personne" },
     { label: "Sport", value: "Sport" },
@@ -74,28 +74,41 @@ function AdminAssociation() {
 
   const token = user.token;
   console.log("token===>" + token);
- 
-  
-  // const fetchAssociation = async () => {
-  //   console.log("fetch start");
+  const id = "67602d2b2df39615a1822bac";
 
-  //   try {
-  //     const response = await fetch(`http://localhost:3000/associations/getasso/${token}`);
-  //     const data = await response.json();
-  //     console.log(data)
-  //     // setAssociation(data.association);
-  //     // setAddress(data.association.address)
-     
-  //   } catch (error) {
-  //     console.error("Error during the fetch of association:", error);
-  //   }
-  // };
+  const fetchAssociation = async () => {
+    console.log("fetch start");
 
-  
+    try {
+      const response = await fetch(
+        `http://localhost:3000/associations/getasso/${id}`
+      );
+      const data = await response.json();
 
-  // useEffect(() => {
-  //   !nameEditable && !descriptionEditable && !siretEditable &&!streetEditable&& !zipcodeEditable&& !cityEditable&& fetchAssociation();
-  // }, [id, nameEditable, descriptionEditable, siretEditable, streetEditable, zipcodeEditable, cityEditable]);
+      setAssociation(data.association);
+      setAddress(data.association.address);
+    } catch (error) {
+      console.error("Error during the fetch of association:", error);
+    }
+  };
+
+  useEffect(() => {
+    !nameEditable &&
+      !descriptionEditable &&
+      !siretEditable &&
+      !streetEditable &&
+      !zipcodeEditable &&
+      !cityEditable &&
+      fetchAssociation();
+  }, [
+    id,
+    nameEditable,
+    descriptionEditable,
+    siretEditable,
+    streetEditable,
+    zipcodeEditable,
+    cityEditable,
+  ]);
 
   //// END - GET THE ASSOCIATION DATA ////
 
@@ -103,15 +116,14 @@ function AdminAssociation() {
   //   setStreet(address?.street);
   //   setZipcode(address?.zipcode);
   //   setCity(address?.city);
-  // }, [address]); 
+  // }, [address]);
 
   ////// START - EDIT THE ASSOCIATION DATA ////
-  
+
   const handleAddressChange = (field, value) => {
     setAddress((prevAddress) => ({ ...prevAddress, [field]: value }));
-    console.log('adress =====>', value);
-  };  
-  
+    console.log("adress =====>", value);
+  };
 
   const handleSubmitAsso = async () => {
     console.log("submit clicked avant le try==================================");
@@ -131,9 +143,9 @@ function AdminAssociation() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("DATA +++++++++++++++++++++++++++++++++++++++++++++++",data)
-        //  Update association with the new address
-         setAssociation((prevAssociation) => ({
+
+        // Update association with the new address
+        setAssociation((prevAssociation) => ({
           ...prevAssociation,
           name: name,
           description: description,
@@ -141,31 +153,28 @@ function AdminAssociation() {
           address: address, // Use the updated address state
         }));
 
-
-        const updatedAddress = { 
-          street: address.street, 
-          zipcode: address.zipcode, 
-          city: address.city 
+        const updatedAddress = {
+          street: address.street,
+          zipcode: address.zipcode,
+          city: address.city,
         };
 
-        console.log("Update Address====================>",updatedAddress);
-        setAssociation(data.association); 
-        setAddress(data.association.address); 
-  
+        console.log(updatedAddress);
+        setAssociation(data.association);
+        setAddress(data.association.address);
+
         // Immediately update individual address variables
-        // setStreet(data.association.address.street);
-        // setZipcode(data.association.address.zipcode);
-        // setCity(data.association.address.city); 
-        
-  
-  
-          setNameEditable(false);
-          setDescriptionEditable(false);
-          setSiretEditable(false);
-          setStreetEditable(false);
-          setZipcodeEditable(false);
-          setCityEditable(false);
- 
+        setStreet(data.association.address.street);
+        setZipcode(data.association.address.zipcode);
+        setCity(data.association.address.city);
+
+        setNameEditable(false);
+        setDescriptionEditable(false);
+        setSiretEditable(false);
+        setStreetEditable(false);
+        setZipcodeEditable(false);
+        setCityEditable(false);
+
         console.log("Asso updated:", data);
       } else {
         const errorData = await response.json();
@@ -504,8 +513,8 @@ function AdminAssociation() {
               <input
                 type="text"
                 id="street"
-                defaultValue={address?.street}
-                onChange={(e) => handleAddressChange('street', e.target.value)}
+                defaultValue={association?.address.street}
+                onChange={(e) => handleAddressChange("street", e.target.value)}
               />
             ) : (
               <span>{address?.street}</span>
@@ -526,7 +535,7 @@ function AdminAssociation() {
                 type="text"
                 id="zipcode"
                 defaultValue={address?.zipcode}
-                onChange={(e) => handleAddressChange('zipcode', e.target.value)}
+                onChange={(e) => handleAddressChange("zipcode", e.target.value)}
               />
             ) : (
               <span>{address?.zipcode}</span>
@@ -548,7 +557,7 @@ function AdminAssociation() {
                 type="text"
                 id="city"
                 defaultValue={address?.city}
-                onChange={(e) => handleAddressChange('city', e.target.value)}
+                onChange={(e) => handleAddressChange("city", e.target.value)}
               />
             ) : (
               <span>{address?.city}</span>
@@ -581,11 +590,10 @@ function AdminAssociation() {
 
       {showModal && (
         <div className={styles.modal}>
-    
           <div className={styles.modalContent}>
-          <span className={styles.close} onClick={() => setShowModal(false)}>
-          &times;
-        </span>{" "}
+            <span className={styles.close} onClick={() => setShowModal(false)}>
+              &times;
+            </span>{" "}
             <h2>{editingEvent ? "Edit Event" : "Create New Event"}</h2>
             <form
               onSubmit={

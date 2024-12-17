@@ -10,8 +10,6 @@
   width: 100%;
   z-index: 1;
   background-color: white;
-  margin-bottom: 10px;
-  /* padding: 10px; */
 }
 
 .logo {
@@ -154,15 +152,18 @@
   color: #0093e9;
   box-shadow: 0 8px 25px rgba(0, 147, 233, 0.7), 0 4px 10px rgba(11, 50, 94, 0.5);
   transform: translateY(-2px);
+  background-color: none;
   cursor: pointer;
+  border-radius: 8px;
 }
 
 .contactIcon {
   color: #0093e9;
+  /* background-color: #0093e9; */
 }
 
 .contactIcon:hover {
-  color: #cacaca;
+  
   box-shadow: 0 8px 25px rgba(0, 147, 233, 0.7), 0 4px 10px rgba(11, 50, 94, 0.5);
   transform: translateY(-2px);
   cursor: pointer;
@@ -171,6 +172,7 @@
 .calendarIcon {
   color: #0093e9;
 }
+
 
 .calendarIcon:hover {
   box-shadow: 0 8px 25px rgba(0, 147, 233, 0.7), 0 4px 10px rgba(11, 50, 94, 0.5);
@@ -192,7 +194,6 @@
   margin: 10px;
   border-bottom: 1px solid #0093e9;
   font-style: italic;
-
 }
 
 .infoSession {

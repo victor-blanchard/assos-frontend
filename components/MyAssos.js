@@ -4,9 +4,11 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Image from 'next/image';
+import { useRouter } from "next/router";
 
 
 function MyAssos() {
+    const router = useRouter();
 
     const associations = [
         {
@@ -23,6 +25,10 @@ function MyAssos() {
         },
     ];
 
+    // Fonction pour rediriger à la page de l'association
+    const handleClick = (link) => {
+        router.push('/public_association');
+    };
 
     return (
 
@@ -32,31 +38,30 @@ function MyAssos() {
             </div>
             <div className={styles.rightSection}>
                 <h1 className={styles.title}>Mes Associations</h1>
+                <div className={styles.container}>
 
-                    {associations.map((asso, index) => (
-                        
-                        <div key={index} className={styles.associationBox}>
-                                <Image
-                                    src='/asso.jpg'
-                                    alt="image d'association"
-                                    className={styles.myAssosImage}
-                                    width={200}
-                                    height={150}
-                                />
-                                
-                             <h3 className={styles.myAssosTitle}>Association Solidaire</h3>
-                                
-                            
-                            <div className={styles.myAssosItem}></div>
+                    {associations.map((public_association, index) => (
+
+                        <div key={index} className={styles.associationBox} onClick={() => handleClick(public_association)}>
+
+                            <Image
+                                src='/asso.jpg'
+                                alt="image d'association"
+                                className={styles.myAssosImage}
+                                width={200}
+                                height={150}
+                            />
+
+                            <h3 className={styles.myAssosTitle}>Association Solidaire</h3>
+
+
+
                         </div>
                     ))}
-                    </div>
-            
+                </div>
             </div>
-            );
-            }
+        </div>
+    );
+}
 
-
-
-
-            export default MyAssos;
+export default MyAssos;

@@ -1,114 +1,66 @@
-import styles from "../styles/UserProfil.module.css";
-import Image from "next/image";
-import { useSelector, useDispatch } from "react-redux";
-import AssociationCard from "./AssociationCards";
-import { useState } from "react";
+import styles from '../styles/UserProfil.module.css';
+import Image from 'next/image';
+import { useSelector, useDispatch } from 'react-redux';
+import AssociationCard from './AssociationCards';
+import Link from "next/link";
+import { useRouter } from "next/router";
+
 
 function UserProfil() {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.users.value);
-  const associations = useSelector((state) => state.associations.value);
-  const token = user.token;
-  const titleCards = [
-    {
-      title: "Mes associations",
-      description: "Retrouvez toutes les associations qui vous interessent.",
-    },
-    {
-      title: "Mes evenements à venir",
-      description:
-        "Les evenementd à venir de vos associations préferées au même endroit.",
-    },
-    { title: "Mes notifications", description: "Vos événements programmés." },
-    // {title: 'Mes notifications', description: 'Vos événements programmés.'},
-  ];
-  console.log("User session =>", token);
+  const router = useRouter();
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.users.value);
+    const associations = useSelector((state) => state.associations.value);
+    const token = user.token;
+    const titleCards = [
+        {title: 'Mes associations', description: 'Retrouvez toutes les associations qui vous interessent.', route: '/my_assos'}, 
+        {title: 'Mes evenements à venir', description: 'Les evenementd à venir de vos associations préferées au même endroit.', route:'/my_events'}, 
+        {title: 'Mes notifications', description: 'Vos événements programmés.', route:'/notification'}, 
+        // {title: 'Mes notifications', description: 'Vos événements programmés.'},  
+    ];
+    console.log('User session =>', token);
 
-  // Modal için state
-  const [showModal, setShowModal] = useState(false);
-  const [email, setEmail] = useState(user.email);
-  const [password, setPassword] = useState(user.password);
+    const handleCardClick = (route) => {
+      // console.log('click', link);
+      if (route) {
+          router.push(route); // Redirection vers l'URL spécifiée
+      }
+      
+  };
 
-  const userProfil = (
-    <div>
-      <div className={styles.userImgProfil}>
-        <Image
-          src="/user_profil.jpg"
-          width={200}
-          height={200}
-          alt="asso"
-          className={styles.imgProfil}
-        />
-      </div>
-      <div>
-        <h2>Profil de {user.username}</h2>
-        <p>Adresse mail: {user.email}</p>
-        <button onClick={() => setShowModal(true)}>Modifier Profil</button>{" "}
-        {/* Button to open modal*/}
-      </div>
-    </div>
-  );
-
-  const cards = titleCards.map((data, i) => (
-    <AssociationCard
-      key={i}
-      title={data.title}
-      description={data.description || "Description non disponible."}
+const cards = titleCards.map((data, i) => (
+  <AssociationCard 
+        key={i} 
+        title={data.title} 
+        description={data.description || 'Description non disponible.'} 
+        onClick={() => handleCardClick(data.route)} // Passez le lien à la fonction onClick
+        
     />
-  ));
+  
 
-  // Modal content
-  const modalContent = (
-    <div className={styles.modal}>
-      <div className={styles.modalContent}>
-        <span className={styles.close} onClick={() => setShowModal(false)}>
-          &times;
-        </span>{" "}
-        {/* Button to close modal */}
-        <h2>Modifier Profil</h2>
-        <form>
-          <div>
-            {/* <label htmlFor="firstName">Prénom</label>
-            <input
-              type="text"
-              id="firstName"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-            /> */}
-          </div>
-          <div>
-            {/* <label htmlFor="lastName">Nom de Famille</label>
-            <input
-              type="text"
-              id="lastName"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            /> */}
-          </div>
-          <div>
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor="password">Mot de passe</label>
-            <input
-              type="text"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <button type="submit">Enregistrer les modifications</button>
-        </form>
-      </div>
-    </div>
-  );
+    
+));
 
+    
+    const userProfil = (
+        <div>
+            <div className={styles.userImgProfil}>
+                <Image  
+                    src="/user_profil.jpg"
+                    width={200}
+                    height={200}
+                    alt="asso"
+                    className={styles.imgProfil}
+                />
+            </div>
+            <div>
+                <h2>Profil de {user.username}</h2>
+                <p>Adresse mail: {user.email}</p>
+            </div>
+        </div>
+        )
+
+        
   return (
     <main className={styles.mainContainer}>
       <h1>Espace personnel</h1>

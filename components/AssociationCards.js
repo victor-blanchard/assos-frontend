@@ -3,7 +3,9 @@ import Image from 'next/image';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 
-function AssociationCard({ title, description }) {
+
+
+function AssociationCard({ title, description, onClick }) {
     const [dataAsso, setDataAsso] = useState([])
 
     useEffect(() => {
@@ -26,7 +28,7 @@ function AssociationCard({ title, description }) {
     }, [])
 
     return (
-        <article className={styles.assoCard}>
+        <article className={styles.assoCard} onClick={onClick} style={{ cursor: 'pointer' }}>
             <figure className={styles.assCardFigure}>
                 <Image 
                     src="/colaboration.webp"
@@ -36,7 +38,7 @@ function AssociationCard({ title, description }) {
                     className={styles.assoCardImg}
                 />
             </figure>
-            <div className={styles.assoCardTxt}>
+            <div className={styles.assoCardTxt} >
                 <h4>{title}</h4>
                 <p>{description}</p>
             </div>

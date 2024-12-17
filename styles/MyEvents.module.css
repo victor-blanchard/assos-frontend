@@ -7,23 +7,25 @@
   
 
   .leftSection {
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
+    background-color: #f6cdea;
+   
+    /* opacity: 80%; */
     padding: 20px;
   }
-  
+
   .homeLink {
-    text-decoration: none;
+    /* text-decoration: none; */
     color: rgb(15, 64, 113);
     font-size: 18px;
     font-weight: bold;
     transition: color 0.2s ease-in-out;
     margin-bottom: 520px;
   }
-  
+
   .homeLink:hover {
     color: #e0e0e0;
   }
@@ -34,8 +36,9 @@
   
   .rightSection {
     flex: 3;
-    padding: 40px;
-    background-color: white;
+    /* padding: 40px; */
+    /* background-color: white; */
+    background-color: #f0edfe;
     overflow-y: auto;
     border-radius: 1px solid black;
   }
@@ -43,31 +46,62 @@
   .title {
     font-size: 28px;
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: -5px;
+    position: relative;
+    top: -50px;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+
   }
   
   .eventBox {
-    display: flexbox; 
-    justify-content: space-between; 
+    display: flex; 
+    margin-left: 30px;
+    padding-right: 10px;
+    padding-left: 10px;
+    flex-direction: row-reverse;
+    align-items: center;
+    width: 90%;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    background-color: #f1f1f1;
+    height: 150px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #555;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    /* background-color: #f6cdea; */
+    /* background-color: #f0edfe; */
+    /* transition: transform 0.2s ease, box-shadow 0.2s ease; */
+    cursor: pointer;
+  }
+  .eventImage {
+    object-fit: cover;
   }
 
-  .eventImage {
-    margin-left: 900px;
-  }
 
   .eventDetails {
-    margin-top: -110px;
+    /* margin-top: 10px; */
     color: #513b81;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    
+   
   }
 
-  .eventDetails:hover {
+  .eventBox:hover {
     transform: translateY(-2px);
     box-shadow: 0px 4px 8px rgba(53, 55, 54, 0.2);
   }
-  .notificationItem {
+
+  .eventDate {
+    /* margin-top: 100px; */
+  }
+  /* .notificationItem {
     background-color: #f1f1f1;
     height: 50px;
     border: 1px solid #ddd;
@@ -78,9 +112,9 @@
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     
-  }
-  
+  } */
+/*   
   .notificationItem:hover {
     transform: translateY(-2px);
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  }
+  } */

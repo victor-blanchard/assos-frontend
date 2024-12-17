@@ -46,7 +46,7 @@ function Header() {
   // let events = useSelector((state) => state.searchResults?.value.events);
 
   const handleSearch = () => {
-    dispatch(addFilters({ keyword: keyword, location: location }));
+    dispatch(addFilters({ keyword: keyword, location: location, categories: "" }));
 
     const params = new URLSearchParams(
       Object.fromEntries(
@@ -102,7 +102,7 @@ function Header() {
   };
 
   const handleLogout = () => {
-    router.push('/');
+    router.push("/");
     dispatch(logout());
     dispatch(logoutAsso());
     console.log("Déconnexion user : => ", token);
@@ -121,8 +121,8 @@ function Header() {
   };
 
   const handleMyasso = () => {
-    console.log("Mes association")
-  }
+    console.log("Mes association");
+  };
 
   const handleCreateAsso = () => {
     console.log("click");
@@ -147,7 +147,7 @@ function Header() {
           <h3 className={styles.txtWelcome}>Bienvenue {user.username} </h3>
           {isAssociationOwner  && !isExistingAssociaiton && (
             <p onClick={handleCreateAsso} className={styles.createAssoMsg}>
-              Creez votre association <FontAwesomeIcon icon={faPlus} color={"blue"} />
+             J'enregistre mon association 
             </p>
           )}
         </div>
@@ -158,17 +158,21 @@ function Header() {
             className={`${styles.headerIcon} ${styles.calendarIcon}`}
             icon={faCalendarDays}
           />
-          {isAssociationOwner ? <FontAwesomeIcon
-            title="Contact"
-            onClick={handleContact}
-            className={`${styles.headerIcon} ${styles.contactIcon}`}
-            icon={faAddressCard}
-          />: <FontAwesomeIcon 
-                title="Mes associations"
-                onClick={handleMyasso}
-                className={`${styles.headerIcon} ${styles.contactIcon}`}
-                icon={faUsers}
-                 />}
+          {isAssociationOwner ? (
+            <FontAwesomeIcon
+              title="Contact"
+              onClick={handleContact}
+              className={`${styles.headerIcon} ${styles.contactIcon}`}
+              icon={faAddressCard}
+            />
+          ) : (
+            <FontAwesomeIcon
+              title="Mes associations"
+              onClick={handleMyasso}
+              className={`${styles.headerIcon} ${styles.contactIcon}`}
+              icon={faUsers}
+            />
+          )}
           <FontAwesomeIcon
             title="Notification"
             onClick={handleNotification}
@@ -186,6 +190,12 @@ function Header() {
   //     <FontAwesomeIcon className={styles.logout} icon={faRightFromBracket} />
   //     </div>
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.logoAndSearchContainer}>
@@ -199,6 +209,7 @@ function Header() {
             type="text"
             onChange={(e) => setKeyword(e.target.value)}
             value={keyword}
+            onKeyDown={handleKeyDown}
           />
           <input
             className={styles.searchLocation}
@@ -206,6 +217,7 @@ function Header() {
             type="text"
             onChange={(e) => setLocation(e.target.value)}
             value={location}
+            onKeyDown={handleKeyDown}
             // value={currentPlace}
             // onChange={(e) => setcurrentPlace(e.target.value)}
           />

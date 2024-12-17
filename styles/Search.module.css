@@ -4,26 +4,25 @@
   flex-direction: column;
   justify-content: top;
   align-items: left;
-  height: 100vh;
-  margin-top: 3rem;
+  height: 84vh;
   flex-grow: 1;
 }
 
 .searchHeaders {
-  margin-top: 3%;
+  margin-top: 1%;
   text-align: center;
 }
 
-/* .searchTitle {  
- 
-  } */
+.searchTitle {
+  margin-top: 0%;
+  margin-bottom: 1%;
+}
 
 .searchTabs {
   display: flex;
   list-style-type: none;
   flex-direction: row;
   justify-content: center;
-  margin-left: 0px;
   width: 100%;
 }
 
@@ -42,14 +41,12 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 1%;
-  margin-top: 1%;
 
   /* background-color: #bababa; */
   border-radius: 5%;
 }
 
 .filterbox {
-  /* border: 1px solid #d8d8d8; */
   border-radius: 10px;
   display: flex;
   flex-direction: row;
@@ -59,66 +56,22 @@
 }
 
 .openOnlyBox {
-  /* border: 1px solid #d8d8d8; */
   border-radius: 10px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   margin-left: 10px;
+  margin-right: 10px;
   font-size: 10px;
-}
-.openOnlyBox {
-  /* border: 1px solid #d8d8d8; */
-  border-radius: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin-left: 10px;
-  font-size: 10px;
-}
-
-.resultPageAndMap {
-  display: flex;
-  flex-direction: row;
-  align-items: top;
-  justify-content: space-around;
-}
-
-.map {
-  margin-top: 20px;
-  padding: 10px;
-  width: 30%;
-  height: 100%;
-  border: 1px solid #d8d8d8;
-}
-
-/* .resultPageContainer {
-  padding: 10px;
-  border: 1px solid #d8d8d8;
-
-  margin-top: 20px;
-  height: 500px;
-  overflow-y: auto;
-} */
-
-.resultDefandIcons {
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .resultContainer {
   display: flex;
   flex-direction: column;
-  border: 1px solid #d8d8d8;
-  padding: 10px;
   width: 100%;
-  max-height: 75vh;
-  margin-bottom: 10px;
+  max-height: 58vh;
+  padding-bottom: 10px;
   overflow-y: auto;
 }
 
@@ -172,9 +125,8 @@
   background-color: rgba(214, 214, 214, 0.151);
 }
 
-.card.hover {
-  cursor: ;
-}
+/* .card.hover {
+} */
 
 .cardName {
   display: flex;
