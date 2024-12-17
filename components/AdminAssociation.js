@@ -454,15 +454,15 @@ function AdminAssociation() {
               />
             )}
           </div>
-          <p className={styles.assoTitle}>Nom de l'association</p>
+          <h2>{name}</h2>
           <div className={styles.assoEditInput}>
-            <h1 htmlFor="name">{name}</h1>
+           
             {nameEditable ? (
               <input
                 type="text"
                 id="name"
                 onChange={(e) => setName(e.target.value)}
-                defaultValue={name}
+                // defaultValue={name}
               />
             ) : (
               <span>{name}</span>
@@ -477,7 +477,7 @@ function AdminAssociation() {
             }
           </div>
           <div className={styles.assoEditInput}>
-            <label htmlFor="description"className={styles.assoTitle}>Activity Description</label>
+            <label htmlFor="description"className={styles.assoTitle}>Description</label>
             {descriptionEditable ? (
               <textarea
                 id="description"
@@ -759,11 +759,11 @@ function AdminAssociation() {
       )}
 
       <div className={styles.eventsSection}>
-        <h1>Events</h1>
+        <h2>Evenement</h2>
         <button className={styles.eventButton} onClick={handleCreateEvent}>
-          Create
+          Créer un évenement
         </button>
-
+        <div className={styles.tableContainer}>
         <table className={styles.tableOfEvents}>
           <thead>
             <tr>
@@ -868,6 +868,7 @@ function AdminAssociation() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

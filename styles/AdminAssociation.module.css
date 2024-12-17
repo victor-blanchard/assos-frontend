@@ -1,21 +1,32 @@
 .adminMain {   
-    margin-top: 60px;
+    /* margin-top: 60px; */
     display: flex;
-    height: 100vh;
-    height: 100vh; 
-    overflow-y: auto; 
-    padding: 10px; 
+    width: 100%;
+    height: auto; 
+    
+   
 }
 .identitySection {
-  border: 1px solid #d8d8d8;
+  border: 1px solid #f1f1f1;
   padding: 10px; 
+  width: 30%;
+  height: auto;
+  /* background-color: #d8d8d8; */
+  background-color: #f0edfe;
 
+}
+
+.identyProfil {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .eventsSection{
-
+width: 70%;
 border: 1px solid #d8d8d8;
 padding: 10px; 
+height: auto;
 }
 
 .eventButton{
@@ -30,12 +41,23 @@ padding: 10px;
     white-space: nowrap; 
     width: 50px;
     height: 30px;
+    font-size: 10px;
 
 } 
-
+.tableContainer {
+  width: 100%;
+  height: auto;
+  overflow: auto;
+  /* overflow-x: auto; */
+  scrollbar-color: #0093e9 rgb(249, 249, 249) ;
+  scrollbar-width: thin;
+  font-size: 12px;
+  background-color:white;
+}
 .tableOfEvents{
     border: 1px solid #d8d8d8;
     border-collapse: collapse; 
+   
 
 }
 
@@ -108,8 +130,8 @@ padding: 10px;
     padding: 4spx;
     cursor: pointer;
     white-space: nowrap; 
-    width: 50px;
-    height: 30px;
+    /* width: 50px;
+    height: 30px; */
 
   }
 
@@ -119,11 +141,13 @@ padding: 10px;
     justify-content: space-between;
     align-items: center;
     height: auto;
-     border-bottom: 1px solid #d8d8d8;
-    margin: 10px;
-    
-    
+    border-bottom: 1px solid #d8d8d8;
+    margin: 10px;   
 
+  }
+
+  .assoEditInput h2 {
+    font-size: 1rem;
   }
 
   .assoTitle{
