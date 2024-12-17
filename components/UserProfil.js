@@ -57,7 +57,7 @@ function UserProfil() {
     />
   ));
 
-  // Modal içeriği
+  // Modal content
   const modalContent = (
     <div className={styles.modal}>
       <div className={styles.modalContent}>
