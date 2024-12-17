@@ -76,6 +76,7 @@ function Event() {
           width={"35vw"}
           className={styles.eventImage}
           preview={false}
+          alt="image de l'événement"
         />
         <div className={styles.eventLabelDetails}>Détails</div>
         <div className={styles.eventDescription}>
@@ -101,6 +102,7 @@ function Event() {
             height={70}
             className={styles.associationImage}
             preview={false}
+            alt="image de l'association"
           />
         </div>
         <div className={styles.eventInfos}>

@@ -122,6 +122,7 @@ function PublicAssociation() {
           height={200}
           className={styles.associationImage}
           preview={false}
+          alt="image de l'association"
         />
         <div className={styles.assoDescriptionLabel}>Description</div>
         <div className={styles.assoDescription}>

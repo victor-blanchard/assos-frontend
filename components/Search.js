@@ -42,25 +42,26 @@ const EventSearchContent = () => {
   const events = useSelector((state) => state.searchResults.value.events);
   const eventSelectedId = useSelector((state) => state.searchResults.value.selectedEventId);
   const filters = useSelector((state) => state.searchResults.value.filters);
+  const [keyword, setKeyword] = useState("");
+  const [location, setLocation] = useState("");
+  const [date, setDate] = useState("");
+  const [categories, setCategories] = useState(null);
+  const [target, setTarget] = useState(null);
+  const [openOnly, setOpenOnly] = useState(true);
 
   useEffect(() => {
     if (filters?.keyword?.length > 0) {
-      console.log("nouveau filtre");
-      console.log(filters.keyword);
       setKeyword(filters.keyword);
     }
 
     if (filters?.location?.length > 0) {
-      console.log("nouveau lcoation");
       setLocation(filters.location);
     }
 
     if (filters?.categories?.length > 0) {
-      console.log("nouveau coategories");
-      console.log(filters.categories);
       setCategories(filters.categories);
     }
-  }, []);
+  }, [filters]);
 
   const eventsToDisplay = events.map((data, i) => {
     const categoriesToDisplay = data.categories.map((data, i) => {
@@ -84,6 +85,7 @@ const EventSearchContent = () => {
           src="https://secure.meetupstatic.com/photos/event/2/1/7/600_525000535.webp?w=750"
           width={180}
           height={100}
+          alt="image de l'événement"
           className={styles.cardImage}
         />
         <div className={styles.cardInfos}>
@@ -105,13 +107,6 @@ const EventSearchContent = () => {
   });
 
   const dispatch = useDispatch();
-
-  const [keyword, setKeyword] = useState("");
-  const [location, setLocation] = useState("");
-  const [date, setDate] = useState("");
-  const [categories, setCategories] = useState("");
-  const [target, setTarget] = useState("");
-  const [openOnly, setOpenOnly] = useState(true);
 
   const handleSearch = () => {
     dispatch(
@@ -178,6 +173,7 @@ const EventSearchContent = () => {
           className={styles.filterbox}
           placeholder="Mot clé"
           value={keyword}
+          allowClear="true"
           onChange={(e) => setKeyword(e.target.value)}
           onKeyDown={handleKeyDown}
         />
@@ -185,6 +181,7 @@ const EventSearchContent = () => {
           className={styles.filterbox}
           placeholder="Lieu"
           value={location}
+          allowClear="true"
           onChange={(e) => setLocation(e.target.value)}
           onKeyDown={handleKeyDown}
         />
@@ -201,6 +198,7 @@ const EventSearchContent = () => {
           placeholder="Categories"
           // defaultValue={categories}
           options={categoriesOptions}
+          value={[]}
           onChange={(value) => {
             setCategories(value.join(","));
           }}

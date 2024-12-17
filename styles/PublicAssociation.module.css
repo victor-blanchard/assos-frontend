@@ -2,13 +2,43 @@
   display: flex;
   flex-direction: row;
   width: 100vw;
-  height: 80vh;
+  height: 82vh;
   overflow-y: auto;
-  background-color: #0093e9;
+  padding-top: 2vh;
+  background-color: #f6f7f8;
 }
 .identitySection {
   border: 1px solid #d8d8d8;
   padding: 10px;
+}
+
+.associationImage {
+  object-fit: cover;
+  width: 80%;
+  height: auto;
+  border-radius: 8px;
+  margin: 0;
+}
+
+.assoDescriptionLabel {
+  font-weight: 700;
+  margin-top: 2vh;
+}
+
+.assoDescription {
+  width: 80%;
+  font-weight: 500;
+  margin-top: 1vh;
+  flex-wrap: wrap;
+  justify-self: start;
+  text-align: justify;
+}
+
+.assoName {
+  font-size: 200%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  font-weight: 500;
 }
 
 .eventsSection {
@@ -129,7 +159,6 @@
   display: flex;
   flex-direction: column;
   align-items: start;
-  margin-top: 2%;
   margin-left: 2%;
   max-width: 50vw;
   width: 40vw;

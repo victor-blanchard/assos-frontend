@@ -137,7 +137,7 @@ function Home() {
             <h2>
               Découvrez La Sauce, votre plateforme pour trouver des activités près de chez vous{" "}
             </h2>
-            <p>
+            <p className={styles.description}>
               La Sauce met en relation les associations locales et les particuliers en quête
               d'activités enrichissantes. Explorez une large gamme d'événements, ateliers, et
               sorties organisés par des associations proches de vous. Que vous cherchiez à
@@ -154,11 +154,11 @@ function Home() {
           <ModalCreate /> */}
           <div className={styles.divImg}>
             <Image
-              src="/solidarité.jpeg"
+              src="/home.jpg"
               className={styles.imgAccueil}
               alt="image d'accueil"
-              width={120}
-              height={120}
+              width={2000}
+              height={2000}
             />
           </div>
         </section>
