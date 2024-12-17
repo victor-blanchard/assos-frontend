@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import * as emailjs from "emailjs-com";
 import styles from "../styles/Contact.module.css";
 
+
 function Contact() {
+   
 
    useEffect(() => {
       emailjs.init({
@@ -33,7 +35,7 @@ function Contact() {
                 "service_vcekf98",
                 "template_3h6k34a",
                 e.target,
-                "VJDA6kgRI7pMWQtp7",
+                "VJDA6kgRI7pMWQtp7", 
             )
             .then(
                 (result) => {
