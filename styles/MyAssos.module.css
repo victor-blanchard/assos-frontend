@@ -1,7 +1,8 @@
 .main {
     display: flex;
     height: 100vh;
-    background-color: #f9f9f9;
+    
+
     font-family: Arial, sans-serif;
   }
   
@@ -13,10 +14,12 @@
     align-items: center;
     color: white;
     padding: 20px;
+    background-color: #f4a1dc;
+    /* opacity: 80%; */
   }
   
   .homeLink {
-    text-decoration: none;
+    /* text-decoration: none; */
     color: rgb(15, 64, 113);
     font-size: 18px;
     font-weight: bold;
@@ -39,14 +42,14 @@
   .title {
     font-size: 28px;
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: -5px;
+    position: relative;
+    top: -50px;
+
   }
   
   .associationBox {
-    display: flexbox; 
-    justify-content: space-between; 
     background-color: #f1f1f1;
-    width: 300Px;
     height: 200px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -56,11 +59,9 @@
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     text-align: center;
-  padding: 20px;
-  width: 45%; /* Chaque bloc occupe 45% de la largeur */
-  justify-content: space-between; /* Espace entre les blocs */
-  gap: 20px; /* Ajoute de l'espace entre les blocs */
-  padding: 20px;
+    width: 30%; /* Chaque bloc occupe 45% de la largeur */
+    justify-content: space-between; /* Espace entre les blocs */
+  /* gap: 20px; Ajoute de l'espace entre les blocs */
 
   }
 
@@ -82,4 +83,11 @@
   .associationBox:hover {
     transform: translateY(-2px);
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .container {
+display: flex; 
+flex-direction: row;
+flex-wrap: wrap;
+gap: 20px;
   }
