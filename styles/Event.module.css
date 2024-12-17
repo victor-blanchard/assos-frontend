@@ -4,23 +4,23 @@
   align-items: flex-start;
   justify-content: space-between;
   width: 100vw;
-  height: 82vh;
+  height: 80vh;
   /* background-color: rgb(123, 187, 39); */
-  margin-top: 9vh;
+  margin-top: 2vh;
 }
 
 .leftContainer {
   display: flex;
   flex-direction: column;
   align-items: start;
-  margin-top: 2%;
-  margin-left: 5%;
-  max-width: 50vw;
+  margin-left: 2%;
   width: 60vw;
 }
 
 .eventTitle {
-  font-size: 250%;
+  font-size: 200%;
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
 
 .eventImage {
@@ -31,15 +31,13 @@
 }
 
 .eventLabelDetails {
-  font-weight: 600;
-  margin-left: 1vw;
+  font-weight: 700;
   margin-top: 2vh;
 }
 
 .eventDescription {
   width: 95%;
   font-weight: 500;
-  margin-left: 1vw;
   margin-top: 1vh;
   flex-wrap: wrap;
   justify-self: start;
@@ -50,25 +48,25 @@
   display: flex;
   flex-direction: column;
   align-items: end;
-  margin-top: 2%;
-  margin-right: 5%;
+  margin-right: 2%;
 }
 
 .contactButton {
-  margin-top: 4vh;
-  margin-bottom: 4vh;
-  background-color: rgba(158, 92, 225, 0.832);
+  margin-top: 10%;
+  margin-bottom: 10%;
+  background-color: #0093ea;
   color: white;
-  width: 20vw;
+  width: 17vw;
   height: 5vh;
   font-size: large;
+  display: no;
 }
 
 .associationCard {
   display: flex;
   flex-direction: row;
   /* border: 1px solid rgb(135, 135, 135); */
-  justify-content: start;
+  justify-content: space-between;
   align-items: start;
   width: 28vw;
   padding: 5%;
@@ -78,7 +76,6 @@
 }
 
 .associationName {
-  margin-left: 5%;
   margin-top: 2%;
   font-weight: 500;
   font-size: 120%;
@@ -95,7 +92,7 @@
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  font-size: 120%;
+  font-size: 100%;
   margin-bottom: 2vh;
 }
 

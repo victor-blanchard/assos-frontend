@@ -16,8 +16,8 @@ import {
   deleteFilters,
   addAssociations,
   deleteAssociations,
-  addEventKey,
-  addAssociationKey,
+  addEventId,
+  addAssociationId,
 } from "../reducers/searchResults";
 const categoriesOptions = [
   { label: "Aide à la personne", value: "Aide à la personne" },
@@ -40,7 +40,27 @@ const publicOptions = [
 const EventSearchContent = () => {
   const router = useRouter();
   const events = useSelector((state) => state.searchResults.value.events);
-  const eventSelectedKey = useSelector((state) => state.searchResults.value.selectedEventKey);
+  const eventSelectedId = useSelector((state) => state.searchResults.value.selectedEventId);
+  const filters = useSelector((state) => state.searchResults.value.filters);
+
+  useEffect(() => {
+    if (filters?.keyword?.length > 0) {
+      console.log("nouveau filtre");
+      console.log(filters.keyword);
+      setKeyword(filters.keyword);
+    }
+
+    if (filters?.location?.length > 0) {
+      console.log("nouveau lcoation");
+      setLocation(filters.location);
+    }
+
+    if (filters?.categories?.length > 0) {
+      console.log("nouveau coategories");
+      console.log(filters.categories);
+      setCategories(filters.categories);
+    }
+  }, []);
 
   const eventsToDisplay = events.map((data, i) => {
     const categoriesToDisplay = data.categories.map((data, i) => {
@@ -54,7 +74,12 @@ const EventSearchContent = () => {
     }).format(new Date(data.startDate));
 
     return (
-      <div onClick={() => handleEventDisplay(i)} key={i} className={styles.card}>
+      <div
+        onClick={() => handleEventDisplay(data._id)}
+        key={i}
+        id={data._id}
+        className={styles.card}
+      >
         <Image
           src="https://secure.meetupstatic.com/photos/event/2/1/7/600_525000535.webp?w=750"
           width={180}
@@ -128,26 +153,16 @@ const EventSearchContent = () => {
       });
   };
 
-  const handleEventDisplay = (i) => {
-    console.log(`event selected${i}`);
-    dispatch(addEventKey(i));
-    console.log({ eventSelectedKey });
+  const handleEventDisplay = (id) => {
+    console.log(`event selected${id}`);
+    dispatch(addEventId(id));
+    console.log({ eventSelectedId });
     router.push("/event"); //gere la navigation au click vers la page search en évitant la page blanche
   };
 
   const openOnlyChange = (openOnly) => {
     console.log("Display open events only:", openOnly);
   };
-  // const locationReducer = useSelector((state) => state.searchResults.value.filters.location);
-  // let locationValue;
-  // if (locationReducer) {
-  //   locationValue = location;
-  // }
-  // const keywordReducer = useSelector((state) => state.searchResults.value.filters.keyword);
-  // let keywordValue;
-  // if (keywordReducer) {
-  //   keywordValue = keyword;
-  // }
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -169,6 +184,7 @@ const EventSearchContent = () => {
         <Input
           className={styles.filterbox}
           placeholder="Lieu"
+          value={location}
           onChange={(e) => setLocation(e.target.value)}
           onKeyDown={handleKeyDown}
         />
@@ -183,7 +199,7 @@ const EventSearchContent = () => {
           allowClear
           style={{ width: "100%" }}
           placeholder="Categories"
-          defaultValue={[]}
+          // defaultValue={categories}
           options={categoriesOptions}
           onChange={(value) => {
             setCategories(value.join(","));
@@ -200,7 +216,6 @@ const EventSearchContent = () => {
           onChange={(value) => setTarget(value.join(","))}
         />
 
-        
         <div className={styles.openOnlyBox}>
           <div className={styles.openOnlyText}> Inscriptions ouvertes uniquement </div>
           <Switch onChange={(checked) => setOpenOnly(checked)} defaultChecked />
@@ -217,19 +232,18 @@ const EventSearchContent = () => {
 };
 const AssociationSearchContent = () => {
   const router = useRouter();
-  const associationSelectedKey = useSelector(
-    (state) => state.searchResults.value.associationSelectedKey
+  const associationSelectedId = useSelector(
+    (state) => state.searchResults.value.associationSelectedId
   );
   const associations = useSelector((state) => state.searchResults.value.associations);
 
-  const handleAssociationDisplay = (i) => {
-    console.log(`event selected${i}`);
-    dispatch(addEventKey(i));
-    console.log({ associationSelectedKey });
-    router.push("/association"); //gere la navigation au click vers la page search en évitant la page blanche
+  const handleAssociationDisplay = (id) => {
+    dispatch(addAssociationId(id));
+    console.log({ associationSelectedId });
+    router.push("/public_association"); //gere la navigation au click vers la page search en évitant la page blanche
   };
 
-  const eventsToDisplay = associations.map((data, i) => {
+  const associationsToDisplay = associations.map((data, i) => {
     const categoriesToDisplay = data.categories.map((data, i) => {
       return <div className={styles.cardCategory}>{data}</div>;
     });
@@ -246,7 +260,12 @@ const AssociationSearchContent = () => {
     }
 
     return (
-      <div onClick={() => handleAssociationDisplay(i)} key={i} className={styles.card}>
+      <div
+        onClick={() => handleAssociationDisplay(data._id)}
+        id={data._id}
+        key={i}
+        className={styles.card}
+      >
         <Image
           src="https://secure.meetupstatic.com/photos/event/2/1/7/600_525000535.webp?w=750"
           width={180}
@@ -314,17 +333,6 @@ const AssociationSearchContent = () => {
     }
   };
 
-  // const locationReducer = useSelector((state) => state.searchResults.value.filters.location);
-  // let locationValue;
-  // if (locationReducer) {
-  //   locationValue = location;
-  // }
-  // const keywordReducer = useSelector((state) => state.searchResults.value.filters.keyword);
-  // let keywordValue;
-  // if (keywordReducer) {
-  //   keywordValue = keyword;
-  // }
-
   return (
     <div>
       <h2 className={styles.searchTitle}>Associations à proximité</h2>
@@ -358,7 +366,7 @@ const AssociationSearchContent = () => {
           </Button>
         </div>
       </div>
-      <div className={styles.resultContainer}>{eventsToDisplay}</div>
+      <div className={styles.resultContainer}>{associationsToDisplay}</div>
 
       {/* <div className={styles.map}></div> */}
     </div>
