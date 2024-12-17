@@ -6,7 +6,7 @@ function Contact() {
 
    useEffect(() => {
       emailjs.init({
-        publicKey: "VJDA6kgRI7pMWQtp7", // EmailJS Public Key'inizi buraya girin
+        publicKey: "VJDA6kgRI7pMWQtp7", // EmailJS Public Key
       });
     }, []);
 
