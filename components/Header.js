@@ -3,8 +3,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { isModalVisible, setFormType, logout } from "../reducers/users";
-import { isModalCreateOpen } from "../reducers/associations";
-import { isCreateAsso } from "../reducers/associations";
+import { isModalCreateOpen, isCreateAsso, getAssoInfo } from "../reducers/associations";
 import Image from "next/image";
 import styles from "../styles/Header.module.css";
 import { Button } from "antd";
@@ -28,6 +27,7 @@ function Header() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
   const token = user.token;
+  console.log('TOKEN ==============>',token)
   const isAssociationOwner = useSelector((state) => state.users.value.isAssociationOwner);
   const isExistingAssociaiton = useSelector((state) => state.associations.value.assosCreate);
 
@@ -72,8 +72,24 @@ function Header() {
     setKeyword("");
     setLocation("");
     router.push("/search"); //gere la navigation au click vers la page search en évitant la page blanche
-    // window.location.href = "/search";
   };
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/associations/getasso/${token}`)
+    .then(response => response.json())
+    .then(data => {
+      if (data.result) {
+        console.log('Avant dispatch =>',data)
+        dispatch(isCreateAsso(true));
+        dispatch(getAssoInfo(data.asso));
+        console.log('Asso de l\'owner',data.asso)
+      } else {
+        dispatch(isCreateAsso(false));
+        console.log('Pas d\'associaition', data)
+      }
+      
+    })
+  }, [])
 
   const handleSignUp = () => {
     dispatch(setFormType("signup"));
@@ -126,8 +142,8 @@ function Header() {
     signSection = (
       <div className={styles.shortcut}>
         <div className={styles.infoSession}>
-          <h3 className={styles.txtWelcome}>Bienvenu {user.username} </h3>
-          {isAssociationOwner && !isExistingAssociaiton && (
+          <h3 className={styles.txtWelcome}>Bienvenue {user.username} </h3>
+          {isAssociationOwner  && !isExistingAssociaiton && (
             <p onClick={handleCreateAsso} className={styles.createAssoMsg}>
               Creez votre association <FontAwesomeIcon icon={faPlus} color={"blue"} />
             </p>

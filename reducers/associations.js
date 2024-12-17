@@ -4,6 +4,7 @@ const initialState = {
     value: {
         assosCreate: false,
         modalCreateState: false,
+        assoInfos: [],
     },
 };
 
@@ -19,9 +20,13 @@ export const associationsSlice = createSlice({
             state.value.modalCreateState = action.payload;
         },
 
+        getAssoInfo: (state, action) => {
+            state.value.assoInfos.push(action.payload);
+        }
+
 
     }
 });
 
-export const { isCreateAsso, isModalCreateOpen } = associationsSlice.actions;
+export const { isCreateAsso, isModalCreateOpen, getAssoInfo } = associationsSlice.actions;
 export default associationsSlice.reducer;

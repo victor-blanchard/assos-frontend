@@ -29,6 +29,7 @@ function ModalCreate() {
   const dispatch = useDispatch();
   const modal = useSelector((state) => state.associations.value.modalCreateState);
   const user = useSelector((state) => state.users.value);
+  console.log('token modalCreate',user.token)
 
   // Réinitialisation des champs du formulaire
   const resetForm = () => {
@@ -146,20 +147,21 @@ function ModalCreate() {
       console.log('Body =>', JSON.stringify({
         ...assoInfo,
         owner: user.firstname,
-      }))
+        token: user.token,
+      }));
      
       console.log('Statut de la réponse :', response.status);
-      const data = await response.json();
-
       if (!response.ok) {
         throw new Error('Une erreur est survenue lors de la soumission.');
-      }
+      };
+      const data = await response.json();
       
-      if (data.result) {
+      if (!data.result) {
+        console.log('Erreur lors de la création de l\'association.', data);
+        //Le siret exist déjà
+      } else {
         console.log('Association créée avec succès :', data);
         handleCancel(); // Ferme la modal et réinitialise
-      } else {
-        console.log('Erreur lors de la création de l\'association.');
       }
     } catch (error) {
       console.error('Erreur :', error.message);
