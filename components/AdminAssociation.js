@@ -18,21 +18,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../reducers/users";
 
 function AdminAssociation() {
-  const [association, setAssociation] = useState(null);
+  const infosAsso = useSelector((state) => state.associations.value.assoInfos);
 
-  const [name, setName] = useState(association?.name);
+ console.log('Page admin INFO ASSO ===>', infosAsso[0].id);
+  const [association, setAssociation] = useState(null);
+  const [id, setId] = useState(infosAsso[0].id)
+  const [name, setName] = useState(infosAsso[0].name);
   const [nameEditable, setNameEditable] = useState(false);
-  const [description, setDescription] = useState(association?.description);
+  const [description, setDescription] = useState(infosAsso[0].description);
   const [descriptionEditable, setDescriptionEditable] = useState(false);
-  const [siret, setSiret] = useState(association?.siret);
+  const [siret, setSiret] = useState(infosAsso[0].siret);
   const [siretEditable, setSiretEditable] = useState(false);
-  const [address, setAddress] = useState(association?.address);
-  const [street, setStreet] = useState(association?.address.street);
+  const [address, setAddress] = useState(infosAsso[0].address);
+  const [street, setStreet] = useState(infosAsso[0].address.street);
   const [streetEditable, setStreetEditable] = useState(false);
-  const [zipcode, setZipcode] = useState(association?.address.zipcode);
+  const [zipcode, setZipcode] = useState(infosAsso[0].address.zipcode);
   const [zipcodeEditable, setZipcodeEditable] = useState(false);
-  const [city, setCity] = useState(association?.address.city);
+  const [city, setCity] = useState(infosAsso[0].address.city);
   const [cityEditable, setCityEditable] = useState(false);
+  // const { street, city, zipcode } = address;
+  console.log("State address :", address);
+  console.log("Address street :", address ? address.street : 'Adresse est undefined');
+
 
   const [photoFile, setPhotoFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
@@ -67,7 +74,6 @@ function AdminAssociation() {
 
   const token = user.token;
   console.log("token===>" + token);
-  const id = "67602d2b2df39615a1822bac";
 
   const fetchAssociation = async () => {
     console.log("fetch start");
@@ -78,8 +84,8 @@ function AdminAssociation() {
       );
       const data = await response.json();
 
-      setAssociation(data.association);
-      setAddress(data.association.address);
+      // setAssociation(data.association);
+      // setAddress(data.association.address);
     } catch (error) {
       console.error("Error during the fetch of association:", error);
     }
@@ -113,41 +119,35 @@ function AdminAssociation() {
 
   ////// START - EDIT THE ASSOCIATION DATA ////
 
-  const handleAddressChange = (field, value) => {
-    setAddress((prevAddress) => ({ ...prevAddress, [field]: value }));
-    console.log("adress =====>", value);
-  };
+  // const handleAddressChange = (field, value) => {
+  //   setAddress((prevAddress) => ({ ...prevAddress, [field]: value }));
+  //   console.log("adress =====>", value);
+  // };
 
   const handleSubmitAsso = async () => {
-    console.log("submit clicked");
-
+    console.log("submit clicked avant le try==================================");
     try {
-      console.log(
-        "Sending PUT request to:",
-        `http://localhost:3000/associations/update/${id}`
-      );
-      console.log("Request body:", {
-        id: id,
-        name: name,
-        token: token,
-        address: address,
-      });
+      console.log('après le try===================================');
+      const response = await fetch(`http://localhost:3000/associations/update/${id}`, {
 
-      const response = await fetch(
-        `http://localhost:3000/associations/update/${id}`,
-        {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            id: id,
+          body: JSON.stringify({ 
             name: name,
-            description: description,
             siret: siret,
-            address: address,
-            token: token,
+            token: token, 
+            address: {
+              street: street,
+              zipcode: zipcode,
+              city: city,
+            }
           }),
-        }
+        },
       );
+
+      console.log('BODY +++++++>>>>> :', JSON.stringify({
+        token: token
+      }))
 
       if (response.ok) {
         const data = await response.json();
@@ -158,7 +158,11 @@ function AdminAssociation() {
           name: name,
           description: description,
           siret: siret,
-          address: address, // Use the updated address state
+          address: {
+            street: street,
+            city: city,
+            zipcode: zipcode,
+          }, // Use the updated address state
         }));
 
         const updatedAddress = {
@@ -450,15 +454,15 @@ function AdminAssociation() {
               />
             )}
           </div>
-          <text className={styles.assoTitle}>Name of the association</text>
+          <p className={styles.assoTitle}>Nom de l'association</p>
           <div className={styles.assoEditInput}>
-            <h1 htmlFor="name">{association?.name}</h1>
+            <h1 htmlFor="name">{name}</h1>
             {nameEditable ? (
               <input
                 type="text"
                 id="name"
                 onChange={(e) => setName(e.target.value)}
-                defaultValue={association?.name}
+                defaultValue={name}
               />
             ) : (
               <span>{name}</span>
@@ -472,13 +476,12 @@ function AdminAssociation() {
               </button>
             }
           </div>
-          <text className={styles.assoTitle}>Activity Description</text>
           <div className={styles.assoEditInput}>
-            <label htmlFor="description">{association?.description}</label>
+            <label htmlFor="description"className={styles.assoTitle}>Activity Description</label>
             {descriptionEditable ? (
               <textarea
                 id="description"
-                defaultValue={association?.description}
+                defaultValue={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
             ) : (
@@ -493,14 +496,13 @@ function AdminAssociation() {
               </button>
             }
           </div>
-          <text className={styles.assoTitle}>SIRET</text>
           <div className={styles.assoEditInput}>
-            <label htmlFor="siret">{association?.siret}</label>
+            <label htmlFor="siret" className={styles.assoTitle}>Siret</label>
             {siretEditable ? (
               <input
                 type="text"
                 id="siret"
-                defaultValue={association?.siret}
+                defaultValue={siret}
                 onChange={(e) => setSiret(e.target.value)}
               />
             ) : (
@@ -515,18 +517,18 @@ function AdminAssociation() {
               </button>
             }
           </div>
-          <text className={styles.assoTitle}>STREET</text>
+
           <div className={styles.assoEditInput}>
-            <label htmlFor="street">{address?.street}</label>
+            <label htmlFor="street" className={styles.assoTitle}>Rue</label>
             {streetEditable ? (
               <input
                 type="text"
                 id="street"
-                defaultValue={association?.address.street}
-                onChange={(e) => handleAddressChange("street", e.target.value)}
+                defaultValue={street}
+                onChange={(e) => setStreet(e.target.value)}
               />
             ) : (
-              <span>{association?.address.street}</span>
+              <span>{address?.street}</span>
             )}
             {
               <button
@@ -537,18 +539,17 @@ function AdminAssociation() {
               </button>
             }
           </div>
-          <text className={styles.assoTitle}>ZIPCODE</text>
           <div className={styles.assoEditInput}>
-            <label htmlFor="zipcode">{association?.address.zipcode}</label>
+            <label htmlFor="zipcode" className={styles.assoTitle}>Code postal</label>
             {zipcodeEditable ? (
               <input
                 type="text"
                 id="zipcode"
-                defaultValue={address?.zipcode}
-                onChange={(e) => handleAddressChange("zipcode", e.target.value)}
+                defaultValue={zipcode}
+                onChange={(e) => setZipcode(e.target.value)}
               />
             ) : (
-              <span>{association?.address.zipcode}</span>
+              <span>{address?.zipcode}</span>
             )}
             {
               <button
@@ -559,18 +560,17 @@ function AdminAssociation() {
               </button>
             }
           </div>
-          <text className={styles.assoTitle}>CITY</text>
           <div className={styles.assoEditInput}>
-            <label htmlFor="city">{association?.address.city}</label>
+            <label htmlFor="city" className={styles.assoTitle}>Ville</label>
             {cityEditable ? (
               <input
                 type="text"
                 id="city"
-                defaultValue={address?.city}
-                onChange={(e) => handleAddressChange("city", e.target.value)}
+                defaultValue={city}
+                onChange={(e) => setCity(e.target.value)}
               />
             ) : (
-              <span>{association?.address.city}</span>
+              <span>{address?.city}</span>
             )}
             {
               <button

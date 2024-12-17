@@ -8,6 +8,7 @@ const initialState = {
         token: null,
         email: null,
         username: null,
+        id: null,
         isAssociationOwner: false,
         likedEvents: [],
     },
@@ -34,6 +35,7 @@ export const usersSlice = createSlice({
             state.value.email = action.payload.email;
             state.value.username = action.payload.username;
             state.value.isAssociationOwner = action.payload.isAssociationOwner;
+            state.value.id = action.payload.id;
             statue.value.likedEvents.push(action.payload)
           },
 

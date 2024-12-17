@@ -25,7 +25,7 @@ function Home() {
   // const [isModalVisible, setIsModalVisible] = useState(false);
   const dispatch = useDispatch();
   const modal = useSelector((state) => state.users.value.formState);
-  console.log(modal);
+  // console.log(modal);
   const token = useSelector((state) => state.users.value.token);
   const router = useRouter();
 
@@ -45,9 +45,9 @@ function Home() {
   const handleSign = () => {
     // setIsModalVisible(true)
     dispatch(isModalVisible(true));
-    console.log("open", modal);
-  };
-
+    // console.log('open', modal)
+  }
+  
   /**
    * Permet de récuperer via le setter d'etat setIcon les données du tableau dataEVent
    * @param {object} event : les donnée du tableau dataEVent
