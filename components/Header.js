@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { isModalVisible, setFormType, logout } from "../reducers/users";
-import { isModalCreateOpen, isCreateAsso, getAssoInfo } from "../reducers/associations";
+import { isModalCreateOpen, isCreateAsso, getAssoInfo, logoutAsso } from "../reducers/associations";
 import Image from "next/image";
 import styles from "../styles/Header.module.css";
 import { Button } from "antd";
@@ -83,7 +83,7 @@ function Header() {
       if (data.result) {
         console.log('Avant dispatch =>',data)
         dispatch(isCreateAsso(true));
-        dispatch(getAssoInfo(data.asso));
+        !asso && dispatch(getAssoInfo(data.asso));
         console.log('Asso de l\'owner',data.asso)
       } else {
         dispatch(isCreateAsso(false));
@@ -105,6 +105,7 @@ function Header() {
   const handleLogout = () => {
     router.push('/');
     dispatch(logout());
+    dispatch(logoutAsso());
     console.log("Déconnexion user : => ", token);
   };
 

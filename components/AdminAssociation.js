@@ -67,57 +67,55 @@ function AdminAssociation() {
 
   const token = user.token;
   console.log("token===>" + token);
-  const [ids, setIds] = useState([]);
-  console.log('Associaiton ids ====>', ids)
-  useEffect(() => {
-    const fetchIdsAssociation = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/associations/filtered');
+  const [id, setId] = useState('');
+  // console.log('Associaiton ids ====>', ids)
+//   useEffect(() => {
+//     const fetchIdsAssociation = async () => {
+//       try {
+//         const response = await fetch('http://localhost:3000/associations/filtered');
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        };
+//         if (!response.ok) {
+//           throw new Error(`HTTP error! status: ${response.status}`);
+//         };
 
-        const contentType = response.headers.get('Content-Type');
-        if (!contentType || !contentType.includes('application/json')) {
-          throw new Error('Server did not return JSON.');
-        };
+//         const contentType = response.headers.get('Content-Type');
+//         if (!contentType || !contentType.includes('application/json')) {
+//           throw new Error('Server did not return JSON.');
+//         };
 
-        const allAssociaitonData = await response.json();
-        console.log('Response associations =============>',response);
+//         const allAssociaitonData = await response.json();
+//         console.log('Response associations =============>',response);
 
-        if (allAssociaitonData .result) {
-          console.log(allAssociaitonData.associations)
-          setIds(allAssociaitonData.associations)
-        }
+//         if (allAssociaitonData .result) {
+//           console.log(allAssociaitonData.associations)
+//           setIds(allAssociaitonData.associations)
+//         }
         
-      } catch(error) {
-        console.error('Erreur de fetch', error)
-      }
-    };
-  fetchIdsAssociation();
+//       } catch(error) {
+//         console.error('Erreur de fetch', error)
+//       }
+//     };
+//   fetchIdsAssociation();
 
-  },[])
+//   },[])
 
-const id = ids.map((data, i) => {
-  console.log('Les données ===>',data._id)
-  console.log('data =>', data)
-  if (owner === user.token) {
+// const id = ids.map((data, i) => {
+//   console.log('Les données ===>',data._id)
+//   console.log('data =>', data)
+//   if (owner === user.token) {
 
-  }
-  return data._id
-})
+//   }
+//   return data._id
+// })
  
 
   const fetchAssociation = async () => {
     console.log("fetch start");
 
     try {
-      const response = await fetch(
-        `http://localhost:3000/associations/getasso/${id}`
-      );
+      const response = await fetch(`http://localhost:3000/associations/getasso/${token}`);
       const data = await response.json();
-
+      console.log(data)
       setAssociation(data.association);
       setAddress(data.association.address)
      

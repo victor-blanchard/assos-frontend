@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { logout } from './users';
 
 const initialState = {
     value: {
@@ -24,15 +25,17 @@ export const associationsSlice = createSlice({
             // if (!state.value.assoInfos) {
             //     state.value.assoInfos = [];
             // };
-            // console.log("État avant modification :", state);
-            console.log("Payload reçu :", action.payload);
-            state.value.assoInfos.push(action.payload);
+            state.value.assoInfos.length <= 1 && state.value.assoInfos.push(action.payload);
             // console.log("État après push :", state.value.assoInfos);
+        },
+
+        logoutAsso: (state, action) => {
+            state.value.assoInfos = [];
         }
 
 
     }
 });
 
-export const { isCreateAsso, isModalCreateOpen, getAssoInfo } = associationsSlice.actions;
+export const { isCreateAsso, isModalCreateOpen, getAssoInfo, logoutAsso } = associationsSlice.actions;
 export default associationsSlice.reducer;
