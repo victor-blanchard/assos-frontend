@@ -268,7 +268,7 @@ function ModalCreate() {
           {errors.includes('zipcode') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
         </label>
         <label htmlFor="description">
-          Description de l'association:
+          Description de l'association :
           <input
             type="textarea"
             id="description"
