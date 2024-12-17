@@ -5,9 +5,11 @@
   justify-content: center;
   width: 100vw;
   margin: 0;
-  border-top: 1px solid #d8d8d8;
+  /* border-top: 1px solid #d8d8d8; */
   border-bottom: 1px solid #d8d8d8;
   background-color: #f6f7f8;
+  position: absolute;
+  bottom: 0;
 }
 
 .footerInfos {
