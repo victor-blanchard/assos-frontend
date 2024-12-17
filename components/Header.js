@@ -125,10 +125,10 @@ function Header() {
     signSection = (
       <div className={styles.shortcut}>
         <div className={styles.infoSession}>
-          <h3 className={styles.txtWelcome}>Bienvenu {user.username} </h3>
+          <h3 className={styles.txtWelcome}>Bienvenu {user.username}, </h3>
           {isAssociationOwner && !isExistingAssociaiton && (
             <p onClick={handleCreateAsso} className={styles.createAssoMsg}>
-              Creez votre association <FontAwesomeIcon icon={faPlus} color={"blue"} />
+             J'enregistre mon association 
             </p>
           )}
         </div>
