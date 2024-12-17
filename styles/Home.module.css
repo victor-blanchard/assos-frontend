@@ -4,9 +4,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 91vh;
+  height: 84vh;
   /* padding: 4rem 0; */
   flex-grow: 1;
+  background-color: #f0edfe;
 }
 
 .mainCentral {
@@ -18,7 +19,19 @@
 
 .mainText {
   width: 50%;
+  margin-top: 3%;
 }
+
+.description {
+  width: 95%;
+  font-weight: 400;
+  margin-top: 1vh;
+  flex-wrap: wrap;
+  justify-self: start;
+  text-align: justify;
+  line-height: 160%;
+}
+
 .btn {
   background-color: #0093e9;
   color: #ffffff;
@@ -26,9 +39,10 @@
   font-weight: 400;
   border-radius: 15px;
   border-color: #0093e9;
-  width: 142px;
+  width: 40%;
   padding: 10px;
-  margin: 10px;
+  margin-top: 5%;
+  margin-left: 30%;
   -webkit-box-shadow: inset -1px 3px 8px 5px #1f87ff, 2px 5px 16px 0px #0b325e,
     -4px 5px 28px 1px rgba(6, 103, 122, 0); /*Permet l'utilisation avec firefox*/
   box-shadow: inset -1px 3px 8px 5px #0093e9, 2px 5px 16px 0px #0b325e,
@@ -44,8 +58,7 @@
   cursor: pointer;
 }
 .divImg {
-  width: 40%;
-  border-radius: 15px;
+  width: 30%;
 }
 
 .imgAccueil {
@@ -62,12 +75,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-left: 2%;
+  margin-right: 1%;
 }
 
 .cicleEvent {
   /* border: 1px solid black; */
   border-radius: 50%;
-  background-color: #ffe7c2;
+  background-color: #fbfeed;
 }
 .cicleEvent:hover {
   color: #cacaca;
@@ -80,7 +95,7 @@
   width: 40px;
   height: 40px;
   padding: 20px;
-  color: #545454;
+  color: #797979;
   cursor: pointer;
 }
 

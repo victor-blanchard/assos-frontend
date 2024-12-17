@@ -10,7 +10,7 @@ import {
   faSortUp,
   faSortDown,
   faTrash,
-  faPen, 
+  faPen,
 } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -39,7 +39,7 @@ function AdminAssociation() {
   const [showModal, setShowModal] = useState(false); // State for modal visibility
   const [editingEvent, setEditingEvent] = useState(null);
   const user = useSelector((state) => state.users.value);
- 
+
   const categoriesOptions = [
     { label: "Aide à la personne", value: "Aide à la personne" },
     { label: "Sport", value: "Sport" },
@@ -69,8 +69,6 @@ function AdminAssociation() {
   console.log("token===>" + token);
   const id = "67602d2b2df39615a1822bac";
 
- 
-
   const fetchAssociation = async () => {
     console.log("fetch start");
 
@@ -81,18 +79,29 @@ function AdminAssociation() {
       const data = await response.json();
 
       setAssociation(data.association);
-      setAddress(data.association.address)
-     
+      setAddress(data.association.address);
     } catch (error) {
       console.error("Error during the fetch of association:", error);
     }
   };
 
-  
-
   useEffect(() => {
-    !nameEditable && !descriptionEditable && !siretEditable &&!streetEditable&& !zipcodeEditable&& !cityEditable&& fetchAssociation();
-  }, [id, nameEditable, descriptionEditable, siretEditable, streetEditable, zipcodeEditable, cityEditable]);
+    !nameEditable &&
+      !descriptionEditable &&
+      !siretEditable &&
+      !streetEditable &&
+      !zipcodeEditable &&
+      !cityEditable &&
+      fetchAssociation();
+  }, [
+    id,
+    nameEditable,
+    descriptionEditable,
+    siretEditable,
+    streetEditable,
+    zipcodeEditable,
+    cityEditable,
+  ]);
 
   //// END - GET THE ASSOCIATION DATA ////
 
@@ -100,15 +109,14 @@ function AdminAssociation() {
   //   setStreet(address?.street);
   //   setZipcode(address?.zipcode);
   //   setCity(address?.city);
-  // }, [address]); 
+  // }, [address]);
 
   ////// START - EDIT THE ASSOCIATION DATA ////
-  
+
   const handleAddressChange = (field, value) => {
     setAddress((prevAddress) => ({ ...prevAddress, [field]: value }));
-    console.log('adress =====>', value);
-  };  
-  
+    console.log("adress =====>", value);
+  };
 
   const handleSubmitAsso = async () => {
     console.log("submit clicked");
@@ -144,8 +152,8 @@ function AdminAssociation() {
       if (response.ok) {
         const data = await response.json();
 
-         // Update association with the new address
-         setAssociation((prevAssociation) => ({
+        // Update association with the new address
+        setAssociation((prevAssociation) => ({
           ...prevAssociation,
           name: name,
           description: description,
@@ -153,31 +161,28 @@ function AdminAssociation() {
           address: address, // Use the updated address state
         }));
 
-
-        const updatedAddress = { 
-          street: address.street, 
-          zipcode: address.zipcode, 
-          city: address.city 
+        const updatedAddress = {
+          street: address.street,
+          zipcode: address.zipcode,
+          city: address.city,
         };
 
         console.log(updatedAddress);
-        setAssociation(data.association); 
-        setAddress(data.association.address); 
-  
+        setAssociation(data.association);
+        setAddress(data.association.address);
+
         // Immediately update individual address variables
         setStreet(data.association.address.street);
         setZipcode(data.association.address.zipcode);
-        setCity(data.association.address.city); 
-        
-  
-  
-          setNameEditable(false);
-          setDescriptionEditable(false);
-          setSiretEditable(false);
-          setStreetEditable(false);
-          setZipcodeEditable(false);
-          setCityEditable(false);
- 
+        setCity(data.association.address.city);
+
+        setNameEditable(false);
+        setDescriptionEditable(false);
+        setSiretEditable(false);
+        setStreetEditable(false);
+        setZipcodeEditable(false);
+        setCityEditable(false);
+
         console.log("Asso updated:", data);
       } else {
         const errorData = await response.json();
@@ -518,7 +523,7 @@ function AdminAssociation() {
                 type="text"
                 id="street"
                 defaultValue={association?.address.street}
-                onChange={(e) => handleAddressChange('street', e.target.value)}
+                onChange={(e) => handleAddressChange("street", e.target.value)}
               />
             ) : (
               <span>{association?.address.street}</span>
@@ -540,7 +545,7 @@ function AdminAssociation() {
                 type="text"
                 id="zipcode"
                 defaultValue={address?.zipcode}
-                onChange={(e) => handleAddressChange('zipcode', e.target.value)}
+                onChange={(e) => handleAddressChange("zipcode", e.target.value)}
               />
             ) : (
               <span>{association?.address.zipcode}</span>
@@ -562,7 +567,7 @@ function AdminAssociation() {
                 type="text"
                 id="city"
                 defaultValue={address?.city}
-                onChange={(e) => handleAddressChange('city', e.target.value)}
+                onChange={(e) => handleAddressChange("city", e.target.value)}
               />
             ) : (
               <span>{association?.address.city}</span>
@@ -596,6 +601,9 @@ function AdminAssociation() {
       {showModal && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
+            <span className={styles.close} onClick={() => setShowModal(false)}>
+              &times;
+            </span>{" "}
             <h2>{editingEvent ? "Edit Event" : "Create New Event"}</h2>
             <form
               onSubmit={

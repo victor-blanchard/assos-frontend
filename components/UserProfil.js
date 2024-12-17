@@ -62,24 +62,20 @@ const cards = titleCards.map((data, i) => (
 
         
   return (
-     <main className={styles.mainContainer}>
+    <main className={styles.mainContainer}>
       <h1>Espace personnel</h1>
       <section className={styles.section}>
-      <div className={styles.sectionLeftSIde}>
-        {userProfil}
-      </div>
-      <div className={styles.sectionRightSide}>
-        
-        {cards.length > 0 ? (
-            cards 
-        ) : (
-        <p>Aucune donnée disponible pour le moment.</p>
-        )}
-        
-
-      </div>
+        <div className={styles.sectionLeftSIde}>{userProfil}</div>
+        <div className={styles.sectionRightSide}>
+          {cards.length > 0 ? (
+            cards
+          ) : (
+            <p>Aucune donnée disponible pour le moment.</p>
+          )}
+        </div>
       </section>
-     </main>
+      {showModal && modalContent} {/* Show modal */}
+    </main>
   );
 }
 
