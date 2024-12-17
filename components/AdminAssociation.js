@@ -631,7 +631,11 @@ function AdminAssociation() {
 
       {showModal && (
         <div className={styles.modal}>
+    
           <div className={styles.modalContent}>
+          <span className={styles.close} onClick={() => setShowModal(false)}>
+          &times;
+        </span>{" "}
             <h2>{editingEvent ? "Edit Event" : "Create New Event"}</h2>
             <form
               onSubmit={
