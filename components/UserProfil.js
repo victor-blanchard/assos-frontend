@@ -27,7 +27,7 @@ function UserProfil() {
   // Modal için state
   const [showModal, setShowModal] = useState(false);
   const [email, setEmail] = useState(user.email);
-  const [username, setUsername] = useState(user.username);
+  const [password, setPassword] = useState(user.password);
 
   const userProfil = (
     <div>
@@ -77,6 +77,15 @@ function UserProfil() {
             /> */}
           </div>
           <div>
+            {/* <label htmlFor="lastName">Nom de Famille</label>
+            <input
+              type="text"
+              id="lastName"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            /> */}
+          </div>
+          <div>
             <label htmlFor="email">Email:</label>
             <input
               type="email"
@@ -86,12 +95,12 @@ function UserProfil() {
             />
           </div>
           <div>
-            <label htmlFor="username">Nom d'utilisateur:</label>
+            <label htmlFor="password">Mot de passe</label>
             <input
               type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <button type="submit">Enregistrer les modifications</button>
