@@ -2,20 +2,45 @@ import styles from '../styles/UserProfil.module.css';
 import Image from 'next/image';
 import { useSelector, useDispatch } from 'react-redux';
 import AssociationCard from './AssociationCards';
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 
 function UserProfil() {
+  const router = useRouter();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.users.value);
     const associations = useSelector((state) => state.associations.value);
     const token = user.token;
     const titleCards = [
-        {title: 'Mes associations', description: 'Retrouvez toutes les associations qui vous interessent.'}, 
-        {title: 'Mes evenements à venir', description: 'Les evenementd à venir de vos associations préferées au même endroit.'}, 
-        {title: 'Mes notifications', description: 'Vos événements programmés.'}, 
+        {title: 'Mes associations', description: 'Retrouvez toutes les associations qui vous interessent.', route: '/my_assos'}, 
+        {title: 'Mes evenements à venir', description: 'Les evenementd à venir de vos associations préferées au même endroit.', route:'/my_events'}, 
+        {title: 'Mes notifications', description: 'Vos événements programmés.', route:'/notification'}, 
         // {title: 'Mes notifications', description: 'Vos événements programmés.'},  
     ];
     console.log('User session =>', token);
+
+    const handleCardClick = (route) => {
+      // console.log('click', link);
+      if (route) {
+          router.push(route); // Redirection vers l'URL spécifiée
+      }
+      
+  };
+
+const cards = titleCards.map((data, i) => (
+  <AssociationCard 
+        key={i} 
+        title={data.title} 
+        description={data.description || 'Description non disponible.'} 
+        onClick={() => handleCardClick(data.route)} // Passez le lien à la fonction onClick
+        
+    />
+  
+
+    
+));
+
     
     const userProfil = (
         <div>
@@ -34,14 +59,8 @@ function UserProfil() {
             </div>
         </div>
         )
-    
-    const cards = titleCards.map((data, i) => (
-        <AssociationCard 
-            key={i} 
-            title={data.title} 
-            description={data.description || 'Description non disponible.'} 
-        />
-    ));
+
+        
   return (
      <main className={styles.mainContainer}>
       <h1>Espace personnel</h1>

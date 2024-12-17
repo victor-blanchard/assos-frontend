@@ -11,6 +11,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #f4a1dc;
+    /* opacity: 80%; */
     color: white;
     padding: 20px;
   }
@@ -39,7 +41,9 @@
   .title {
     font-size: 28px;
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    position: relative;
+    top: -40px;
   }
   
   .notificationBox {
@@ -57,6 +61,7 @@
     color: #555;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    justify-content: space-between; 
     
   }
   
