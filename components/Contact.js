@@ -4,7 +4,7 @@ import styles from "../styles/Contact.module.css";
 
 
 function Contact() {
-   
+
 
    useEffect(() => {
       emailjs.init({
