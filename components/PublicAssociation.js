@@ -193,5 +193,6 @@ function PublicAssociation() {
     </div>
   );
 }
+//a supprimer apres le merge
 
 export default PublicAssociation;
