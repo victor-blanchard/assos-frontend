@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import * as emailjs from "emailjs-com";
 import styles from "../styles/Contact.module.css";
+import Image from "next/image";
 
 function Contact() {
   useEffect(() => {
     emailjs.init({
-      publicKey: "VJDA6kgRI7pMWQtp7", // EmailJS Public Key
+      publicKey: "VJDA6kgRI7pMWQtp7",
     });
   }, []);
 
@@ -43,15 +44,14 @@ function Contact() {
         }
       );
 
-    //reset the form after submission
     setContactData({ ...initialFormState });
   };
 
   return (
     <div className={styles.All}>
-      <div className="col-md-6 col-md">
+      <div className={styles.tables}> 
         <h2>Contact</h2>
-        <p>L'équipe La Sauce est à votre entière disposition ! </p>
+        <p>L'équipe La Sauce est à votre entière disposition !</p>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.row}>
             <div className={styles.subRow}>
@@ -59,6 +59,7 @@ function Contact() {
               <input
                 type="text"
                 className={styles.formControl}
+                id="name"
                 name="name"
                 value={contactData.name}
                 onChange={handleChange}
@@ -70,6 +71,7 @@ function Contact() {
               <input
                 type="email"
                 className={styles.formControl}
+                id="email"
                 name="email"
                 value={contactData.email}
                 onChange={handleChange}
@@ -81,7 +83,7 @@ function Contact() {
               <label htmlFor="message">Votre message</label>
               <textarea
                 className={styles.formControl}
-                type="text"
+                id="message"
                 name="message"
                 maxLength="6000"
                 rows="7"
@@ -99,6 +101,14 @@ function Contact() {
             </div>
           </div>
         </form>
+      </div>
+      <div className={styles.image}>
+        <Image
+          src={require("../public/home.jpg")}
+          alt="Contact Image"
+          width={300}
+       
+        />
       </div>
     </div>
   );
