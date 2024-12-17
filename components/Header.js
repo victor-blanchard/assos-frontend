@@ -67,8 +67,8 @@ function Header() {
       .then((data) => {
         if (data.result) {
           dispatch(addEvents(data.events));
-          console.log(`${data.events.length} events ajoutés au reducer searchResult`);
-          console.log(data);
+          // console.log(`${data.events.length} events ajoutés au reducer searchResult`);
+          // console.log(data);
         }
       });
     setKeyword("");
@@ -81,10 +81,9 @@ function Header() {
     .then(response => response.json())
     .then(data => {
       if (data.result) {
-        console.log('Avant dispatch =>',data)
         dispatch(isCreateAsso(true));
-        !asso && dispatch(getAssoInfo(data.asso));
-        console.log('Asso de l\'owner',data.asso)
+        dispatch(getAssoInfo(data.asso));
+        // console.log('Asso de l\'owner',data.asso)
       } else {
         dispatch(isCreateAsso(false));
         console.log('Pas d\'associaition', data)

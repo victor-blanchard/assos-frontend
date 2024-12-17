@@ -5,7 +5,7 @@ const initialState = {
     value: {
         assosCreate: false,
         modalCreateState: false,
-        assoInfos: [],
+        assoInfos: {},
     },
 };
 
@@ -25,7 +25,13 @@ export const associationsSlice = createSlice({
             // if (!state.value.assoInfos) {
             //     state.value.assoInfos = [];
             // };
-            state.value.assoInfos.length <= 1 && state.value.assoInfos.push(action.payload);
+            const alreadyExists = state.value.assoInfos.some(
+                (asso) => asso.id === action.payload.id // Vérifie par exemple l'ID
+            );
+        
+            if (!alreadyExists) {
+                state.value.assoInfos.push(action.payload);
+            }
             // console.log("État après push :", state.value.assoInfos);
         },
 
