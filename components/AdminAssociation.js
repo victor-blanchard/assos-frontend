@@ -119,10 +119,10 @@ function AdminAssociation() {
 
   ////// START - EDIT THE ASSOCIATION DATA ////
 
-  const handleAddressChange = (field, value) => {
-    setAddress((prevAddress) => ({ ...prevAddress, [field]: value }));
-    console.log("adress =====>", value);
-  };
+  // const handleAddressChange = (field, value) => {
+  //   setAddress((prevAddress) => ({ ...prevAddress, [field]: value }));
+  //   console.log("adress =====>", value);
+  // };
 
   const handleSubmitAsso = async () => {
     console.log("submit clicked avant le try==================================");
@@ -136,6 +136,11 @@ function AdminAssociation() {
             name: name,
             siret: siret,
             token: token, 
+            address: {
+              street: street,
+              zipcode: zipcode,
+              city: city,
+            }
           }),
         },
       );
@@ -153,7 +158,11 @@ function AdminAssociation() {
           name: name,
           description: description,
           siret: siret,
-          address: address, // Use the updated address state
+          address: {
+            street: street,
+            city: city,
+            zipcode: zipcode,
+          }, // Use the updated address state
         }));
 
         const updatedAddress = {
@@ -445,7 +454,7 @@ function AdminAssociation() {
               />
             )}
           </div>
-          <text className={styles.assoTitle}>Name of the association</text>
+          <p className={styles.assoTitle}>Nom de l'association</p>
           <div className={styles.assoEditInput}>
             <h1 htmlFor="name">{name}</h1>
             {nameEditable ? (
@@ -487,9 +496,8 @@ function AdminAssociation() {
               </button>
             }
           </div>
-          <text className={styles.assoTitle}>SIRET</text>
           <div className={styles.assoEditInput}>
-            <label htmlFor="siret">{siret}</label>
+            <label htmlFor="siret" className={styles.assoTitle}>Siret</label>
             {siretEditable ? (
               <input
                 type="text"
@@ -511,13 +519,13 @@ function AdminAssociation() {
           </div>
 
           <div className={styles.assoEditInput}>
-            <label htmlFor="street">STREET</label>
+            <label htmlFor="street" className={styles.assoTitle}>Rue</label>
             {streetEditable ? (
               <input
                 type="text"
                 id="street"
-                defaultValue={association?.address.street}
-                onChange={(e) => handleAddressChange("street", e.target.value)}
+                defaultValue={street}
+                onChange={(e) => setStreet(e.target.value)}
               />
             ) : (
               <span>{address?.street}</span>
@@ -532,13 +540,13 @@ function AdminAssociation() {
             }
           </div>
           <div className={styles.assoEditInput}>
-            <label htmlFor="zipcode">ZIPCODE</label>
+            <label htmlFor="zipcode" className={styles.assoTitle}>Code postal</label>
             {zipcodeEditable ? (
               <input
                 type="text"
                 id="zipcode"
-                defaultValue={address?.zipcode}
-                onChange={(e) => handleAddressChange("zipcode", e.target.value)}
+                defaultValue={zipcode}
+                onChange={(e) => setZipcode(e.target.value)}
               />
             ) : (
               <span>{address?.zipcode}</span>
@@ -552,15 +560,14 @@ function AdminAssociation() {
               </button>
             }
           </div>
-          <text className={styles.assoTitle}>CITY</text>
           <div className={styles.assoEditInput}>
-            <label htmlFor="city">{address?.city}</label>
+            <label htmlFor="city" className={styles.assoTitle}>Ville</label>
             {cityEditable ? (
               <input
                 type="text"
                 id="city"
-                defaultValue={address?.city}
-                onChange={(e) => handleAddressChange("city", e.target.value)}
+                defaultValue={city}
+                onChange={(e) => setCity(e.target.value)}
               />
             ) : (
               <span>{address?.city}</span>
