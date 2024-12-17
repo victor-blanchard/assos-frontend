@@ -16,6 +16,8 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@reduxjs/toolkit": "^2.4.0",
     "antd": "^5.22.4",
+    "emailjs": "^4.0.3",
+    "emailjs-com": "^3.2.0",
     "fontawesome": "^5.6.3",
     "next": "^15.0.4",
     "next-transpile-modules": "^10.0.1",

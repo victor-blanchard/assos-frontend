@@ -143,21 +143,22 @@
 
 .headerIcon {
   cursor: pointer;
+  color: #0093e9;
 }
 
 .bellIcon {
-  color: burlywood;
+  color: #0093e9;
 }
 
 .bellIcon:hover {
-  color: #e4cda9;
+  color: #0093e9;
   box-shadow: 0 8px 25px rgba(0, 147, 233, 0.7), 0 4px 10px rgba(11, 50, 94, 0.5);
   transform: translateY(-2px);
   cursor: pointer;
 }
 
 .contactIcon {
-  color: dimgray;
+  color: #0093e9;
 }
 
 .contactIcon:hover {
@@ -168,7 +169,7 @@
 }
 
 .calendarIcon {
-  color: rgb(114, 42, 42);
+  color: #0093e9;
 }
 
 .calendarIcon:hover {
@@ -185,9 +186,13 @@
 .createAssoMsg {
   display: flex;
   align-items: center;
-  font-size: 10px;
-  color: red;
+  font-size: 12px;
+  color: #0093e9;
   cursor: pointer;
+  margin: 10px;
+  border-bottom: 1px solid #0093e9;
+  font-style: italic;
+
 }
 
 .infoSession {

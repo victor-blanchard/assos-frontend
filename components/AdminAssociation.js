@@ -10,32 +10,36 @@ import {
   faSortUp,
   faSortDown,
   faTrash,
-  faPen,
+  faPen, 
 } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { login } from "../reducers/users";
 
 function AdminAssociation() {
   const [association, setAssociation] = useState(null);
-  const [editingAsso, setEditingAsso] = useState(null);
+
   const [name, setName] = useState(association?.name);
   const [nameEditable, setNameEditable] = useState(false);
+  const [description, setDescription] = useState(association?.description);
+  const [descriptionEditable, setDescriptionEditable] = useState(false);
   const [siret, setSiret] = useState(association?.siret);
   const [siretEditable, setSiretEditable] = useState(false);
+  const [address, setAddress] = useState(association?.address);
   const [street, setStreet] = useState(association?.address.street);
-
   const [streetEditable, setStreetEditable] = useState(false);
   const [zipcode, setZipcode] = useState(association?.address.zipcode);
   const [zipcodeEditable, setZipcodeEditable] = useState(false);
   const [city, setCity] = useState(association?.address.city);
   const [cityEditable, setCityEditable] = useState(false);
+
   const [photoFile, setPhotoFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
-  const [description, setDescription] = useState(association?.description);
-  const [descriptionEditable, setDescriptionEditable] = useState(false);
   const [showModal, setShowModal] = useState(false); // State for modal visibility
   const [editingEvent, setEditingEvent] = useState(null);
+  const user = useSelector((state) => state.users.value);
+ 
   const categoriesOptions = [
     { label: "Aide à la personne", value: "Aide à la personne" },
     { label: "Sport", value: "Sport" },
@@ -61,10 +65,15 @@ function AdminAssociation() {
 
   ///START - GET THE ASSOCIATION DATA ////
 
-  const token = "HW0ZerJu5ADHWreXP_FQDVBvLebMToZH";
-  const id = "675c14923937bbd6164bd305";
+  const token = user.token;
+  console.log("token===>" + token);
+  const id = "67602d2b2df39615a1822bac";
+
+ 
 
   const fetchAssociation = async () => {
+    console.log("fetch start");
+
     try {
       const response = await fetch(
         `http://localhost:3000/associations/getasso/${id}`
@@ -72,30 +81,49 @@ function AdminAssociation() {
       const data = await response.json();
 
       setAssociation(data.association);
-      setCity(data.association.address.city);
-
+      setAddress(data.association.address)
+     
     } catch (error) {
       console.error("Error during the fetch of association:", error);
     }
   };
 
+  
+
   useEffect(() => {
-    fetchAssociation();
-  }, [id]);
+    !nameEditable && !descriptionEditable && !siretEditable &&!streetEditable&& !zipcodeEditable&& !cityEditable&& fetchAssociation();
+  }, [id, nameEditable, descriptionEditable, siretEditable, streetEditable, zipcodeEditable, cityEditable]);
 
   //// END - GET THE ASSOCIATION DATA ////
 
-  ////// START - EDIT THE ASSOCIATION DATA ////
+  // useEffect(() => {
+  //   setStreet(address?.street);
+  //   setZipcode(address?.zipcode);
+  //   setCity(address?.city);
+  // }, [address]); 
 
-  const handleSubmitAsso = async (event) => {
-    event.preventDefault();
+  ////// START - EDIT THE ASSOCIATION DATA ////
+  
+  const handleAddressChange = (field, value) => {
+    setAddress((prevAddress) => ({ ...prevAddress, [field]: value }));
+    console.log('adress =====>', value);
+  };  
+  
+
+  const handleSubmitAsso = async () => {
+    console.log("submit clicked");
 
     try {
       console.log(
         "Sending PUT request to:",
         `http://localhost:3000/associations/update/${id}`
       );
-      console.log("Request body:", { id: id, name: name, token: token });
+      console.log("Request body:", {
+        id: id,
+        name: name,
+        token: token,
+        address: address,
+      });
 
       const response = await fetch(
         `http://localhost:3000/associations/update/${id}`,
@@ -107,7 +135,7 @@ function AdminAssociation() {
             name: name,
             description: description,
             siret: siret,
-            address:{street:street, zipcode:zipcode, city:city},
+            address: address,
             token: token,
           }),
         }
@@ -115,6 +143,41 @@ function AdminAssociation() {
 
       if (response.ok) {
         const data = await response.json();
+
+         // Update association with the new address
+         setAssociation((prevAssociation) => ({
+          ...prevAssociation,
+          name: name,
+          description: description,
+          siret: siret,
+          address: address, // Use the updated address state
+        }));
+
+
+        const updatedAddress = { 
+          street: address.street, 
+          zipcode: address.zipcode, 
+          city: address.city 
+        };
+
+        console.log(updatedAddress);
+        setAssociation(data.association); 
+        setAddress(data.association.address); 
+  
+        // Immediately update individual address variables
+        setStreet(data.association.address.street);
+        setZipcode(data.association.address.zipcode);
+        setCity(data.association.address.city); 
+        
+  
+  
+          setNameEditable(false);
+          setDescriptionEditable(false);
+          setSiretEditable(false);
+          setStreetEditable(false);
+          setZipcodeEditable(false);
+          setCityEditable(false);
+ 
         console.log("Asso updated:", data);
       } else {
         const errorData = await response.json();
@@ -123,13 +186,6 @@ function AdminAssociation() {
     } catch (error) {
       console.error("Error updating asso:", error);
     }
-
-    // setNameEditable(false);
-    // // setDescriptionEditable(true);
-    // // setSiretEditable(true);
-        
-    setEditingAsso(false);
- 
   };
 
   ////// END - EDIT THE ASSOCIATION DATA ////
@@ -377,7 +433,7 @@ function AdminAssociation() {
   return (
     <div className={styles.adminMain}>
       <div className={styles.identitySection}>
-        <form onSubmit={handleSubmitAsso}>
+        <div>
           <div className={styles.assoEditInput}>
             <label htmlFor="photo"></label>
             <input type="file" id="photo" onChange={handlePhotoChange} />
@@ -389,6 +445,7 @@ function AdminAssociation() {
               />
             )}
           </div>
+          <text className={styles.assoTitle}>Name of the association</text>
           <div className={styles.assoEditInput}>
             <h1 htmlFor="name">{association?.name}</h1>
             {nameEditable ? (
@@ -400,11 +457,17 @@ function AdminAssociation() {
               />
             ) : (
               <span>{name}</span>
-            )}  {!editingAsso && 
-            <button className={styles.editAsso} onClick={() => setNameEditable(!nameEditable)}>
-              {nameEditable ? "Cancel" : "Edit"}
-            </button>}
+            )}{" "}
+            {
+              <button
+                className={styles.editAsso}
+                onClick={() => setNameEditable(!nameEditable)}
+              >
+                {nameEditable ? "Cancel" : "Edit"}
+              </button>
+            }
           </div>
+          <text className={styles.assoTitle}>Activity Description</text>
           <div className={styles.assoEditInput}>
             <label htmlFor="description">{association?.description}</label>
             {descriptionEditable ? (
@@ -416,14 +479,16 @@ function AdminAssociation() {
             ) : (
               <span>{description}</span>
             )}
-            {!editingAsso && 
-            <button
-            className={styles.editAsso}
-              onClick={() => setDescriptionEditable(!descriptionEditable)}
-            >
-              {descriptionEditable ? "Cancel" : "Edit"}
-            </button>}
+            {
+              <button
+                className={styles.editAsso}
+                onClick={() => setDescriptionEditable(!descriptionEditable)}
+              >
+                {descriptionEditable ? "Cancel" : "Edit"}
+              </button>
+            }
           </div>
+          <text className={styles.assoTitle}>SIRET</text>
           <div className={styles.assoEditInput}>
             <label htmlFor="siret">{association?.siret}</label>
             {siretEditable ? (
@@ -436,71 +501,96 @@ function AdminAssociation() {
             ) : (
               <span>{siret}</span>
             )}
-            {!editingAsso && 
-            <button className={styles.editAsso} onClick={() => setSiretEditable(!siretEditable)}>
-              {siretEditable ? "Cancel" : "Edit"}
-            </button>}
+            {
+              <button
+                className={styles.editAsso}
+                onClick={() => setSiretEditable(!siretEditable)}
+              >
+                {siretEditable ? "Cancel" : "Edit"}
+              </button>
+            }
           </div>
+          <text className={styles.assoTitle}>STREET</text>
           <div className={styles.assoEditInput}>
-            <label htmlFor="street">{association?.address.street}</label>
+            <label htmlFor="street">{address?.street}</label>
             {streetEditable ? (
               <input
                 type="text"
                 id="street"
                 defaultValue={association?.address.street}
-                onChange={(e) => setStreet(e.target.value)}
+                onChange={(e) => handleAddressChange('street', e.target.value)}
               />
             ) : (
-              <span>{street}</span>
+              <span>{association?.address.street}</span>
             )}
-            {!editingAsso && 
-            <button className={styles.editAsso} onClick={() => setStreetEditable(!streetEditable)}>
-              {streetEditable ? "Cancel" : "Edit"}
-            </button>}
+            {
+              <button
+                className={styles.editAsso}
+                onClick={() => setStreetEditable(!streetEditable)}
+              >
+                {streetEditable ? "Cancel" : "Edit"}
+              </button>
+            }
+          </div>
+          <text className={styles.assoTitle}>ZIPCODE</text>
+          <div className={styles.assoEditInput}>
+            <label htmlFor="zipcode">{association?.address.zipcode}</label>
+            {zipcodeEditable ? (
+              <input
+                type="text"
+                id="zipcode"
+                defaultValue={address?.zipcode}
+                onChange={(e) => handleAddressChange('zipcode', e.target.value)}
+              />
+            ) : (
+              <span>{association?.address.zipcode}</span>
+            )}
+            {
+              <button
+                className={styles.editAsso}
+                onClick={() => setZipcodeEditable(!zipcodeEditable)}
+              >
+                {zipcodeEditable ? "Cancel" : "Edit"}
+              </button>
+            }
+          </div>
+          <text className={styles.assoTitle}>CITY</text>
+          <div className={styles.assoEditInput}>
+            <label htmlFor="city">{association?.address.city}</label>
+            {cityEditable ? (
+              <input
+                type="text"
+                id="city"
+                defaultValue={address?.city}
+                onChange={(e) => handleAddressChange('city', e.target.value)}
+              />
+            ) : (
+              <span>{association?.address.city}</span>
+            )}
+            {
+              <button
+                className={styles.editAsso}
+                onClick={() => setCityEditable(!cityEditable)}
+              >
+                {cityEditable ? "Cancel" : "Edit"}
+              </button>
+            }
           </div>
 
-          <div className={styles.assoEditInput}>
-           <label htmlFor="zipcode">{association?.address.zipcode}</label>
-           {zipcodeEditable ? (
-             <input
-               type="text"
-               id="zipcode"
-               defaultValue={association?.address.zipcode}
-               onChange={(e) => setZipcode(e.target.value)}
-             />
-           ) : (
-             <span>{zipcode}</span>
-           )}
-           {!editingAsso &&
-           <button className={styles.editAsso} onClick={() => setZipcodeEditable(!zipcodeEditable)}>
-             {zipcodeEditable ? "Cancel" : "Edit"}
-           </button>}
-         </div>
-
-         <div className={styles.assoEditInput}>
-           <label htmlFor="city">{association?.address.city}</label>
-           {cityEditable ? (
-             <input
-               type="text"
-               id="city"
-               defaultValue={association?.address.city}
-               onChange={(e) => setCity(e.target.value)}
-             />
-           ) : (
-             <span>{city}</span>
-           )}
-           {!editingAsso &&
-           <button className={styles.editAsso} onClick={() => setCityEditable(!cityEditable)}>
-             {cityEditable ? "Cancel" : "Edit"}
-           </button>}
-         </div>
-
-
-
-          {(nameEditable || descriptionEditable || siretEditable || streetEditable || zipcodeEditable) && (
-            <button className={styles.editAsso} type="submit">Save </button>
+          {(nameEditable ||
+            descriptionEditable ||
+            siretEditable ||
+            streetEditable ||
+            zipcodeEditable ||
+            cityEditable) && (
+            <button
+              className={styles.editAsso}
+              onClick={() => handleSubmitAsso()}
+            >
+              Save{" "}
+            </button>
           )}
-        </form>
+        </div>
       </div>
 
       {showModal && (
