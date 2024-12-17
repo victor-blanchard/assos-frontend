@@ -21,7 +21,13 @@ export const associationsSlice = createSlice({
         },
 
         getAssoInfo: (state, action) => {
+            // if (!state.value.assoInfos) {
+            //     state.value.assoInfos = [];
+            // };
+            // console.log("État avant modification :", state);
+            console.log("Payload reçu :", action.payload);
             state.value.assoInfos.push(action.payload);
+            // console.log("État après push :", state.value.assoInfos);
         }
 
 

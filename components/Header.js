@@ -27,7 +27,9 @@ function Header() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
   const token = user.token;
-  console.log('TOKEN ==============>',token)
+  console.log('TOKEN ==============>',token);
+  const asso = useSelector((state) => state.associations.value.assoInfos)
+  console.log('getAsso =>', asso)
   const isAssociationOwner = useSelector((state) => state.users.value.isAssociationOwner);
   const isExistingAssociaiton = useSelector((state) => state.associations.value.assosCreate);
 
