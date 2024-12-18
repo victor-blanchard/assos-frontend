@@ -12,6 +12,7 @@
     align-items: center;
     color: white;
     background-color: #eed1e5;
+    width: 200px;
     
    
     /* opacity: 80%; */
@@ -21,15 +22,13 @@
   .homeLink {
     /* text-decoration: none; */
     color: rgb(15, 64, 113);
-    font-size: 18px;
+    font-size: 12px;
     font-weight: bold;
-    transition: color 0.2s ease-in-out;
+
     margin-bottom: 520px;
   }
 
-  .homeLink:hover {
-    color: #e0e0e0;
-  }
+  
 
   .tabs {
     margin-bottom: 200px;
