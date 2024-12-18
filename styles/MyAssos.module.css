@@ -14,7 +14,7 @@
     align-items: center;
     color: white;
     padding: 20px;
-    background-color: #f4a1dc;
+    background-color: #eed1e5;
     /* opacity: 80%; */
   }
   
@@ -25,6 +25,7 @@
     font-weight: bold;
     transition: color 0.2s ease-in-out;
     margin-bottom: 520px;
+    margin-right: 100px;
   }
   
   .homeLink:hover {
@@ -34,7 +35,7 @@
   .rightSection {
     flex: 3;
     padding: 40px;
-    background-color: white;
+    background-color: #f0edfe;
     overflow-y: auto;
     border-radius: 1px solid black;
   }
@@ -44,7 +45,7 @@
     color: #333;
     margin-bottom: -5px;
     position: relative;
-    top: -50px;
+    top: -30px;
 
   }
   
