@@ -73,13 +73,11 @@ function AdminAssociation() {
     console.log("fetch start");
 
     try {
-      const response = await fetch(
-        `http://localhost:3000/associations/getasso/${id}`
-      );
+      const response = await fetch(`http://localhost:3000/associations/getasso/${id}`);
       const data = await response.json();
 
       setAssociation(data.association);
-      setAddress(data.association.address);
+      // setAddress(data.association.address);
     } catch (error) {
       console.error("Error during the fetch of association:", error);
     }
@@ -122,10 +120,7 @@ function AdminAssociation() {
     console.log("submit clicked");
 
     try {
-      console.log(
-        "Sending PUT request to:",
-        `http://localhost:3000/associations/update/${id}`
-      );
+      console.log("Sending PUT request to:", `http://localhost:3000/associations/update/${id}`);
       console.log("Request body:", {
         id: id,
         name: name,
@@ -133,21 +128,18 @@ function AdminAssociation() {
         address: address,
       });
 
-      const response = await fetch(
-        `http://localhost:3000/associations/update/${id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            id: id,
-            name: name,
-            description: description,
-            siret: siret,
-            address: address,
-            token: token,
-          }),
-        }
-      );
+      const response = await fetch(`http://localhost:3000/associations/update/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: id,
+          name: name,
+          description: description,
+          siret: siret,
+          address: address,
+          token: token,
+        }),
+      });
 
       if (response.ok) {
         const data = await response.json();
@@ -216,9 +208,7 @@ function AdminAssociation() {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/events/getAllEvents?id=${id}`
-      );
+      const response = await fetch(`http://localhost:3000/events/getAllEvents?id=${id}`);
       const data = await response.json();
 
       setEvents(data.events);
@@ -299,17 +289,14 @@ function AdminAssociation() {
         token: token,
         event: updatedEvent,
       });
-      const response = await fetch(
-        `http://localhost:3000/events/update/${editingEvent._id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            token: token,
-            ...updatedEvent,
-          }),
-        }
-      );
+      const response = await fetch(`http://localhost:3000/events/update/${editingEvent._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          token: token,
+          ...updatedEvent,
+        }),
+      });
 
       if (response.ok) {
         const data = await response.json();
@@ -409,11 +396,7 @@ function AdminAssociation() {
       const valueB = b[column];
 
       // Sort dates
-      if (
-        column === "startDate" ||
-        column === "endDate" ||
-        column === "limitDate"
-      ) {
+      if (column === "startDate" || column === "endDate" || column === "limitDate") {
         return new Date(valueA) - new Date(valueB);
       }
 
@@ -443,11 +426,7 @@ function AdminAssociation() {
             <label htmlFor="photo"></label>
             <input type="file" id="photo" onChange={handlePhotoChange} />
             {photoPreview && (
-              <img
-                src={photoPreview}
-                alt="Photo Preview"
-                style={{ maxWidth: "200px" }}
-              />
+              <img src={photoPreview} alt="Photo Preview" style={{ maxWidth: "200px" }} />
             )}
           </div>
           <text className={styles.assoTitle}>Name of the association</text>
@@ -464,10 +443,7 @@ function AdminAssociation() {
               <span>{name}</span>
             )}{" "}
             {
-              <button
-                className={styles.editAsso}
-                onClick={() => setNameEditable(!nameEditable)}
-              >
+              <button className={styles.editAsso} onClick={() => setNameEditable(!nameEditable)}>
                 {nameEditable ? "Cancel" : "Edit"}
               </button>
             }
@@ -507,10 +483,7 @@ function AdminAssociation() {
               <span>{siret}</span>
             )}
             {
-              <button
-                className={styles.editAsso}
-                onClick={() => setSiretEditable(!siretEditable)}
-              >
+              <button className={styles.editAsso} onClick={() => setSiretEditable(!siretEditable)}>
                 {siretEditable ? "Cancel" : "Edit"}
               </button>
             }
@@ -573,10 +546,7 @@ function AdminAssociation() {
               <span>{association?.address.city}</span>
             )}
             {
-              <button
-                className={styles.editAsso}
-                onClick={() => setCityEditable(!cityEditable)}
-              >
+              <button className={styles.editAsso} onClick={() => setCityEditable(!cityEditable)}>
                 {cityEditable ? "Cancel" : "Edit"}
               </button>
             }
@@ -588,10 +558,7 @@ function AdminAssociation() {
             streetEditable ||
             zipcodeEditable ||
             cityEditable) && (
-            <button
-              className={styles.editAsso}
-              onClick={() => handleSubmitAsso()}
-            >
+            <button className={styles.editAsso} onClick={() => handleSubmitAsso()}>
               Save{" "}
             </button>
           )}
@@ -605,11 +572,7 @@ function AdminAssociation() {
               &times;
             </span>{" "}
             <h2>{editingEvent ? "Edit Event" : "Create New Event"}</h2>
-            <form
-              onSubmit={
-                editingEvent ? handleSubmitEditEvent : handleSubmitEvent
-              }
-            >
+            <form onSubmit={editingEvent ? handleSubmitEditEvent : handleSubmitEvent}>
               <div>
                 <label htmlFor="eventName">Name:</label>
                 <input
@@ -637,11 +600,7 @@ function AdminAssociation() {
                   id="startDate"
                   name="startDate"
                   defaultValue={
-                    editingEvent
-                      ? new Date(editingEvent.startDate)
-                          .toISOString()
-                          .slice(0, 10)
-                      : ""
+                    editingEvent ? new Date(editingEvent.startDate).toISOString().slice(0, 10) : ""
                   }
                   required
                 />
@@ -653,11 +612,7 @@ function AdminAssociation() {
                   id="endDate"
                   name="endDate"
                   defaultValue={
-                    editingEvent
-                      ? new Date(editingEvent.endDate)
-                          .toISOString()
-                          .slice(0, 10)
-                      : ""
+                    editingEvent ? new Date(editingEvent.endDate).toISOString().slice(0, 10) : ""
                   }
                   required
                 />
@@ -669,11 +624,7 @@ function AdminAssociation() {
                   id="limitDate"
                   name="limitDate"
                   defaultValue={
-                    editingEvent
-                      ? new Date(editingEvent.limitDate)
-                          .toISOString()
-                          .slice(0, 10)
-                      : ""
+                    editingEvent ? new Date(editingEvent.limitDate).toISOString().slice(0, 10) : ""
                   }
                   required
                 />
@@ -704,9 +655,7 @@ function AdminAssociation() {
                   type="text"
                   id="zipcode"
                   name="zipcode"
-                  defaultValue={
-                    editingEvent ? editingEvent.address.zipcode : ""
-                  }
+                  defaultValue={editingEvent ? editingEvent.address.zipcode : ""}
                   required
                 />
               </div>
@@ -750,9 +699,7 @@ function AdminAssociation() {
                   required
                 />
               </div>
-              <button type="submit">
-                {editingEvent ? "Save Changes" : "Create Event"}
-              </button>
+              <button type="submit">{editingEvent ? "Save Changes" : "Create Event"}</button>
             </form>
           </div>
         </div>
@@ -771,58 +718,31 @@ function AdminAssociation() {
               <th onClick={() => handleSort("startDate")}>
                 Start Date
                 {sortOrder.startDate === "asc" ? (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSortUp}
-                  />
+                  <FontAwesomeIcon className={styles.eventSortIcon} icon={faSortUp} />
                 ) : sortOrder.startDate === "desc" ? (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSortDown}
-                  />
+                  <FontAwesomeIcon className={styles.eventSortIcon} icon={faSortDown} />
                 ) : (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSort}
-                  />
+                  <FontAwesomeIcon className={styles.eventSortIcon} icon={faSort} />
                 )}
               </th>
               <th onClick={() => handleSort("endDate")}>
                 End Date
                 {sortOrder.endDate === "asc" ? (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSortUp}
-                  />
+                  <FontAwesomeIcon className={styles.eventSortIcon} icon={faSortUp} />
                 ) : sortOrder.endDate === "desc" ? (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSortDown}
-                  />
+                  <FontAwesomeIcon className={styles.eventSortIcon} icon={faSortDown} />
                 ) : (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSort}
-                  />
+                  <FontAwesomeIcon className={styles.eventSortIcon} icon={faSort} />
                 )}
               </th>
               <th onClick={() => handleSort("limitDate")}>
                 Limit Date
                 {sortOrder.limitDate === "asc" ? (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSortUp}
-                  />
+                  <FontAwesomeIcon className={styles.eventSortIcon} icon={faSortUp} />
                 ) : sortOrder.limitDate === "desc" ? (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSortDown}
-                  />
+                  <FontAwesomeIcon className={styles.eventSortIcon} icon={faSortDown} />
                 ) : (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSort}
-                  />
+                  <FontAwesomeIcon className={styles.eventSortIcon} icon={faSort} />
                 )}
               </th>
               <th>Description</th>

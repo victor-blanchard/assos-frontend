@@ -5,7 +5,7 @@
   justify-content: space-between;
   width: 100vw;
   height: 82vh;
-  background-color: #f0edfe;
+  background-color: #f7f2ec;
   padding-top: 2vh;
 }
 
@@ -103,8 +103,8 @@
   flex-direction: row;
   font-weight: 600;
   margin-right: 1%;
-  width: 50%;
-  /* background-color: blue; */
+  width: 55%;
+  line-height: 130%;
 }
 .eventLocation {
   margin-left: 4%;
@@ -113,6 +113,12 @@
   justify-content: end;
   align-items: end;
 }
+
+.eventStreet {
+  text-align: end;
+  width: 100%;
+}
+
 .eventTarget {
   margin-left: 4%;
   display: flex;

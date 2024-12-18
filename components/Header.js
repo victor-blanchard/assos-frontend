@@ -43,13 +43,14 @@ function Header() {
   // let events = useSelector((state) => state.searchResults?.value.events);
 
   const handleSearch = () => {
-    dispatch(addFilters({ keyword: keyword, location: location, categories: "" }));
+    dispatch(addFilters({ keyword: keyword, location: location, categories: "", openOnly: true }));
 
     const params = new URLSearchParams(
       Object.fromEntries(
         Object.entries({
           keyword: keyword,
           location: location,
+          openOnly: true,
         }).filter(([_, value]) => value !== undefined && value !== null && value !== "")
       )
     );
@@ -70,7 +71,7 @@ function Header() {
       });
     setKeyword("");
     setLocation("");
-    router.push("/search"); //gere la navigation au click vers la page search en évitant la page blanche
+    router.push(`/search?keyword=${keyword}&location=${location}`); //gere la navigation au click vers la page search en évitant la page blanche
     // window.location.href = "/search";
   };
 

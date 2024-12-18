@@ -78,9 +78,9 @@ function Home() {
   // };
 
   const handleSearch = (event) => {
-    dispatch(addFilters({ categories: event, keyword: "", location: "" }));
+    dispatch(addFilters({ categories: event, keyword: "", location: "", openOnly: true }));
 
-    const params = new URLSearchParams({ categories: event }); // Ajoute uniquement la categorie
+    const params = new URLSearchParams({ categories: event, openOnly: true }); // Ajoute uniquement la categorie
     const queryString = params.toString().replace(/%2C/g, ",");
 
     fetch(`http://localhost:3000/events/filtered?${queryString}`, {
@@ -96,7 +96,7 @@ function Home() {
         }
       });
 
-    router.push("/search"); // Navigation vers la page de résultats
+    router.push(`/search?categories=${event}`); // Navigation vers la page de résultats
   };
 
   // const iconEvent = dataEvent.map((data, i) => { //On map sur le tableau d'objet afin de recuperer les infos de manière dynamique
