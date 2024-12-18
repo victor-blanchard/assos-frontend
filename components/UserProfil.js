@@ -2,7 +2,6 @@ import styles from '../styles/UserProfil.module.css';
 import Image from 'next/image';
 import { useSelector, useDispatch } from 'react-redux';
 import AssociationCard from './AssociationCards';
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 
@@ -43,7 +42,7 @@ const cards = titleCards.map((data, i) => (
 
     
     const userProfil = (
-        <div>
+        <div className={styles.leftContainer}>
             <div className={styles.userImgProfil}>
                 <Image  
                     src="/user_profil.jpg"
@@ -56,6 +55,11 @@ const cards = titleCards.map((data, i) => (
             <div>
                 <h2>Profil de {user.username}</h2>
                 <p>Adresse mail: {user.email}</p>
+                <div className={styles.memberInfo}>
+                  <p>Groupes</p>
+                  <p>Centres d'intérêt</p>
+                  <p>Inscriptions</p>
+                </div>
             </div>
         </div>
         )
@@ -74,7 +78,7 @@ const cards = titleCards.map((data, i) => (
           )}
         </div>
       </section>
-      {showModal && modalContent} {/* Show modal */}
+      {/* {showModal && modalContent} Show modal */}
     </main>
   );
 }

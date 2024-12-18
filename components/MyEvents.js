@@ -252,9 +252,23 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Image from 'next/image';
 import { Tabs } from "antd";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from 'react-redux';
 
 function MyEvents() {
     const router = useRouter();
+    // const user = useSelector((state) => state.users.value);
+
+    // Accéder aux événements favoris depuis le store Redux
+    const likedEvents = useSelector((state) => state.users.value.likedEvents);
+
+
+
+     // Fonction pour rediriger à la page d'un événement
+ const handleClick = (eventId) => {
+    router.push(`/event/${eventId}`);
+};
+     
+
     const [activeTab, setActiveTab] = useState("upcoming"); // État pour gérer l'onglet actif
     const events = {
         upcoming: [
@@ -288,7 +302,7 @@ function MyEvents() {
         {
             key: "upcoming",
             label: "À venir",
-            children: null, // Pas d'enfants ici, tout est rendu dans la section droite
+            children: null, 
         },
         {
             key: "past",
@@ -299,11 +313,13 @@ function MyEvents() {
 
     const displayedEvents = activeTab === "upcoming" ? events.upcoming : events.past;
 
-        // Fonction pour rediriger à la page de l'évènement
-        const handleClick = (link) => {
-            console.log(link)
-            router.push('/event');
-        };
+        // // Fonction pour rediriger à la page de l'évènement
+        // const handleClick = (link) => {
+        //     console.log(link)
+        //     router.push('/event');
+        // };
+
+
 
     return (
         <div className={styles.main}>
@@ -326,7 +342,21 @@ function MyEvents() {
             <div className={styles.rightSection}>
                 <h1 className={styles.title}>Mes Évènements</h1>
                 <div className={styles.container}>
-                {displayedEvents && displayedEvents.length > 0 ? (
+                {likedEvents && likedEvents.length > 0 ? (
+                    likedEvents.map((event) => (
+                        <div
+                            key={event.id}
+                            className={styles.eventBox}
+                            onClick={() => handleClick(event.id)}
+                        >
+                               <Image
+                                src={event.image}
+                                alt={event.title}
+                                className={styles.eventImage}
+                                width={100}
+                                height={100}
+                            />
+                {/* {displayedEvents && displayedEvents.length > 0 ? (
                     displayedEvents.map((event) => (
                         <div key={event} className={styles.eventBox} onClick={() => handleClick(event)}>
                             <Image
@@ -335,7 +365,7 @@ function MyEvents() {
                                 className={styles.eventImage}
                                 width={100}
                                 height={100}
-                            />
+                            /> */}
                             <div className={styles.eventDetails}>
                                 <p className={styles.eventDate}>{event.date}</p>
                                 <h3 className={styles.eventTitle}>{event.title}</h3>
@@ -346,6 +376,7 @@ function MyEvents() {
                 ) : (
                     <p>Aucun événement dans cette catégorie.</p>
                 )}
+                
                 </div>
             </div>
         </div>

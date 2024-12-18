@@ -34,7 +34,7 @@ export const usersSlice = createSlice({
             state.value.email = action.payload.email;
             state.value.username = action.payload.username;
             state.value.isAssociationOwner = action.payload.isAssociationOwner;
-            statue.value.likedEvents.push(action.payload)
+            state.value.likedEvents.push(action.payload);
           },
 
         logout: (state) => {

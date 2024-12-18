@@ -11,7 +11,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f4a1dc;
+    background-color: #eed1e5;
     /* opacity: 80%; */
     color: white;
     padding: 20px;
@@ -33,7 +33,7 @@
   .rightSection {
     flex: 3;
     padding: 40px;
-    background-color: white;
+    background-color: #f0edfe;
     overflow-y: auto;
     border-radius: 1px solid black;
   }
