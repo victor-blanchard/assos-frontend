@@ -442,7 +442,7 @@ function AdminAssociation() {
   return (
     <div className={styles.adminMain}>
       <div className={styles.identitySection}>
-        <div>
+        <div className={styles.identyProfil}>
           <div className={styles.assoEditInput}>
             <label htmlFor="photo"></label>
             <input type="file" id="photo" onChange={handlePhotoChange} />
@@ -759,9 +759,9 @@ function AdminAssociation() {
       )}
 
       <div className={styles.eventsSection}>
-        <h2>Evenement</h2>
+        <h2>Evénements</h2>
         <button className={styles.eventButton} onClick={handleCreateEvent}>
-          Créer un évenement
+          Créer un événement
         </button>
         <div className={styles.tableContainer}>
         <table className={styles.tableOfEvents}>
