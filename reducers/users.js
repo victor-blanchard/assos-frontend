@@ -31,7 +31,6 @@ export const usersSlice = createSlice({
       state.value.formReset = action.payload;
     },
 
-<<<<<<< HEAD
         login: (state, action) => {
             state.value.token = action.payload.token;
             state.value.email = action.payload.email;
@@ -41,17 +40,6 @@ export const usersSlice = createSlice({
             state.value.likedEvents = action.payload.likedEvents;
             state.value.followingAssociations = action.payload.followingAssociations;
           },
-=======
-    login: (state, action) => {
-      state.value.token = action.payload.token;
-      state.value.email = action.payload.email;
-      state.value.username = action.payload.username;
-      state.value.isAssociationOwner = action.payload.isAssociationOwner;
-      state.value.id = action.payload.id;
-      state.value.likedEvents = action.payload.likedEvents;
-      state.value.followingAssociations = action.payload.followingAssociations;
-    },
->>>>>>> 1c53b3babe47097f3f9ec0079244bc775c823ad4
 
     logout: (state) => {
       state.value.token = null;

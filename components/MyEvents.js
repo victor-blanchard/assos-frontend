@@ -41,12 +41,12 @@ function MyEvents() {
  const items = [
    {
      key: "upcoming",
-     label: "Ã€ venir",
+     label: "A venir",
      children: null,
    },
    {
      key: "past",
-     label: "PassÃ©s",
+     label: "Passés",
      children: null,
    },
  ];
@@ -79,7 +79,7 @@ function MyEvents() {
           tabPosition="left"
           defaultActiveKey="upcoming"
           items={items}
-          onChange={(key) => setActiveTab(key)} // Mise Ãƒ  jour de l'onglet actif
+          onChange={(key) => setActiveTab(key)} // Mise à  jour de l'onglet actif
         />
   
     </div>
@@ -87,7 +87,7 @@ function MyEvents() {
 
 
      <div className={styles.rightSection}>
-       <h1 className={styles.title}>Mes Ã‰vÃ©nements</h1>
+       <h1 className={styles.title}>Mes évenements</h1>
        <div className={styles.container}>
          {displayedEvents.length > 0 ? (
            displayedEvents.map((event) => (
@@ -112,7 +112,7 @@ function MyEvents() {
                    {event.description}
                  </p>
                  <p className={styles.eventDate}>
-                   Date de dÃ©but:{" "}
+                   Date de début:{" "}
                    {new Date(event.startDate).toISOString().slice(0, 10)}
                  </p>
                  <p className={styles.eventDate}>
@@ -123,13 +123,13 @@ function MyEvents() {
                    Places disponibles: {event.slotsAvailable}
                  </p>
                  <p className={styles.eventDate}>
-                   Public ciblÃ©: {event.target}
+                   Public ciblé: {event.target}
                  </p>
                </div>
              </div>
            ))
          ) : (
-           <p>Aucun Ã©vÃ©nement dans cette catÃ©gorie.</p>
+           <p>Aucun évenement dans cette catégorie.</p>
          )}
        </div>
      </div>
