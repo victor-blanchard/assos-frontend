@@ -27,15 +27,15 @@ function Header() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
   const token = user.token;
-  console.log("TOKEN ==============>", token);
+
   const asso = useSelector((state) => state.associations.value.assoInfos);
-  console.log("getAsso =>", asso);
+ 
   const isAssociationOwner = useSelector((state) => state.users.value.isAssociationOwner);
   const isExistingAssociaiton = useSelector((state) => state.associations.value.assosCreate);
 
-  console.log("L'association exist", isExistingAssociaiton);
+
   // console.log("user : => ", user);
-  console.log("IsAssociaitonOwner =>", isAssociationOwner);
+  // console.log("IsAssociaitonOwner =>", isAssociationOwner);
   // const [currentPlace, setcurrentPlace] = useState({});
   // const places = useSelector((state) => state.places.value.placeName);
 

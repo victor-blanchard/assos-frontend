@@ -13,6 +13,7 @@ function MyAssos() {
 
     // Accéder aux assos favories depuis le store Redux
     const followingAssociations = useSelector((state) => state.users.value.followingAssociations);
+    console.log("followed assoss===>" + followingAssociations)
 
     // Fonction pour rediriger à la page d'une asso
     const handleClick = (assoId) => {
@@ -42,8 +43,10 @@ function MyAssos() {
     return (
 
         <div className={styles.main}>
+            
             <div className={styles.leftSection}>
-                <Link href="/" className={styles.homeLink}><FontAwesomeIcon icon={faArrowLeft} />Retour à la page d'accueil</Link>
+                <Link href="/userProfil" className={styles.homeLink}>Retour à mon profil</Link>
+                <Link href="/" className={styles.homeLink}>Retour à la page d'accueil</Link>
             </div>
             <div className={styles.rightSection}>
                 <h1 className={styles.title}>Mes Associations</h1>
