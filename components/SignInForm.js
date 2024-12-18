@@ -9,33 +9,31 @@ function SignInForm(props) {
     //Gestion des users
     const [isAsso, setIsAsso] = useState(false); // Permet de vérifier si c'est une asso
     const [isUser, setIsUser] = useState(false); // Permet de vérifier si c'est un particulier
-    //Gestion du store
-    const dispatch = useDispatch();
-    const user = useSelector((state) => state.users.value);
-    // console.log('etat modal =>', user.modalState);
-
-    const router = useRouter();
-
-    //Gestion formulaire
+    const [errors, setErrors] = useState([]);
     const [userInfo, setUserInfo] = useState({
         email: '',
         password: '',
     });
+    console.log(userInfo.email)
+    console.log(isAsso,'<=asso,user =>',isUser)
+
+    //Gestion du store
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.users.value);
+    // console.log('etat modal =>', user.modalState);
     
-    const [errors, setErrors] = useState([]);
+    const router = useRouter();
+
+   
+
 
     // Réinitialise les champs
     const resetForm = () => {
         setIsAsso(false);
         setIsUser(false);
         setUserInfo({
-            // firstname: '',
-            // lastname: '',
             email: '',
             password: '',
-            // birthday: '',
-            // zipcode: '',
-            // siret: ''
         });
         setErrors([]);
         // dispatch(isReset(true));
@@ -55,7 +53,7 @@ function SignInForm(props) {
 
     const validateForm = () => {
         const requiredFields = (isUser || isAsso) && ['email', 'password'];
-
+        console.log("requiredFIelds ++++++++++++++", requiredFields,'user', isUser, 'asso', isAsso)
         if (!requiredFields) {
             console.log('Champ pas correct');
             setErrors([]);
@@ -80,15 +78,16 @@ function SignInForm(props) {
             });
             console.log('Données envoyées :', JSON.stringify(userInfo));
             if (!response.ok) {
-                throw new Error('Une erreur est survenue lors de la soumission.');
+                throw new Error('Erreur r&seau ou serveur.');
             }
+            
 
             const data = await response.json();
             if (data.result) {
                 dispatch(login({email: data.email, token: data.token, username: data.firstname, isAssociationOwner: data.isAssociationOwner}));
                 dispatch(isModalVisible(false));
                 dispatch(setFormType(''));
-                console.log('data succès => ', data);
+                console.log('Connected data succès => ', data);
                 resetForm();
 
 
@@ -118,17 +117,8 @@ function SignInForm(props) {
     };
 
     let formulaire = (
-        <div>
-            <h2>Je suis :</h2>
-            <Button className={styles.btnAssociation} onClick={handleAsso}>Association</Button>
-            <Button className={styles.btnParticulier} onClick={handleUser}>Particulier</Button>
-        </div>
-    );
-
-    if (isUser) {
-        formulaire = (
             <form className={styles.form} onSubmit={handleConnect}>
-                <h2>Particulier</h2>
+                <h2>J'ai déjà un compte</h2>
                 <label>
                     Email :
                     <input type="email" name="email" value={userInfo.email} onChange={handleChange} />
@@ -143,25 +133,6 @@ function SignInForm(props) {
                 <Button onClick={handleConnect}>Se connecter</Button>
             </form>
         );
-    } else if (isAsso) {
-        formulaire = (
-            
-            <form className={styles.form} onSubmit={handleConnect}>
-                <h2>Association</h2>
-                <label>
-                    Email :
-                    <input type="email" name="email" value={userInfo.email} onChange={handleChange} />
-                    {errors.includes('email') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
-                </label>
-                <label>
-                    Mot de passe :
-                    <input type="password" name="password" value={userInfo.password} onChange={handleChange} />
-                    {errors.includes('password') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
-                </label>
-                <Button onClick={handleConnect}>Se connecter</Button>
-            </form>
-        );
-    }
 
     return (
         <div>

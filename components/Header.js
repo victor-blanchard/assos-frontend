@@ -3,8 +3,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { isModalVisible, setFormType, logout } from "../reducers/users";
-import { isModalCreateOpen } from "../reducers/associations";
-import { isCreateAsso } from "../reducers/associations";
+import { isModalCreateOpen, isCreateAsso, getAssoInfo, logoutAsso } from "../reducers/associations";
 import Image from "next/image";
 import styles from "../styles/Header.module.css";
 import { Button } from "antd";
@@ -28,10 +27,14 @@ function Header() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
   const token = user.token;
+  console.log("TOKEN ==============>", token);
+  const asso = useSelector((state) => state.associations.value.assoInfos);
+  console.log("getAsso =>", asso);
   const isAssociationOwner = useSelector((state) => state.users.value.isAssociationOwner);
-  const isExistingAssociaiton = useSelector((state) => state.associations.assosCreate);
+  const isExistingAssociaiton = useSelector((state) => state.associations.value.assosCreate);
+
   console.log("L'association exist", isExistingAssociaiton);
-  console.log("user : => ", user);
+  // console.log("user : => ", user);
   console.log("IsAssociaitonOwner =>", isAssociationOwner);
   // const [currentPlace, setcurrentPlace] = useState({});
   // const places = useSelector((state) => state.places.value.placeName);
@@ -65,15 +68,31 @@ function Header() {
       .then((data) => {
         if (data.result) {
           dispatch(addEvents(data.events));
-          console.log(`${data.events.length} events ajoutés au reducer searchResult`);
-          console.log(data);
+          // console.log(`${data.events.length} events ajoutés au reducer searchResult`);
+          // console.log(data);
         }
       });
     setKeyword("");
     setLocation("");
     router.push(`/search?keyword=${keyword}&location=${location}`); //gere la navigation au click vers la page search en évitant la page blanche
-    // window.location.href = "/search";
   };
+
+  useEffect(() => {
+    if (token) {
+      fetch(`http://localhost:3000/associations/getasso/${token}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.result) {
+            dispatch(isCreateAsso(true));
+            dispatch(getAssoInfo(data.asso));
+            // console.log('Asso de l\'owner',data.asso)
+          } else {
+            dispatch(isCreateAsso(false));
+            console.log("Pas d'associaition", data);
+          }
+        });
+    }
+  }, [token]);
 
   const handleSignUp = () => {
     dispatch(setFormType("signup"));
@@ -87,6 +106,7 @@ function Header() {
   const handleLogout = () => {
     router.push("/");
     dispatch(logout());
+    dispatch(logoutAsso());
     console.log("Déconnexion user : => ", token);
   };
 
@@ -126,10 +146,10 @@ function Header() {
     signSection = (
       <div className={styles.shortcut}>
         <div className={styles.infoSession}>
-          <h3 className={styles.txtWelcome}>Bienvenu {user.username} </h3>
+          <h3 className={styles.txtWelcome}>Bienvenue {user.username} </h3>
           {isAssociationOwner && !isExistingAssociaiton && (
             <p onClick={handleCreateAsso} className={styles.createAssoMsg}>
-              Creez votre association <FontAwesomeIcon icon={faPlus} color={"blue"} />
+              J'enregistre mon association
             </p>
           )}
         </div>
