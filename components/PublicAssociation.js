@@ -18,8 +18,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addEventId } from "../reducers/searchResults";
 import { login } from "../reducers/users";
 
-
-
 function PublicAssociation() {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -31,7 +29,8 @@ function PublicAssociation() {
   const [association, setAssociation] = useState(null);
   const [events, setEvents] = useState([]);
   const [sortOrder, setSortOrder] = useState({});
- 
+  const [assoLikeStatus, setAssolikeStatus] = useState(false);
+
   const [associationId, setAssociationId] = useState(null);
   // const eventSelectedId = useSelector((state) => state.searchResults.value.selectedEventId);
 
@@ -47,7 +46,7 @@ function PublicAssociation() {
     const fetchAssociation = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/associations/getAssoInfos/${associationId}`,
+          `http://localhost:3000/associations/getasso/${associationId}`,
           {
             method: "GET",
             headers: { "Content-Type": "application/json" },
@@ -56,7 +55,9 @@ function PublicAssociation() {
         const data = await response.json();
 
         if (data.result) {
-          console.log(`Données de l'association ${associationId} récupérées`);
+          console.log(
+            `Données de l'association--- ${associationId} -----récupérées`
+          );
           setAssociation(data.association);
         } else {
           console.error("Erreur : Association non trouvée");
@@ -203,102 +204,93 @@ function PublicAssociation() {
 
   const data = events;
 
-  // const data = [event
-  //   {
-  //     key: "1",
-  //     name: "John Brown",
-  //     chinese: 98,
-  //     math: 60,
-  //     english: 70,
-  //   },
-  //   {
-  //     key: "2",
-  //     name: "Jim Green",
-  //     chinese: 98,
-  //     math: 66,
-  //     english: 89,
-  //   },
-  //   {
-  //     key: "3",
-  //     name: "Joe Black",
-  //     chinese: 98,
-  //     math: 90,
-  //     english: 70,
-  //   },
-  //   {
-  //     key: "4",
-  //     name: "Jim Red",
-  //     chinese: 88,
-  //     math: 99,
-  //     english: 89,
-  //   },
-  // ];
-
   const onChange = (pagination, filters, sorter, extra) => {
     console.log("params", pagination, filters, sorter, extra);
   };
 
+  console.log("likestatusavantchargement=>" + assoLikeStatus);
+  ///// START - LIKE OF THE ASSOCIATION /////
+  const user = useSelector((state) => {
+    return state.users.value;
+  });
 
-///// START - LIKE OF THE ASSOCIATION /////
-const user = useSelector((state) => {
-  console.log(state); 
-  return state.users.value;
-});
-
-const likeAsso = async (token, assoId) => { 
-  try {
-    const response = await fetch(
-      `http://localhost:3000/users/addLikeAsso/${token}`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          token: token, 
-          assoId: assoId,
-        }),
-      }
-    );
-    const data = await response.json();
-
-    if (data.result) {
-      console.log(`Données de l'association ${assoId} récupérées`); // assoId kullanıldı
-    } else {
-      console.error("Erreur : User non trouvé");
+  const likeAsso = async (token, assoId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/users/addLikeAsso/${token}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            token: token,
+            assoId: assoId,
+          }),
+        }
+      );
+      response.json().then((data) => {
+        if (data.result) {
+          console.log(`Données de l'association ${assoId} récupérées`);
+        } else {
+          console.error("Erreur : User non trouvé");
+        }
+      });
+      setAssolikeStatus(true);
+    } catch (error) {
+      console.error("Erreur lors de la récupération de l'utilisateur :", error);
     }
-  } catch (error) {
-    console.error(
-      "Erreur lors de la récupération de l'utilisateur :",
-      error
-    );
-  }
-};
+  };
 
-const handleLikeAsso = () => { 
-  if (user && user.token) { // user kontrolü eklendi
-    console.log(user.token);
-    console.log(associationId);
-    likeAsso(user.token, associationId); // association._id kullanıldı
-  } else {
-    console.error('User veya token bulunamadı.');
-  }
-};
+  const handleLikeAsso = () => {
+    if (user && user.token) {
+      // controle utilisateur
+      console.log(user.token);
+      console.log(associationId);
+      likeAsso(user.token, associationId);
+    } else {
+      console.error("User not found.");
+    }
+  };
 
+  ///// END - DISLIKE OF THE ASSOCIATION //////
 
+  const dislikeAsso = async (token, assoId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/users/removeLikeAsso/${token}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            token: token,
+            assoId: assoId,
+          }),
+        }
+      );
+      response.json().then((data) => {
+        if (data.result) {
+          console.log(`Données de l'association ${assoId} récupérées`);
+        } else {
+          console.error("Erreur : User non trouvé");
+        }
+      });
+      setAssolikeStatus(false);
+    } catch (error) {
+      console.error("Erreur lors de la récupération de l'utilisateur :", error);
+    }
+  };
 
-///// END - LIKE OF THE ASSOCIATION //////
+  const handledislikeAsso = () => {
+    if (user && user.token) {
+      // controle utilisateur
+      console.log(user.token);
+      console.log(associationId);
+      dislikeAsso(user.token, associationId);
+    } else {
+      console.error("User not found.");
+    }
+  };
 
-
-
-
-
-
-
-
-
-
-
-
-
+  ///// END - DISLIKE OF THE ASSOCIATION //////
 
   return (
     <div className={styles.publicAssoMain}>
@@ -347,10 +339,21 @@ const handleLikeAsso = () => {
               </div>
             </div>
           </div>
-
-          <Button className={styles.subButton} onClick={handleLikeAsso(associationId)}> 
-        S'abonner à l'association 
-      </Button>
+          {assoLikeStatus ? (
+  <Button
+    className={styles.subButton}
+    onClick={() => handledislikeAsso(associationId)}
+  >
+    Ne plus suivre l'association
+  </Button>
+) : (
+  <Button
+    className={styles.subButton}
+    onClick={() => handleLikeAsso(associationId)}
+  >
+    Suivre l'association
+  </Button>
+)}
         </div>
 
         <h1>Événements</h1>
