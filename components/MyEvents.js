@@ -367,8 +367,8 @@ function MyEvents() {
                                 height={100}
                             /> */}
                             <div className={styles.eventDetails}>
-                                <p className={styles.eventDate}>{event.date}</p>
-                                <h3 className={styles.eventTitle}>{event.title}</h3>
+                                <p className={styles.eventDate}>{event.startDate}</p>
+                                <h3 className={styles.eventTitle}>{event.name}</h3>
                                 <p className={styles.eventDescription}>{event.description}</p>
                             </div>
                         </div>
