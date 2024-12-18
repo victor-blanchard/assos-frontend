@@ -9,20 +9,23 @@ function SignInForm(props) {
     //Gestion des users
     const [isAsso, setIsAsso] = useState(false); // Permet de vérifier si c'est une asso
     const [isUser, setIsUser] = useState(false); // Permet de vérifier si c'est un particulier
-    //Gestion du store
-    const dispatch = useDispatch();
-    const user = useSelector((state) => state.users.value);
-    // console.log('etat modal =>', user.modalState);
-
-    const router = useRouter();
-
-    //Gestion formulaire
+    const [errors, setErrors] = useState([]);
     const [userInfo, setUserInfo] = useState({
         email: '',
         password: '',
     });
+    console.log(userInfo.email)
+    console.log(isAsso,'<=asso,user =>',isUser)
+
+    //Gestion du store
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.users.value);
+    // console.log('etat modal =>', user.modalState);
     
-    const [errors, setErrors] = useState([]);
+    const router = useRouter();
+
+   
+
 
     // Réinitialise les champs
     const resetForm = () => {
@@ -50,7 +53,7 @@ function SignInForm(props) {
 
     const validateForm = () => {
         const requiredFields = (isUser || isAsso) && ['email', 'password'];
-
+        console.log("requiredFIelds ++++++++++++++", requiredFields,'user', isUser, 'asso', isAsso)
         if (!requiredFields) {
             console.log('Champ pas correct');
             setErrors([]);
@@ -75,8 +78,9 @@ function SignInForm(props) {
             });
             console.log('Données envoyées :', JSON.stringify(userInfo));
             if (!response.ok) {
-                throw new Error('Une erreur est survenue lors de la soumission.');
+                throw new Error('Erreur r&seau ou serveur.');
             }
+            
 
             const data = await response.json();
             if (data.result) {

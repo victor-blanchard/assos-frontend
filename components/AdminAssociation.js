@@ -20,12 +20,12 @@ import { login } from "../reducers/users";
 function AdminAssociation() {
   const infosAsso = useSelector((state) => state.associations.value.assoInfos);
 
- console.log('Page admin INFO ASSO ===>', infosAsso[0].id);
+ console.log('Page admin INFO ASSO ===>', infosAsso[0]?.id);
   const [association, setAssociation] = useState(null);
-  const [id, setId] = useState(infosAsso[0].id)
-  const [name, setName] = useState(infosAsso[0].name);
+  const [id, setId] = useState(infosAsso[0]?.id)
+  const [name, setName] = useState(infosAsso[0]?.name);
   const [nameEditable, setNameEditable] = useState(false);
-  const [description, setDescription] = useState(infosAsso[0].description);
+  const [description, setDescription] = useState(infosAsso[0]?.description);
   const [descriptionEditable, setDescriptionEditable] = useState(false);
   const [siret, setSiret] = useState(infosAsso[0].siret);
   const [siretEditable, setSiretEditable] = useState(false);
@@ -454,147 +454,156 @@ function AdminAssociation() {
               />
             )}
           </div>
-          <h2>{name}</h2>
-          <div className={styles.assoEditInput}>
-           
-            {nameEditable ? (
-              <input
-                type="text"
-                id="name"
-                onChange={(e) => setName(e.target.value)}
-                // defaultValue={name}
-              />
-            ) : (
-              <span>{name}</span>
-            )}{" "}
-            {
-              <button
-                className={styles.editAsso}
-                onClick={() => setNameEditable(!nameEditable)}
-              >
-                {nameEditable ? "Cancel" : "Edit"}
-              </button>
-            }
+          <div className={styles.presentation}>
+            <h2>{name}</h2>
+            <p>{description}</p>
           </div>
-          <div className={styles.assoEditInput}>
-            <label htmlFor="description"className={styles.assoTitle}>Description</label>
-            {descriptionEditable ? (
-              <textarea
-                id="description"
-                defaultValue={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            ) : (
-              <span>{description}</span>
-            )}
-            {
-              <button
-                className={styles.editAsso}
-                onClick={() => setDescriptionEditable(!descriptionEditable)}
-              >
-                {descriptionEditable ? "Cancel" : "Edit"}
-              </button>
-            }
-          </div>
-          <div className={styles.assoEditInput}>
-            <label htmlFor="siret" className={styles.assoTitle}>Siret</label>
-            {siretEditable ? (
-              <input
-                type="text"
-                id="siret"
-                defaultValue={siret}
-                onChange={(e) => setSiret(e.target.value)}
-              />
-            ) : (
-              <span>{siret}</span>
-            )}
-            {
-              <button
-                className={styles.editAsso}
-                onClick={() => setSiretEditable(!siretEditable)}
-              >
-                {siretEditable ? "Cancel" : "Edit"}
-              </button>
-            }
-          </div>
+          <h3>Modification</h3>
+          <div className={styles.blocModif}>
+            
+            <div className={styles.assoEditInput}>
+              <label htmlFor="description"className={styles.assoTitle}>Nom de l'associaiton</label>
 
-          <div className={styles.assoEditInput}>
-            <label htmlFor="street" className={styles.assoTitle}>Rue</label>
-            {streetEditable ? (
-              <input
-                type="text"
-                id="street"
-                defaultValue={street}
-                onChange={(e) => setStreet(e.target.value)}
-              />
-            ) : (
-              <span>{address?.street}</span>
-            )}
-            {
-              <button
-                className={styles.editAsso}
-                onClick={() => setStreetEditable(!streetEditable)}
-              >
-                {streetEditable ? "Cancel" : "Edit"}
-              </button>
-            }
-          </div>
-          <div className={styles.assoEditInput}>
-            <label htmlFor="zipcode" className={styles.assoTitle}>Code postal</label>
-            {zipcodeEditable ? (
-              <input
-                type="text"
-                id="zipcode"
-                defaultValue={zipcode}
-                onChange={(e) => setZipcode(e.target.value)}
-              />
-            ) : (
-              <span>{address?.zipcode}</span>
-            )}
-            {
-              <button
-                className={styles.editAsso}
-                onClick={() => setZipcodeEditable(!zipcodeEditable)}
-              >
-                {zipcodeEditable ? "Cancel" : "Edit"}
-              </button>
-            }
-          </div>
-          <div className={styles.assoEditInput}>
-            <label htmlFor="city" className={styles.assoTitle}>Ville</label>
-            {cityEditable ? (
-              <input
-                type="text"
-                id="city"
-                defaultValue={city}
-                onChange={(e) => setCity(e.target.value)}
-              />
-            ) : (
-              <span>{address?.city}</span>
-            )}
-            {
-              <button
-                className={styles.editAsso}
-                onClick={() => setCityEditable(!cityEditable)}
-              >
-                {cityEditable ? "Cancel" : "Edit"}
-              </button>
-            }
-          </div>
+              {nameEditable ? (
+                <input
+                  type="text"
+                  id="name"
+                  onChange={(e) => setName(e.target.value)}
+                  defaultValue={name}
+                />
+              ) : (
+                <p>{name}</p>
+              )}{" "}
+              {
+                <button
+                  className={styles.editAsso}
+                  onClick={() => setNameEditable(!nameEditable)}
+                >
+                  {nameEditable ? "Cancel" : "Edit"}
+                </button>
+              }
+            </div>
+            <div className={styles.assoEditInput}>
+              <label htmlFor="description"className={styles.assoTitle}>Description</label>
+              {descriptionEditable ? (
+                <textarea
+                  id="description"
+                  defaultValue={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              ) : (
+                <p>{description}</p>
+              )}
+              {
+                <button
+                  className={styles.editAsso}
+                  onClick={() => setDescriptionEditable(!descriptionEditable)}
+                >
+                  {descriptionEditable ? "Cancel" : "Edit"}
+                </button>
+              }
+            </div>
+            <div className={styles.assoEditInput}>
+              <label htmlFor="siret" className={styles.assoTitle}>Siret</label>
+              {siretEditable ? (
+                <input
+                  type="text"
+                  id="siret"
+                  defaultValue={siret}
+                  onChange={(e) => setSiret(e.target.value)}
+                />
+              ) : (
+                <p>{siret}</p>
+              )}
+              {
+                <button
+                  className={styles.editAsso}
+                  onClick={() => setSiretEditable(!siretEditable)}
+                >
+                  {siretEditable ? "Cancel" : "Edit"}
+                </button>
+              }
+            </div>
 
-          {(nameEditable ||
-            descriptionEditable ||
-            siretEditable ||
-            streetEditable ||
-            zipcodeEditable ||
-            cityEditable) && (
-            <button
-              className={styles.editAsso}
-              onClick={() => handleSubmitAsso()}
-            >
-              Save{" "}
-            </button>
-          )}
+            <div className={styles.assoEditInput}>
+              <label htmlFor="street" className={styles.assoTitle}>Rue</label>
+              {streetEditable ? (
+                <input
+                  type="text"
+                  id="street"
+                  defaultValue={street}
+                  onChange={(e) => setStreet(e.target.value)}
+                />
+              ) : (
+                <p>{address?.street}</p>
+              )}
+              {
+                <button
+                  className={styles.editAsso}
+                  onClick={() => setStreetEditable(!streetEditable)}
+                >
+                  {streetEditable ? "Cancel" : "Edit"}
+                </button>
+              }
+            </div>
+            <div className={styles.assoEditInput}>
+              <label htmlFor="zipcode" className={styles.assoTitle}>Code postal</label>
+              {zipcodeEditable ? (
+                <input
+                  type="text"
+                  id="zipcode"
+                  defaultValue={zipcode}
+                  onChange={(e) => setZipcode(e.target.value)}
+                />
+              ) : (
+                <p>{address?.zipcode}</p>
+              )}
+              {
+                <button
+                  className={styles.editAsso}
+                  onClick={() => setZipcodeEditable(!zipcodeEditable)}
+                >
+                  {zipcodeEditable ? "Cancel" : "Edit"}
+                </button>
+              }
+            </div>
+            <div className={styles.assoEditInput}>
+              <label htmlFor="city" className={styles.assoTitle}>Ville</label>
+              {cityEditable ? (
+                <input
+                  type="text"
+                  id="city"
+                  defaultValue={city}
+                  onChange={(e) => setCity(e.target.value)}
+                />
+              ) : (
+                <p>{address?.city}</p>
+              )}
+              {
+                <button
+                  className={styles.editAsso}
+                  onClick={() => setCityEditable(!cityEditable)}
+                >
+                  {cityEditable ? "Cancel" : "Edit"}
+                </button>
+              }
+            </div>
+
+            {(nameEditable ||
+              descriptionEditable ||
+              siretEditable ||
+              streetEditable ||
+              zipcodeEditable ||
+              cityEditable) && (
+              <button
+                className={styles.editAsso}
+                onClick={() => handleSubmitAsso()}
+              >
+                Save{" "}
+              </button>
+            )}
+
+          </div>
         </div>
       </div>
 

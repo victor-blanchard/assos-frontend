@@ -77,20 +77,23 @@ function Header() {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:3000/associations/getasso/${token}`)
-    .then(response => response.json())
-    .then(data => {
-      if (data.result) {
-        dispatch(isCreateAsso(true));
-        dispatch(getAssoInfo(data.asso));
-        // console.log('Asso de l\'owner',data.asso)
-      } else {
-        dispatch(isCreateAsso(false));
-        console.log('Pas d\'associaition', data)
-      }
-      
-    })
-  }, [])
+    if (token) {
+      fetch(`http://localhost:3000/associations/getasso/${token}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.result) {
+          dispatch(isCreateAsso(true));
+          dispatch(getAssoInfo(data.asso));
+          // console.log('Asso de l\'owner',data.asso)
+        } else {
+          dispatch(isCreateAsso(false));
+          console.log('Pas d\'associaition', data)
+        }
+        
+      })
+
+    }
+  }, [token])
 
   const handleSignUp = () => {
     dispatch(setFormType("signup"));
