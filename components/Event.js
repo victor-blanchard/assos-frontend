@@ -5,21 +5,26 @@ import { Image, Button } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { addAssociationId } from "../reducers/searchResults";
+import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
+import { addLikeEvent } from "../reducers/searchResults";
 
 function Event() {
   const [event, setEvent] = useState(null);
+  const [like, setLike] = useState(false);
   // const eventSelectedId = useSelector((state) => state.searchResults.value.selectedEventId);
+  const user = useSelector((state) => state.users.value);
+  const userLikedEvents = useSelector((state) => state.users.value.likedEvents);
   // const associationSelectedId = useSelector(
   //   (state) => state.searchResults.value.selectedAssociationId
   // );
   const router = useRouter();
   const dispatch = useDispatch();
-  let eventId;
+  const [eventId, setEventId] = useState(null);
 
   useEffect(() => {
     if (router.query.id) {
-      eventId = router.query.id;
+      setEventId(router.query.id);
     }
     if (eventId) {
       fetch(`http://localhost:3000/events/eventById/${eventId}`, {
@@ -33,6 +38,23 @@ function Event() {
           }
         })
         .catch((error) => console.error("Erreur lors de la récupération de l'événement :", error));
+
+      fetch(`http://localhost:3000/users/getUserLikedEvents/${user.token}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.result) {
+            if (data.likedEvents.includes(eventId)) {
+              setLike(true);
+              console.log("event dans les events likés");
+            }
+          }
+        })
+        .catch((error) =>
+          console.error("Erreur lors de la récupération des liked events :", error)
+        );
     }
   }, [eventId]);
 
@@ -66,6 +88,56 @@ function Event() {
     window.location.href = `mailto:${event?.organiser?.email}?subject=Demande d'informations ${event?.name}`;
   };
 
+  const handleLike = async () => {
+    if (!like) {
+      await fetch(`http://localhost:3000/users/addLikeEvent/${user.token}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ eventId: eventId }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.result) {
+            console.log(`like ajouté `);
+            setLike(!like);
+            console.log(data.likedEvents);
+          } else {
+            console.error("Erreur : erreur dans l'ajout du like");
+          }
+        });
+    } else {
+      await fetch(`http://localhost:3000/users/removeLikeEvent/${user.token}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ eventId: eventId }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.result) {
+            console.log(`like ajouté `);
+            setLike(!like);
+            console.log(data.likedEvents);
+          } else {
+            console.error("Erreur : erreur dans la suppression du like");
+          }
+        });
+    }
+  };
+
+  const renderLikeButton = () => {
+    if (!user?.token || user?.isAssociationOwner) return null;
+    return like ? (
+      <FontAwesomeIcon className={styles.likeButton} icon={faHeartSolid} onClick={handleLike} />
+    ) : (
+      <FontAwesomeIcon
+        className={styles.likeButton}
+        icon={faHeartRegular}
+        style={{ color: "#4e4e4e" }}
+        onClick={handleLike}
+      />
+    );
+  };
+
   return (
     <div className={styles.mainContainer}>
       <div className={styles.leftContainer}>
@@ -88,10 +160,12 @@ function Event() {
       </div>
 
       <div className={styles.rightContainer}>
-        <Button className={styles.contactButton} onClick={handleMailto}>
-          Contacter l'association
-        </Button>
-
+        <div className={styles.eventButtons}>
+          <div className={styles.likeButton}>{renderLikeButton()}</div>
+          <Button className={styles.contactButton} onClick={handleMailto}>
+            Contacter l'association
+          </Button>
+        </div>
         <div
           className={styles.associationCard}
           onClick={() => handleAssociationDisplay(event?.organiser?._id)}
