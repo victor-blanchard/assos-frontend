@@ -5,7 +5,7 @@
   height: 82vh;
   overflow-y: auto;
   padding-top: 2vh;
-  background-color: #f6f7f8;
+  background-color: #eff2f6;
 }
 .identitySection {
   border: 1px solid #d8d8d8;
@@ -16,8 +16,9 @@
   object-fit: cover;
   width: 80%;
   height: auto;
-  border-radius: 8px;
   margin: 0;
+  margin-top: 2%;
+  border-radius: 8px;
 }
 
 .assoDescriptionLabel {
@@ -169,6 +170,12 @@
   margin-bottom: 3%;
   font-size: x-large;
 }
+.assoSiretSlot {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  /* width: 30%; */
+}
 
 .assoLabel {
   display: flex;
@@ -181,11 +188,6 @@
   font-size: medium;
   font
 } */
-
-.associationImage {
-  margin-top: 2%;
-  border-radius: 3%;
-}
 
 .rightContainer {
   display: flex;

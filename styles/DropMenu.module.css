@@ -1,6 +1,9 @@
 .userIcon {
     cursor: pointer;
     transition: 0.3 ease-in-out;
+    background-color: white;
+    color:  #0093e9;
+    border-radius: 5px;
     
   }
 

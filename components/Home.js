@@ -25,7 +25,7 @@ function Home() {
   // const [isModalVisible, setIsModalVisible] = useState(false);
   const dispatch = useDispatch();
   const modal = useSelector((state) => state.users.value.formState);
-  console.log(modal);
+  // console.log(modal);
   const token = useSelector((state) => state.users.value.token);
   const router = useRouter();
 
@@ -45,9 +45,9 @@ function Home() {
   const handleSign = () => {
     // setIsModalVisible(true)
     dispatch(isModalVisible(true));
-    console.log("open", modal);
-  };
-
+    // console.log('open', modal)
+  }
+  
   /**
    * Permet de récuperer via le setter d'etat setIcon les données du tableau dataEVent
    * @param {object} event : les donnée du tableau dataEVent
@@ -78,9 +78,9 @@ function Home() {
   // };
 
   const handleSearch = (event) => {
-    dispatch(addFilters({ categories: event, keyword: "", location: "" }));
+    dispatch(addFilters({ categories: event, keyword: "", location: "", openOnly: true }));
 
-    const params = new URLSearchParams({ categories: event }); // Ajoute uniquement la categorie
+    const params = new URLSearchParams({ categories: event, openOnly: true }); // Ajoute uniquement la categorie
     const queryString = params.toString().replace(/%2C/g, ",");
 
     fetch(`http://localhost:3000/events/filtered?${queryString}`, {
@@ -96,7 +96,7 @@ function Home() {
         }
       });
 
-    router.push("/search"); // Navigation vers la page de résultats
+    router.push(`/search?categories=${event}`); // Navigation vers la page de résultats
   };
 
   // const iconEvent = dataEvent.map((data, i) => { //On map sur le tableau d'objet afin de recuperer les infos de manière dynamique

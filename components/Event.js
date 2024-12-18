@@ -9,29 +9,32 @@ import { addAssociationId } from "../reducers/searchResults";
 
 function Event() {
   const [event, setEvent] = useState(null);
-  const eventSelectedId = useSelector((state) => state.searchResults.value.selectedEventId);
-  const associationSelectedId = useSelector(
-    (state) => state.searchResults.value.selectedAssociationId
-  );
+  // const eventSelectedId = useSelector((state) => state.searchResults.value.selectedEventId);
+  // const associationSelectedId = useSelector(
+  //   (state) => state.searchResults.value.selectedAssociationId
+  // );
   const router = useRouter();
   const dispatch = useDispatch();
+  let eventId;
 
   useEffect(() => {
-    if (eventSelectedId) {
-      fetch(`http://localhost:3000/events/eventById/${eventSelectedId}`, {
+    if (router.query.id) {
+      eventId = router.query.id;
+    }
+    if (eventId) {
+      fetch(`http://localhost:3000/events/eventById/${eventId}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       })
         .then((response) => response.json())
         .then((data) => {
           if (data.result) {
-            console.log(data.event);
             setEvent(data.event);
           }
         })
         .catch((error) => console.error("Erreur lors de la récupération de l'événement :", error));
     }
-  }, [eventSelectedId]);
+  }, [eventId]);
 
   const handleGoBack = () => {
     router.back();
@@ -53,10 +56,10 @@ function Event() {
   };
 
   const handleAssociationDisplay = (id) => {
-    console.log(`asso selected${id}`);
-    dispatch(addAssociationId(id));
-    console.log({ associationSelectedId });
-    router.push("/public_association");
+    // console.log(`asso selected${id}`);
+    // dispatch(addAssociationId(id));
+    // console.log({ associationSelectedId });
+    router.push(`/public_association?id=${id}`);
   };
 
   const handleMailto = () => {
@@ -68,7 +71,7 @@ function Event() {
       <div className={styles.leftContainer}>
         <Button className={styles.backButton} onClick={handleGoBack}>
           <FontAwesomeIcon className={styles.btnSearch} icon={faArrowLeft} />
-          Retour aux résultats
+          Retour
         </Button>
         <h2 className={styles.eventTitle}>{event?.name || "Nom de l'événement non disponible"}</h2>
         <Image
@@ -115,9 +118,15 @@ function Event() {
             <div className={styles.eventEndDate}>{formatDateTime(event?.endDate)}</div>
           </div>
           <div className={styles.eventSlot}>
+            <div className={styles.eventLabel}>Date limite d'inscription :</div>
+            <div className={styles.eventLimitDate}>{formatDateTime(event?.limitDate)}</div>
+          </div>
+          <div className={styles.eventSlot}>
             <div className={styles.eventLabel}>Lieu :</div>
             <div className={styles.eventLocation}>
-              <div>{event?.address?.street || "Adresse non disponible"}</div>
+              <div className={styles.eventStreet}>
+                {event?.address?.street || "Adresse non disponible"}
+              </div>
               <div>{event?.address?.city || "Ville non disponible"}</div>
               <div>{event?.address?.zipcode || "Code postal non disponible"}</div>
             </div>
@@ -125,13 +134,13 @@ function Event() {
           <div className={styles.eventSlot}>
             <div className={styles.eventLabel}>Public visé :</div>
             <div className={styles.eventTarget}>
-              {event?.target?.join(", ") || "Aucun public spécifié"}
+              {event?.target?.join(" - ") || "Aucun public spécifié"}
             </div>
           </div>
           <div className={styles.eventSlot}>
             <div className={styles.eventLabel}>Catégories de l'événement :</div>
             <div className={styles.eventCategories}>
-              {event?.categories?.join(", ") || "Aucune catégorie définie"}
+              {event?.categories?.join(" - ") || "Aucune catégorie définie"}
             </div>
           </div>
         </div>

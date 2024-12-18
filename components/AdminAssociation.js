@@ -18,21 +18,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../reducers/users";
 
 function AdminAssociation() {
-  const [association, setAssociation] = useState(null);
+  const infosAsso = useSelector((state) => state.associations.value.assoInfos);
 
-  const [name, setName] = useState(association?.name);
+  console.log("Page admin INFO ASSO ===>", infosAsso[0]?.id);
+  const [association, setAssociation] = useState(null);
+  const [id, setId] = useState(infosAsso[0]?.id);
+  const [name, setName] = useState(infosAsso[0]?.name);
   const [nameEditable, setNameEditable] = useState(false);
-  const [description, setDescription] = useState(association?.description);
+  const [description, setDescription] = useState(infosAsso[0]?.description);
   const [descriptionEditable, setDescriptionEditable] = useState(false);
-  const [siret, setSiret] = useState(association?.siret);
+  const [siret, setSiret] = useState(infosAsso[0].siret);
   const [siretEditable, setSiretEditable] = useState(false);
-  const [address, setAddress] = useState(association?.address);
-  const [street, setStreet] = useState(association?.address.street);
+  const [address, setAddress] = useState(infosAsso[0].address);
+  const [street, setStreet] = useState(infosAsso[0].address.street);
   const [streetEditable, setStreetEditable] = useState(false);
-  const [zipcode, setZipcode] = useState(association?.address.zipcode);
+  const [zipcode, setZipcode] = useState(infosAsso[0].address.zipcode);
   const [zipcodeEditable, setZipcodeEditable] = useState(false);
-  const [city, setCity] = useState(association?.address.city);
+  const [city, setCity] = useState(infosAsso[0].address.city);
   const [cityEditable, setCityEditable] = useState(false);
+  // const { street, city, zipcode } = address;
+  console.log("State address :", address);
+  console.log("Address street :", address ? address.street : "Adresse est undefined");
 
   const [photoFile, setPhotoFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
@@ -67,19 +73,16 @@ function AdminAssociation() {
 
   const token = user.token;
   console.log("token===>" + token);
-  const id = "67602d2b2df39615a1822bac";
 
   const fetchAssociation = async () => {
     console.log("fetch start");
 
     try {
-      const response = await fetch(
-        `http://localhost:3000/associations/getasso/${id}`
-      );
+      const response = await fetch(`http://localhost:3000/associations/getasso/${id}`);
       const data = await response.json();
 
-      setAssociation(data.association);
-      setAddress(data.association.address);
+      // setAssociation(data.association);
+      // setAddress(data.association.address);
     } catch (error) {
       console.error("Error during the fetch of association:", error);
     }
@@ -113,40 +116,35 @@ function AdminAssociation() {
 
   ////// START - EDIT THE ASSOCIATION DATA ////
 
-  const handleAddressChange = (field, value) => {
-    setAddress((prevAddress) => ({ ...prevAddress, [field]: value }));
-    console.log("adress =====>", value);
-  };
+  // const handleAddressChange = (field, value) => {
+  //   setAddress((prevAddress) => ({ ...prevAddress, [field]: value }));
+  //   console.log("adress =====>", value);
+  // };
 
   const handleSubmitAsso = async () => {
-    console.log("submit clicked");
-
+    console.log("submit clicked avant le try==================================");
     try {
-      console.log(
-        "Sending PUT request to:",
-        `http://localhost:3000/associations/update/${id}`
-      );
-      console.log("Request body:", {
-        id: id,
-        name: name,
-        token: token,
-        address: address,
+      console.log("après le try===================================");
+      const response = await fetch(`http://localhost:3000/associations/update/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name,
+          siret: siret,
+          token: token,
+          address: {
+            street: street,
+            zipcode: zipcode,
+            city: city,
+          },
+        }),
       });
 
-      const response = await fetch(
-        `http://localhost:3000/associations/update/${id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            id: id,
-            name: name,
-            description: description,
-            siret: siret,
-            address: address,
-            token: token,
-          }),
-        }
+      console.log(
+        "BODY +++++++>>>>> :",
+        JSON.stringify({
+          token: token,
+        })
       );
 
       if (response.ok) {
@@ -158,7 +156,11 @@ function AdminAssociation() {
           name: name,
           description: description,
           siret: siret,
-          address: address, // Use the updated address state
+          address: {
+            street: street,
+            city: city,
+            zipcode: zipcode,
+          }, // Use the updated address state
         }));
 
         const updatedAddress = {
@@ -216,9 +218,7 @@ function AdminAssociation() {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/events/getAllEvents?id=${id}`
-      );
+      const response = await fetch(`http://localhost:3000/events/getAllEvents?id=${id}`);
       const data = await response.json();
 
       setEvents(data.events);
@@ -299,17 +299,14 @@ function AdminAssociation() {
         token: token,
         event: updatedEvent,
       });
-      const response = await fetch(
-        `http://localhost:3000/events/update/${editingEvent._id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            token: token,
-            ...updatedEvent,
-          }),
-        }
-      );
+      const response = await fetch(`http://localhost:3000/events/update/${editingEvent._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          token: token,
+          ...updatedEvent,
+        }),
+      });
 
       if (response.ok) {
         const data = await response.json();
@@ -409,11 +406,7 @@ function AdminAssociation() {
       const valueB = b[column];
 
       // Sort dates
-      if (
-        column === "startDate" ||
-        column === "endDate" ||
-        column === "limitDate"
-      ) {
+      if (column === "startDate" || column === "endDate" || column === "limitDate") {
         return new Date(valueA) - new Date(valueB);
       }
 
@@ -438,163 +431,164 @@ function AdminAssociation() {
   return (
     <div className={styles.adminMain}>
       <div className={styles.identitySection}>
-        <div>
+        <div className={styles.identyProfil}>
           <div className={styles.assoEditInput}>
             <label htmlFor="photo"></label>
             <input type="file" id="photo" onChange={handlePhotoChange} />
             {photoPreview && (
-              <img
-                src={photoPreview}
-                alt="Photo Preview"
-                style={{ maxWidth: "200px" }}
-              />
+              <img src={photoPreview} alt="Photo Preview" style={{ maxWidth: "200px" }} />
             )}
           </div>
-          <text className={styles.assoTitle}>Name of the association</text>
-          <div className={styles.assoEditInput}>
-            <h1 htmlFor="name">{association?.name}</h1>
-            {nameEditable ? (
-              <input
-                type="text"
-                id="name"
-                onChange={(e) => setName(e.target.value)}
-                defaultValue={association?.name}
-              />
-            ) : (
-              <span>{name}</span>
-            )}{" "}
-            {
-              <button
-                className={styles.editAsso}
-                onClick={() => setNameEditable(!nameEditable)}
-              >
-                {nameEditable ? "Cancel" : "Edit"}
-              </button>
-            }
+          <div className={styles.presentation}>
+            <h2>{name}</h2>
+            <p>{description}</p>
           </div>
-          <text className={styles.assoTitle}>Activity Description</text>
-          <div className={styles.assoEditInput}>
-            <label htmlFor="description">{association?.description}</label>
-            {descriptionEditable ? (
-              <textarea
-                id="description"
-                defaultValue={association?.description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            ) : (
-              <span>{description}</span>
-            )}
-            {
-              <button
-                className={styles.editAsso}
-                onClick={() => setDescriptionEditable(!descriptionEditable)}
-              >
-                {descriptionEditable ? "Cancel" : "Edit"}
-              </button>
-            }
-          </div>
-          <text className={styles.assoTitle}>SIRET</text>
-          <div className={styles.assoEditInput}>
-            <label htmlFor="siret">{association?.siret}</label>
-            {siretEditable ? (
-              <input
-                type="text"
-                id="siret"
-                defaultValue={association?.siret}
-                onChange={(e) => setSiret(e.target.value)}
-              />
-            ) : (
-              <span>{siret}</span>
-            )}
-            {
-              <button
-                className={styles.editAsso}
-                onClick={() => setSiretEditable(!siretEditable)}
-              >
-                {siretEditable ? "Cancel" : "Edit"}
-              </button>
-            }
-          </div>
-          <text className={styles.assoTitle}>STREET</text>
-          <div className={styles.assoEditInput}>
-            <label htmlFor="street">{address?.street}</label>
-            {streetEditable ? (
-              <input
-                type="text"
-                id="street"
-                defaultValue={association?.address.street}
-                onChange={(e) => handleAddressChange("street", e.target.value)}
-              />
-            ) : (
-              <span>{association?.address.street}</span>
-            )}
-            {
-              <button
-                className={styles.editAsso}
-                onClick={() => setStreetEditable(!streetEditable)}
-              >
-                {streetEditable ? "Cancel" : "Edit"}
-              </button>
-            }
-          </div>
-          <text className={styles.assoTitle}>ZIPCODE</text>
-          <div className={styles.assoEditInput}>
-            <label htmlFor="zipcode">{association?.address.zipcode}</label>
-            {zipcodeEditable ? (
-              <input
-                type="text"
-                id="zipcode"
-                defaultValue={address?.zipcode}
-                onChange={(e) => handleAddressChange("zipcode", e.target.value)}
-              />
-            ) : (
-              <span>{association?.address.zipcode}</span>
-            )}
-            {
-              <button
-                className={styles.editAsso}
-                onClick={() => setZipcodeEditable(!zipcodeEditable)}
-              >
-                {zipcodeEditable ? "Cancel" : "Edit"}
-              </button>
-            }
-          </div>
-          <text className={styles.assoTitle}>CITY</text>
-          <div className={styles.assoEditInput}>
-            <label htmlFor="city">{association?.address.city}</label>
-            {cityEditable ? (
-              <input
-                type="text"
-                id="city"
-                defaultValue={address?.city}
-                onChange={(e) => handleAddressChange("city", e.target.value)}
-              />
-            ) : (
-              <span>{association?.address.city}</span>
-            )}
-            {
-              <button
-                className={styles.editAsso}
-                onClick={() => setCityEditable(!cityEditable)}
-              >
-                {cityEditable ? "Cancel" : "Edit"}
-              </button>
-            }
-          </div>
+          <h3>Modification</h3>
+          <div className={styles.blocModif}>
+            <div className={styles.assoEditInput}>
+              <label htmlFor="description" className={styles.assoTitle}>
+                Nom de l'associaiton
+              </label>
+              {nameEditable ? (
+                <input
+                  type="text"
+                  id="name"
+                  onChange={(e) => setName(e.target.value)}
+                  defaultValue={name}
+                />
+              ) : (
+                <p>{name}</p>
+              )}{" "}
+              {
+                <button className={styles.editAsso} onClick={() => setNameEditable(!nameEditable)}>
+                  {nameEditable ? "Cancel" : "Edit"}
+                </button>
+              }
+            </div>
+            <div className={styles.assoEditInput}>
+              <label htmlFor="description" className={styles.assoTitle}>
+                Description
+              </label>
+              {descriptionEditable ? (
+                <textarea
+                  id="description"
+                  defaultValue={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              ) : (
+                <p>{description}</p>
+              )}
+              {
+                <button
+                  className={styles.editAsso}
+                  onClick={() => setDescriptionEditable(!descriptionEditable)}
+                >
+                  {descriptionEditable ? "Cancel" : "Edit"}
+                </button>
+              }
+            </div>
+            <div className={styles.assoEditInput}>
+              <label htmlFor="siret" className={styles.assoTitle}>
+                Siret
+              </label>
+              {siretEditable ? (
+                <input
+                  type="text"
+                  id="siret"
+                  defaultValue={siret}
+                  onChange={(e) => setSiret(e.target.value)}
+                />
+              ) : (
+                <p>{siret}</p>
+              )}
+              {
+                <button
+                  className={styles.editAsso}
+                  onClick={() => setSiretEditable(!siretEditable)}
+                >
+                  {siretEditable ? "Cancel" : "Edit"}
+                </button>
+              }
+            </div>
 
-          {(nameEditable ||
-            descriptionEditable ||
-            siretEditable ||
-            streetEditable ||
-            zipcodeEditable ||
-            cityEditable) && (
-            <button
-              className={styles.editAsso}
-              onClick={() => handleSubmitAsso()}
-            >
-              Save{" "}
-            </button>
-          )}
+            <div className={styles.assoEditInput}>
+              <label htmlFor="street" className={styles.assoTitle}>
+                Rue
+              </label>
+              {streetEditable ? (
+                <input
+                  type="text"
+                  id="street"
+                  defaultValue={street}
+                  onChange={(e) => setStreet(e.target.value)}
+                />
+              ) : (
+                <p>{address?.street}</p>
+              )}
+              {
+                <button
+                  className={styles.editAsso}
+                  onClick={() => setStreetEditable(!streetEditable)}
+                >
+                  {streetEditable ? "Cancel" : "Edit"}
+                </button>
+              }
+            </div>
+            <div className={styles.assoEditInput}>
+              <label htmlFor="zipcode" className={styles.assoTitle}>
+                Code postal
+              </label>
+              {zipcodeEditable ? (
+                <input
+                  type="text"
+                  id="zipcode"
+                  defaultValue={zipcode}
+                  onChange={(e) => setZipcode(e.target.value)}
+                />
+              ) : (
+                <p>{address?.zipcode}</p>
+              )}
+              {
+                <button
+                  className={styles.editAsso}
+                  onClick={() => setZipcodeEditable(!zipcodeEditable)}
+                >
+                  {zipcodeEditable ? "Cancel" : "Edit"}
+                </button>
+              }
+            </div>
+            <div className={styles.assoEditInput}>
+              <label htmlFor="city" className={styles.assoTitle}>
+                Ville
+              </label>
+              {cityEditable ? (
+                <input
+                  type="text"
+                  id="city"
+                  defaultValue={city}
+                  onChange={(e) => setCity(e.target.value)}
+                />
+              ) : (
+                <p>{address?.city}</p>
+              )}
+              {
+                <button className={styles.editAsso} onClick={() => setCityEditable(!cityEditable)}>
+                  {cityEditable ? "Cancel" : "Edit"}
+                </button>
+              }
+            </div>
+
+            {(nameEditable ||
+              descriptionEditable ||
+              siretEditable ||
+              streetEditable ||
+              zipcodeEditable ||
+              cityEditable) && (
+              <button className={styles.editAsso} onClick={() => handleSubmitAsso()}>
+                Save{" "}
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -605,11 +599,7 @@ function AdminAssociation() {
               &times;
             </span>{" "}
             <h2>{editingEvent ? "Edit Event" : "Create New Event"}</h2>
-            <form
-              onSubmit={
-                editingEvent ? handleSubmitEditEvent : handleSubmitEvent
-              }
-            >
+            <form onSubmit={editingEvent ? handleSubmitEditEvent : handleSubmitEvent}>
               <div>
                 <label htmlFor="eventName">Name:</label>
                 <input
@@ -637,11 +627,7 @@ function AdminAssociation() {
                   id="startDate"
                   name="startDate"
                   defaultValue={
-                    editingEvent
-                      ? new Date(editingEvent.startDate)
-                          .toISOString()
-                          .slice(0, 10)
-                      : ""
+                    editingEvent ? new Date(editingEvent.startDate).toISOString().slice(0, 10) : ""
                   }
                   required
                 />
@@ -653,11 +639,7 @@ function AdminAssociation() {
                   id="endDate"
                   name="endDate"
                   defaultValue={
-                    editingEvent
-                      ? new Date(editingEvent.endDate)
-                          .toISOString()
-                          .slice(0, 10)
-                      : ""
+                    editingEvent ? new Date(editingEvent.endDate).toISOString().slice(0, 10) : ""
                   }
                   required
                 />
@@ -669,11 +651,7 @@ function AdminAssociation() {
                   id="limitDate"
                   name="limitDate"
                   defaultValue={
-                    editingEvent
-                      ? new Date(editingEvent.limitDate)
-                          .toISOString()
-                          .slice(0, 10)
-                      : ""
+                    editingEvent ? new Date(editingEvent.limitDate).toISOString().slice(0, 10) : ""
                   }
                   required
                 />
@@ -704,9 +682,7 @@ function AdminAssociation() {
                   type="text"
                   id="zipcode"
                   name="zipcode"
-                  defaultValue={
-                    editingEvent ? editingEvent.address.zipcode : ""
-                  }
+                  defaultValue={editingEvent ? editingEvent.address.zipcode : ""}
                   required
                 />
               </div>
@@ -750,124 +726,96 @@ function AdminAssociation() {
                   required
                 />
               </div>
-              <button type="submit">
-                {editingEvent ? "Save Changes" : "Create Event"}
-              </button>
+              <button type="submit">{editingEvent ? "Save Changes" : "Create Event"}</button>
             </form>
           </div>
         </div>
       )}
 
       <div className={styles.eventsSection}>
-        <h1>Events</h1>
+        <h2>Evénements</h2>
         <button className={styles.eventButton} onClick={handleCreateEvent}>
-          Create
+          Créer un événement
         </button>
-
-        <table className={styles.tableOfEvents}>
-          <thead>
-            <tr>
-              <th>Event Name</th>
-              <th onClick={() => handleSort("startDate")}>
-                Start Date
-                {sortOrder.startDate === "asc" ? (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSortUp}
-                  />
-                ) : sortOrder.startDate === "desc" ? (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSortDown}
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSort}
-                  />
-                )}
-              </th>
-              <th onClick={() => handleSort("endDate")}>
-                End Date
-                {sortOrder.endDate === "asc" ? (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSortUp}
-                  />
-                ) : sortOrder.endDate === "desc" ? (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSortDown}
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSort}
-                  />
-                )}
-              </th>
-              <th onClick={() => handleSort("limitDate")}>
-                Limit Date
-                {sortOrder.limitDate === "asc" ? (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSortUp}
-                  />
-                ) : sortOrder.limitDate === "desc" ? (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSortDown}
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSort}
-                  />
-                )}
-              </th>
-              <th>Description</th>
-              <th>Event Address </th>
-              <th>Event Zipcode</th>
-              <th>Event City</th>
-              <th>Event Status</th>
-              <th>Event Categories</th>
-              <th>Targeted Public</th>
-              <th>Available Slots</th>
-            </tr>
-          </thead>
-          <tbody>
-            {events.map((event) => (
-              <tr key={event._id}>
-                <td>{truncateText(event.name, 40)}</td>
-                <td>{new Date(event.startDate).toLocaleDateString("fr-FR")}</td>
-                <td>{new Date(event.endDate).toLocaleDateString("fr-FR")}</td>
-                <td>{new Date(event.limitDate).toLocaleDateString("fr-FR")}</td>
-                <td>{truncateText(event.description, 40)}</td>
-                <td>{event.address.street} </td>
-                <td>{event.address.zipcode} </td>
-                <td>{event.address.city} </td>
-                <td>{event.status}</td>
-                <td>{event.categories.join(", ")}</td>
-                <td>{event.target.join(", ")}</td>
-                <td>{event.slotsAvailable}</td>
-                <td>
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faTrash}
-                    onClick={() => handleDeleteEvent(token, event._id)}
-                  />
-                </td>
-                <td>
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faPen}
-                    onClick={() => handleEditEvent(event)} //
-                  />
-                </td>
+        <div className={styles.tableContainer}>
+          <table className={styles.tableOfEvents}>
+            <thead>
+              <tr>
+                <th>Event Name</th>
+                <th onClick={() => handleSort("startDate")}>
+                  Start Date
+                  {sortOrder.startDate === "asc" ? (
+                    <FontAwesomeIcon className={styles.eventSortIcon} icon={faSortUp} />
+                  ) : sortOrder.startDate === "desc" ? (
+                    <FontAwesomeIcon className={styles.eventSortIcon} icon={faSortDown} />
+                  ) : (
+                    <FontAwesomeIcon className={styles.eventSortIcon} icon={faSort} />
+                  )}
+                </th>
+                <th onClick={() => handleSort("endDate")}>
+                  End Date
+                  {sortOrder.endDate === "asc" ? (
+                    <FontAwesomeIcon className={styles.eventSortIcon} icon={faSortUp} />
+                  ) : sortOrder.endDate === "desc" ? (
+                    <FontAwesomeIcon className={styles.eventSortIcon} icon={faSortDown} />
+                  ) : (
+                    <FontAwesomeIcon className={styles.eventSortIcon} icon={faSort} />
+                  )}
+                </th>
+                <th onClick={() => handleSort("limitDate")}>
+                  Limit Date
+                  {sortOrder.limitDate === "asc" ? (
+                    <FontAwesomeIcon className={styles.eventSortIcon} icon={faSortUp} />
+                  ) : sortOrder.limitDate === "desc" ? (
+                    <FontAwesomeIcon className={styles.eventSortIcon} icon={faSortDown} />
+                  ) : (
+                    <FontAwesomeIcon className={styles.eventSortIcon} icon={faSort} />
+                  )}
+                </th>
+                <th>Description</th>
+                <th>Event Address </th>
+                <th>Event Zipcode</th>
+                <th>Event City</th>
+                <th>Event Status</th>
+                <th>Event Categories</th>
+                <th>Targeted Public</th>
+                <th>Available Slots</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {events.map((event) => (
+                <tr key={event._id}>
+                  <td>{truncateText(event.name, 40)}</td>
+                  <td>{new Date(event.startDate).toLocaleDateString("fr-FR")}</td>
+                  <td>{new Date(event.endDate).toLocaleDateString("fr-FR")}</td>
+                  <td>{new Date(event.limitDate).toLocaleDateString("fr-FR")}</td>
+                  <td>{truncateText(event.description, 40)}</td>
+                  <td>{event.address.street} </td>
+                  <td>{event.address.zipcode} </td>
+                  <td>{event.address.city} </td>
+                  <td>{event.status}</td>
+                  <td>{event.categories.join(", ")}</td>
+                  <td>{event.target.join(", ")}</td>
+                  <td>{event.slotsAvailable}</td>
+                  <td>
+                    <FontAwesomeIcon
+                      className={styles.eventSortIcon}
+                      icon={faTrash}
+                      onClick={() => handleDeleteEvent(token, event._id)}
+                    />
+                  </td>
+                  <td>
+                    <FontAwesomeIcon
+                      className={styles.eventSortIcon}
+                      icon={faPen}
+                      onClick={() => handleEditEvent(event)} //
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

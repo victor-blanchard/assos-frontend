@@ -1,15 +1,17 @@
-import styles from '../styles/Footer.module.css';
-import Link from 'next/link';
+import styles from "../styles/Footer.module.css";
+import Link from "next/link";
 
 function Footer() {
   return (
-      <footer className={styles.footer}>
-        <ul className={styles.footerInfos}>
-            {/* <Link className={styles.link} href='/about'><li>A propos</li></Link> */}
-            <text>2024 La Sauce &copy; Tous droits réservés</text>
-            <Link className={styles.link}href='/contact'><li>Contact</li></Link>
-        </ul>
-      </footer>
+    <footer className={styles.footer}>
+      <ul className={styles.footerInfos}>
+        {/* <Link className={styles.link} href='/about'><li>A propos</li></Link> */}
+        <div>2024 La Sauce &copy; Tous droits réservés</div>
+        <Link className={styles.link} href="/contact">
+          <li>Contact</li>
+        </Link>
+      </ul>
+    </footer>
   );
 }
 

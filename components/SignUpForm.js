@@ -115,7 +115,7 @@ function SignUpForm(props) {
 
     let formulaire = (
         <div>
-            <h2>Je suis :</h2>
+           <h3>Je suis :</h3>
             <Button className={styles.btnAssociation} onClick={()=>handleAsso()}>Association</Button>
             <Button className={styles.btnParticulier} onClick={() =>handleUser()}>Particulier</Button>
         </div>
