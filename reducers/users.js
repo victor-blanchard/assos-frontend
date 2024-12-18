@@ -11,6 +11,7 @@ const initialState = {
         id: null,
         isAssociationOwner: false,
         likedEvents: [],
+        followingAssociations: [],
     },
 };
 

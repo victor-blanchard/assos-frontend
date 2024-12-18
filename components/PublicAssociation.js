@@ -16,6 +16,9 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addEventId } from "../reducers/searchResults";
+import { login } from "../reducers/users";
+
+
 
 function PublicAssociation() {
   const dispatch = useDispatch();
@@ -28,13 +31,14 @@ function PublicAssociation() {
   const [association, setAssociation] = useState(null);
   const [events, setEvents] = useState([]);
   const [sortOrder, setSortOrder] = useState({});
-  let associationId;
+ 
+  const [associationId, setAssociationId] = useState(null);
   // const eventSelectedId = useSelector((state) => state.searchResults.value.selectedEventId);
 
   // Effet pour récupérer les données de l'association
   useEffect(() => {
     if (router.query.id) {
-      associationId = router.query.id;
+      setAssociationId(router.query.id);
       console.log(associationId);
     }
     // Vérification : attendre que associationSelectedId soit défini
@@ -58,7 +62,10 @@ function PublicAssociation() {
           console.error("Erreur : Association non trouvée");
         }
       } catch (error) {
-        console.error("Erreur lors de la récupération de l'association :", error);
+        console.error(
+          "Erreur lors de la récupération de l'association :",
+          error
+        );
       }
     };
 
@@ -71,14 +78,21 @@ function PublicAssociation() {
       fetch(`http://localhost:3000/events/getAllEvents/${associationId}`)
         .then((response) => response.json())
         .then((data) => setEvents(data.events))
-        .catch((error) => console.error("Erreur lors de la récupération des événements :", error));
+        .catch((error) =>
+          console.error(
+            "Erreur lors de la récupération des événements :",
+            error
+          )
+        );
       console.log("Events de l'association récupérés");
     }
   }, [associationId]);
 
   // Fonction pour tronquer le texte
   const truncateText = (text, maxLength) =>
-    text?.length > maxLength ? text.substring(0, maxLength) + "..." : text || "";
+    text?.length > maxLength
+      ? text.substring(0, maxLength) + "..."
+      : text || "";
 
   // Gestion du tri
   const handleSort = (column) => {
@@ -93,7 +107,9 @@ function PublicAssociation() {
           ? new Date(valueA) - new Date(valueB)
           : new Date(valueB) - new Date(valueA);
       } else if (typeof valueA === "string") {
-        return newOrder === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+        return newOrder === "asc"
+          ? valueA.localeCompare(valueB)
+          : valueB.localeCompare(valueA);
       }
       return newOrder === "asc" ? valueA - valueB : valueB - valueA;
     });
@@ -222,11 +238,74 @@ function PublicAssociation() {
     console.log("params", pagination, filters, sorter, extra);
   };
 
+
+///// START - LIKE OF THE ASSOCIATION /////
+const user = useSelector((state) => {
+  console.log(state); 
+  return state.users.value;
+});
+
+const likeAsso = async (token, assoId) => { 
+  try {
+    const response = await fetch(
+      `http://localhost:3000/users/addLikeAsso/${token}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          token: token, 
+          assoId: assoId,
+        }),
+      }
+    );
+    const data = await response.json();
+
+    if (data.result) {
+      console.log(`Données de l'association ${assoId} récupérées`); // assoId kullanıldı
+    } else {
+      console.error("Erreur : User non trouvé");
+    }
+  } catch (error) {
+    console.error(
+      "Erreur lors de la récupération de l'utilisateur :",
+      error
+    );
+  }
+};
+
+const handleLikeAsso = () => { 
+  if (user && user.token) { // user kontrolü eklendi
+    console.log(user.token);
+    console.log(associationId);
+    likeAsso(user.token, associationId); // association._id kullanıldı
+  } else {
+    console.error('User veya token bulunamadı.');
+  }
+};
+
+
+
+///// END - LIKE OF THE ASSOCIATION //////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <div className={styles.publicAssoMain}>
       <div className={styles.leftContainer}>
         <Button className={styles.backButton} onClick={() => router.back()}>
-          <FontAwesomeIcon className={styles.btnBack} icon={faArrowLeft} /> Retour
+          <FontAwesomeIcon className={styles.btnBack} icon={faArrowLeft} />{" "}
+          Retour
         </Button>
         <Image
           src="https://secure.meetupstatic.com/photos/event/2/1/7/600_525000535.webp?w=750"
@@ -251,25 +330,35 @@ function PublicAssociation() {
               <div className={styles.assoSiret}>{association?.siret}</div>
             </div>
             <div className={styles.assoLocation}>
-              <div>{association?.address?.street || "Adresse non disponible"}</div>
+              <div>
+                {association?.address?.street || "Adresse non disponible"}
+              </div>
               <div>{association?.address?.city || "Ville non disponible"}</div>
-              <div>{association?.address?.zipcode || "Code postal non disponible"}</div>
+              <div>
+                {association?.address?.zipcode || "Code postal non disponible"}
+              </div>
             </div>
             <div className={styles.assoCategoriesContainer}>
               <div className={styles.assoCategoriesLabel}>Thèmes</div>
               <div className={styles.assoCategories}>
-                <div className={styles.cardCategories}>{categoriesToDisplay}</div>
+                <div className={styles.cardCategories}>
+                  {categoriesToDisplay}
+                </div>
               </div>
             </div>
           </div>
 
-          <Button className={styles.subButton}>S'abonner à l'association</Button>
+          <Button className={styles.subButton} onClick={handleLikeAsso(associationId)}> 
+        S'abonner à l'association 
+      </Button>
         </div>
 
         <h1>Événements</h1>
         <Table
           locale={{
-            emptyText: <Empty description="Pas d'événements à afficher"></Empty>,
+            emptyText: (
+              <Empty description="Pas d'événements à afficher"></Empty>
+            ),
           }}
           columns={columns}
           dataSource={data}
