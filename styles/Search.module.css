@@ -6,6 +6,7 @@
   align-items: left;
   height: 84vh;
   flex-grow: 1;
+  background-color: #f7f2ec;
 }
 
 .searchHeaders {
@@ -52,7 +53,17 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-left: 10px;
+  margin-right: 1%;
+}
+
+.filterboxDate {
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-right: 1%;
 }
 
 .openOnlyBox {
@@ -62,8 +73,9 @@
   justify-content: center;
   align-items: center;
   margin-left: 10px;
-  margin-right: 10px;
   font-size: 10px;
+  margin-right: 1%;
+  /* background-color: #d9613d; */
 }
 
 .resultContainer {
@@ -122,7 +134,8 @@
   cursor: pointer;
   margin-top: 1%;
   border-radius: 10px;
-  background-color: rgba(214, 214, 214, 0.151);
+  background-color: rgb(255, 255, 255);
+  height: 13vh;
 }
 
 /* .card.hover {
@@ -132,7 +145,7 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  width: 20vw;
+  width: 40vw;
   font-weight: 600;
   font-size: 120%;
   font-family: Arial, Helvetica, sans-serif;
@@ -146,36 +159,51 @@
   display: flex;
   flex-direction: row;
   /* justify-content: flex-start; */
-  width: 30vw;
-  font-size: 120%;
+  width: 40vw;
+  font-size: 100%;
   font-weight: 400;
-  font-family: Arial, Helvetica, sans-serif;
+  text-align: justify;
+  margin-bottom: 1%;
+  line-height: 110%;
 }
 .cardInfos {
   display: flex;
   flex-direction: column;
   align-items: start;
   width: 50vw;
+  height: 13vh;
 }
 .cardType {
   display: flex;
   flex-direction: column;
   align-items: start;
+  justify-content: space-between;
+  height: 13vh;
+  width: 25vw;
 }
 .cardCategories {
-  width: 10vw;
+  width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  flex-wrap: wrap;
 }
 .cardCategory {
   display: flex;
   flex-direction: row;
   align-items: start;
-  background-color: #ffe7c2;
+  background-color: #f6f3ef;
   border-radius: 5%;
-  padding-left: 10%;
-  padding-right: 10%;
+  padding-left: 4%;
+  padding-right: 4%;
+  margin-right: 2%;
+  font-size: 110%;
+}
+
+.cardAddress {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
   margin-right: 10%;
-  font-size: 120%;
+  font-size: 110%;
+  gap: 10%;
 }

@@ -22,7 +22,7 @@ function AdminAssociation() {
 
   console.log('Page admin INFO ASSO ===>', infosAsso[0]?.id);
   const [association, setAssociation] = useState(null);
-  const [id, setId] = useState(infosAsso[0]?.id)
+  const [id, setId] = useState(infosAsso[0]?.id);
   const [name, setName] = useState(infosAsso[0]?.name);
   const [nameEditable, setNameEditable] = useState(false);
   const [description, setDescription] = useState(infosAsso[0]?.description);
@@ -38,8 +38,7 @@ function AdminAssociation() {
   const [cityEditable, setCityEditable] = useState(false);
   // const { street, city, zipcode } = address;
   console.log("State address :", address);
-  console.log("Address street :", address ? address.street : 'Adresse est undefined');
-
+  console.log("Address street :", address ? address.street : "Adresse est undefined");
 
   const [photoFile, setPhotoFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
@@ -79,9 +78,7 @@ function AdminAssociation() {
     console.log("fetch start");
 
     try {
-      const response = await fetch(
-        `http://localhost:3000/associations/getasso/${id}`
-      );
+      const response = await fetch(`http://localhost:3000/associations/getasso/${id}`);
       const data = await response.json();
 
       // setAssociation(data.association);
@@ -127,7 +124,7 @@ function AdminAssociation() {
   const handleSubmitAsso = async () => {
     console.log("submit clicked avant le try==================================");
     try {
-      console.log('après le try===================================');
+      console.log("après le try===================================");
       const response = await fetch(`http://localhost:3000/associations/update/${id}`, {
 
         method: "PUT",
@@ -145,9 +142,12 @@ function AdminAssociation() {
       },
       );
 
-      console.log('BODY +++++++>>>>> :', JSON.stringify({
-        token: token
-      }))
+      console.log(
+        "BODY +++++++>>>>> :",
+        JSON.stringify({
+          token: token,
+        })
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -220,9 +220,7 @@ function AdminAssociation() {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/events/getAllEvents?id=${id}`
-      );
+      const response = await fetch(`http://localhost:3000/events/getAllEvents?id=${id}`);
       const data = await response.json();
 
       setEvents(data.events);
@@ -303,17 +301,14 @@ function AdminAssociation() {
         token: token,
         event: updatedEvent,
       });
-      const response = await fetch(
-        `http://localhost:3000/events/update/${editingEvent._id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            token: token,
-            ...updatedEvent,
-          }),
-        }
-      );
+      const response = await fetch(`http://localhost:3000/events/update/${editingEvent._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          token: token,
+          ...updatedEvent,
+        }),
+      });
 
       if (response.ok) {
         const data = await response.json();
@@ -413,11 +408,7 @@ function AdminAssociation() {
       const valueB = b[column];
 
       // Sort dates
-      if (
-        column === "startDate" ||
-        column === "endDate" ||
-        column === "limitDate"
-      ) {
+      if (column === "startDate" || column === "endDate" || column === "limitDate") {
         return new Date(valueA) - new Date(valueB);
       }
 
@@ -480,10 +471,7 @@ function AdminAssociation() {
                 <p>{name}</p>
               )}{" "}
               {
-                <button
-                  className={styles.editAsso}
-                  onClick={() => setNameEditable(!nameEditable)}
-                >
+                <button className={styles.editAsso} onClick={() => setNameEditable(!nameEditable)}>
                   {nameEditable ? "Cancel" : "Edit"}
                 </button>
               }
@@ -509,7 +497,9 @@ function AdminAssociation() {
               }
             </div>
             <div className={styles.assoEditInput}>
-              <label htmlFor="siret" className={styles.assoTitle}>Siret</label>
+              <label htmlFor="siret" className={styles.assoTitle}>
+                Siret
+              </label>
               {siretEditable ? (
                 <input
                   type="text"
@@ -531,7 +521,9 @@ function AdminAssociation() {
             </div>
 
             <div className={styles.assoEditInput}>
-              <label htmlFor="street" className={styles.assoTitle}>Rue</label>
+              <label htmlFor="street" className={styles.assoTitle}>
+                Rue
+              </label>
               {streetEditable ? (
                 <input
                   type="text"
@@ -552,7 +544,9 @@ function AdminAssociation() {
               }
             </div>
             <div className={styles.assoEditInput}>
-              <label htmlFor="zipcode" className={styles.assoTitle}>Code postal</label>
+              <label htmlFor="zipcode" className={styles.assoTitle}>
+                Code postal
+              </label>
               {zipcodeEditable ? (
                 <input
                   type="text"
@@ -573,7 +567,9 @@ function AdminAssociation() {
               }
             </div>
             <div className={styles.assoEditInput}>
-              <label htmlFor="city" className={styles.assoTitle}>Ville</label>
+              <label htmlFor="city" className={styles.assoTitle}>
+                Ville
+              </label>
               {cityEditable ? (
                 <input
                   type="text"
@@ -585,10 +581,7 @@ function AdminAssociation() {
                 <p>{address?.city}</p>
               )}
               {
-                <button
-                  className={styles.editAsso}
-                  onClick={() => setCityEditable(!cityEditable)}
-                >
+                <button className={styles.editAsso} onClick={() => setCityEditable(!cityEditable)}>
                   {cityEditable ? "Cancel" : "Edit"}
                 </button>
               }
@@ -619,11 +612,7 @@ function AdminAssociation() {
               &times;
             </span>{" "}
             <h2>{editingEvent ? "Edit Event" : "Create New Event"}</h2>
-            <form
-              onSubmit={
-                editingEvent ? handleSubmitEditEvent : handleSubmitEvent
-              }
-            >
+            <form onSubmit={editingEvent ? handleSubmitEditEvent : handleSubmitEvent}>
               <div>
                 <label htmlFor="eventName">Name:</label>
                 <input
@@ -651,11 +640,7 @@ function AdminAssociation() {
                   id="startDate"
                   name="startDate"
                   defaultValue={
-                    editingEvent
-                      ? new Date(editingEvent.startDate)
-                        .toISOString()
-                        .slice(0, 10)
-                      : ""
+                    editingEvent ? new Date(editingEvent.startDate).toISOString().slice(0, 10) : ""
                   }
                   required
                 />
@@ -667,6 +652,7 @@ function AdminAssociation() {
                   id="endDate"
                   name="endDate"
                   defaultValue={
+                    editingEvent ? new Date(editingEvent.endDate).toISOString().slice(0, 10) : ""
                     editingEvent
                       ? new Date(editingEvent.endDate)
                         .toISOString()
@@ -718,9 +704,7 @@ function AdminAssociation() {
                   type="text"
                   id="zipcode"
                   name="zipcode"
-                  defaultValue={
-                    editingEvent ? editingEvent.address.zipcode : ""
-                  }
+                  defaultValue={editingEvent ? editingEvent.address.zipcode : ""}
                   required
                 />
               </div>
@@ -764,9 +748,7 @@ function AdminAssociation() {
                   required
                 />
               </div>
-              <button type="submit">
-                {editingEvent ? "Save Changes" : "Create Event"}
-              </button>
+              <button type="submit">{editingEvent ? "Save Changes" : "Create Event"}</button>
             </form>
           </div>
         </div>

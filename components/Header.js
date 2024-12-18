@@ -27,9 +27,9 @@ function Header() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
   const token = user.token;
-  console.log('TOKEN ==============>',token);
-  const asso = useSelector((state) => state.associations.value.assoInfos)
-  console.log('getAsso =>', asso)
+  console.log("TOKEN ==============>", token);
+  const asso = useSelector((state) => state.associations.value.assoInfos);
+  console.log("getAsso =>", asso);
   const isAssociationOwner = useSelector((state) => state.users.value.isAssociationOwner);
   const isExistingAssociaiton = useSelector((state) => state.associations.value.assosCreate);
 
@@ -46,13 +46,14 @@ function Header() {
   // let events = useSelector((state) => state.searchResults?.value.events);
 
   const handleSearch = () => {
-    dispatch(addFilters({ keyword: keyword, location: location, categories: "" }));
+    dispatch(addFilters({ keyword: keyword, location: location, categories: "", openOnly: true }));
 
     const params = new URLSearchParams(
       Object.fromEntries(
         Object.entries({
           keyword: keyword,
           location: location,
+          openOnly: true,
         }).filter(([_, value]) => value !== undefined && value !== null && value !== "")
       )
     );
@@ -73,27 +74,25 @@ function Header() {
       });
     setKeyword("");
     setLocation("");
-    router.push("/search"); //gere la navigation au click vers la page search en évitant la page blanche
+    router.push(`/search?keyword=${keyword}&location=${location}`); //gere la navigation au click vers la page search en évitant la page blanche
   };
 
   useEffect(() => {
     if (token) {
       fetch(`http://localhost:3000/associations/getasso/${token}`)
-      .then(response => response.json())
-      .then(data => {
-        if (data.result) {
-          dispatch(isCreateAsso(true));
-          dispatch(getAssoInfo(data.asso));
-          // console.log('Asso de l\'owner',data.asso)
-        } else {
-          dispatch(isCreateAsso(false));
-          console.log('Pas d\'associaition', data)
-        }
-        
-      })
-
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.result) {
+            dispatch(isCreateAsso(true));
+            dispatch(getAssoInfo(data.asso));
+            // console.log('Asso de l\'owner',data.asso)
+          } else {
+            dispatch(isCreateAsso(false));
+            console.log("Pas d'associaition", data);
+          }
+        });
     }
-  }, [token])
+  }, [token]);
 
   const handleSignUp = () => {
     dispatch(setFormType("signup"));
@@ -148,9 +147,9 @@ function Header() {
       <div className={styles.shortcut}>
         <div className={styles.infoSession}>
           <h3 className={styles.txtWelcome}>Bienvenue {user.username} </h3>
-          {isAssociationOwner  && !isExistingAssociaiton && (
+          {isAssociationOwner && !isExistingAssociaiton && (
             <p onClick={handleCreateAsso} className={styles.createAssoMsg}>
-             J'enregistre mon association 
+              J'enregistre mon association
             </p>
           )}
         </div>
@@ -235,5 +234,7 @@ function Header() {
     </header>
   );
 }
+
+//a supprimer après le merge
 
 export default Header;
