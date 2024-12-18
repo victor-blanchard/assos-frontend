@@ -20,7 +20,7 @@ import { login } from "../reducers/users";
 function AdminAssociation() {
   const infosAsso = useSelector((state) => state.associations.value.assoInfos);
 
- console.log('Page admin INFO ASSO ===>', infosAsso[0]?.id);
+  console.log('Page admin INFO ASSO ===>', infosAsso[0]?.id);
   const [association, setAssociation] = useState(null);
   const [id, setId] = useState(infosAsso[0]?.id)
   const [name, setName] = useState(infosAsso[0]?.name);
@@ -130,19 +130,19 @@ function AdminAssociation() {
       console.log('après le try===================================');
       const response = await fetch(`http://localhost:3000/associations/update/${id}`, {
 
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ 
-            name: name,
-            siret: siret,
-            token: token, 
-            address: {
-              street: street,
-              zipcode: zipcode,
-              city: city,
-            }
-          }),
-        },
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name,
+          siret: siret,
+          token: token,
+          address: {
+            street: street,
+            zipcode: zipcode,
+            city: city,
+          }
+        }),
+      },
       );
 
       console.log('BODY +++++++>>>>> :', JSON.stringify({
@@ -445,24 +445,29 @@ function AdminAssociation() {
         <div className={styles.identyProfil}>
           <div className={styles.assoEditInput}>
             <label htmlFor="photo"></label>
-            <input type="file" id="photo" onChange={handlePhotoChange} />
-            {photoPreview && (
-              <img
+            <div className={styles.photoProfil}>
+            {photoPreview ? (
+              <Image
                 src={photoPreview}
+                width={100}
+                height={100}
                 alt="Photo Preview"
-                style={{ maxWidth: "200px" }}
+                className={styles.imgProfil}
               />
-            )}
+            
+          ) : (<input type="file" id="photo" onChange={handlePhotoChange} />)}
+              <h2>{name}</h2>
+            </div>
           </div>
           <div className={styles.presentation}>
-            <h2>{name}</h2>
+            
             <p>{description}</p>
           </div>
           <h3>Modification</h3>
           <div className={styles.blocModif}>
-            
+
             <div className={styles.assoEditInput}>
-              <label htmlFor="description"className={styles.assoTitle}>Nom de l'associaiton</label>
+              <label htmlFor="description" className={styles.assoTitle}>Nom de l'associaiton</label>
 
               {nameEditable ? (
                 <input
@@ -484,7 +489,7 @@ function AdminAssociation() {
               }
             </div>
             <div className={styles.assoEditInput}>
-              <label htmlFor="description"className={styles.assoTitle}>Description</label>
+              <label htmlFor="description" className={styles.assoTitle}>Description</label>
               {descriptionEditable ? (
                 <textarea
                   id="description"
@@ -595,13 +600,13 @@ function AdminAssociation() {
               streetEditable ||
               zipcodeEditable ||
               cityEditable) && (
-              <button
-                className={styles.editAsso}
-                onClick={() => handleSubmitAsso()}
-              >
-                Save{" "}
-              </button>
-            )}
+                <button
+                  className={styles.editAsso}
+                  onClick={() => handleSubmitAsso()}
+                >
+                  Save{" "}
+                </button>
+              )}
 
           </div>
         </div>
@@ -648,8 +653,8 @@ function AdminAssociation() {
                   defaultValue={
                     editingEvent
                       ? new Date(editingEvent.startDate)
-                          .toISOString()
-                          .slice(0, 10)
+                        .toISOString()
+                        .slice(0, 10)
                       : ""
                   }
                   required
@@ -664,8 +669,8 @@ function AdminAssociation() {
                   defaultValue={
                     editingEvent
                       ? new Date(editingEvent.endDate)
-                          .toISOString()
-                          .slice(0, 10)
+                        .toISOString()
+                        .slice(0, 10)
                       : ""
                   }
                   required
@@ -680,8 +685,8 @@ function AdminAssociation() {
                   defaultValue={
                     editingEvent
                       ? new Date(editingEvent.limitDate)
-                          .toISOString()
-                          .slice(0, 10)
+                        .toISOString()
+                        .slice(0, 10)
                       : ""
                   }
                   required
@@ -769,114 +774,117 @@ function AdminAssociation() {
 
       <div className={styles.eventsSection}>
         <h2>Evénements</h2>
-        <button className={styles.eventButton} onClick={handleCreateEvent}>
-          Créer un événement
-        </button>
-        <div className={styles.tableContainer}>
-        <table className={styles.tableOfEvents}>
-          <thead>
-            <tr>
-              <th>Event Name</th>
-              <th onClick={() => handleSort("startDate")}>
-                Start Date
-                {sortOrder.startDate === "asc" ? (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSortUp}
-                  />
-                ) : sortOrder.startDate === "desc" ? (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSortDown}
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSort}
-                  />
-                )}
-              </th>
-              <th onClick={() => handleSort("endDate")}>
-                End Date
-                {sortOrder.endDate === "asc" ? (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSortUp}
-                  />
-                ) : sortOrder.endDate === "desc" ? (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSortDown}
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSort}
-                  />
-                )}
-              </th>
-              <th onClick={() => handleSort("limitDate")}>
-                Limit Date
-                {sortOrder.limitDate === "asc" ? (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSortUp}
-                  />
-                ) : sortOrder.limitDate === "desc" ? (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSortDown}
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faSort}
-                  />
-                )}
-              </th>
-              <th>Description</th>
-              <th>Event Address </th>
-              <th>Event Zipcode</th>
-              <th>Event City</th>
-              <th>Event Status</th>
-              <th>Event Categories</th>
-              <th>Targeted Public</th>
-              <th>Available Slots</th>
-            </tr>
-          </thead>
-          <tbody>
-            {events.map((event) => (
-              <tr key={event._id}>
-                <td>{truncateText(event.name, 40)}</td>
-                <td>{new Date(event.startDate).toLocaleDateString("fr-FR")}</td>
-                <td>{new Date(event.endDate).toLocaleDateString("fr-FR")}</td>
-                <td>{new Date(event.limitDate).toLocaleDateString("fr-FR")}</td>
-                <td>{truncateText(event.description, 40)}</td>
-                <td>{event.address.street} </td>
-                <td>{event.address.zipcode} </td>
-                <td>{event.address.city} </td>
-                <td>{event.status}</td>
-                <td>{event.categories.join(", ")}</td>
-                <td>{event.target.join(", ")}</td>
-                <td>{event.slotsAvailable}</td>
-                <td>
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faTrash}
-                    onClick={() => handleDeleteEvent(token, event._id)}
-                  />
-                </td>
-                <td>
-                  <FontAwesomeIcon
-                    className={styles.eventSortIcon}
-                    icon={faPen}
-                    onClick={() => handleEditEvent(event)} //
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className={styles.editEventSection}>
+          <button className={styles.eventButton} onClick={handleCreateEvent}>
+            New
+          </button>
+          <div className={styles.tableContainer}>
+            <table className={styles.tableOfEvents}>
+              <thead>
+                <tr>
+                  <th>Event Name</th>
+                  <th onClick={() => handleSort("startDate")}>
+                    Start Date
+                    {sortOrder.startDate === "asc" ? (
+                      <FontAwesomeIcon
+                        className={styles.eventSortIcon}
+                        icon={faSortUp}
+                      />
+                    ) : sortOrder.startDate === "desc" ? (
+                      <FontAwesomeIcon
+                        className={styles.eventSortIcon}
+                        icon={faSortDown}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        className={styles.eventSortIcon}
+                        icon={faSort}
+                      />
+                    )}
+                  </th>
+                  <th onClick={() => handleSort("endDate")}>
+                    End Date
+                    {sortOrder.endDate === "asc" ? (
+                      <FontAwesomeIcon
+                        className={styles.eventSortIcon}
+                        icon={faSortUp}
+                      />
+                    ) : sortOrder.endDate === "desc" ? (
+                      <FontAwesomeIcon
+                        className={styles.eventSortIcon}
+                        icon={faSortDown}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        className={styles.eventSortIcon}
+                        icon={faSort}
+                      />
+                    )}
+                  </th>
+                  <th onClick={() => handleSort("limitDate")}>
+                    Limit Date
+                    {sortOrder.limitDate === "asc" ? (
+                      <FontAwesomeIcon
+                        className={styles.eventSortIcon}
+                        icon={faSortUp}
+                      />
+                    ) : sortOrder.limitDate === "desc" ? (
+                      <FontAwesomeIcon
+                        className={styles.eventSortIcon}
+                        icon={faSortDown}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        className={styles.eventSortIcon}
+                        icon={faSort}
+                      />
+                    )}
+                  </th>
+                  <th>Description</th>
+                  <th>Event Address </th>
+                  <th>Event Zipcode</th>
+                  <th>Event City</th>
+                  <th>Event Status</th>
+                  <th>Event Categories</th>
+                  <th>Targeted Public</th>
+                  <th>Available Slots</th>
+                </tr>
+              </thead>
+              <tbody>
+                {events.map((event) => (
+                  <tr key={event._id}>
+                    <td>{truncateText(event.name, 40)}</td>
+                    <td>{new Date(event.startDate).toLocaleDateString("fr-FR")}</td>
+                    <td>{new Date(event.endDate).toLocaleDateString("fr-FR")}</td>
+                    <td>{new Date(event.limitDate).toLocaleDateString("fr-FR")}</td>
+                    <td>{truncateText(event.description, 40)}</td>
+                    <td>{event.address.street} </td>
+                    <td>{event.address.zipcode} </td>
+                    <td>{event.address.city} </td>
+                    <td>{event.status}</td>
+                    <td>{event.categories.join(", ")}</td>
+                    <td>{event.target.join(", ")}</td>
+                    <td>{event.slotsAvailable}</td>
+                    <td>
+                      <FontAwesomeIcon
+                        className={styles.eventSortIcon}
+                        icon={faTrash}
+                        onClick={() => handleDeleteEvent(token, event._id)}
+                      />
+                    </td>
+                    <td>
+                      <FontAwesomeIcon
+                        className={styles.eventSortIcon}
+                        icon={faPen}
+                        onClick={() => handleEditEvent(event)} //
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+          </div>
         </div>
       </div>
     </div>
