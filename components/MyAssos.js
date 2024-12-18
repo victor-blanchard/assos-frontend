@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from "../styles/MyAssos.module.css";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Image from 'next/image';
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
 function MyAssos() {
@@ -13,13 +13,21 @@ function MyAssos() {
 
     // Accéder aux assos favories depuis le store Redux
     const followingAssociations = useSelector((state) => state.users.value.followingAssociations);
+<<<<<<< HEAD
     console.log("followed assoss===>" + followingAssociations)
 
+=======
+console.log(followingAssociations)
+>>>>>>> 1c53b3babe47097f3f9ec0079244bc775c823ad4
     // Fonction pour rediriger à la page d'une asso
     const handleClick = (assoId) => {
         router.push(`/association/${assoId}`);
     };
 
+
+    const handleAssociationDisplay = (id) => {
+        router.push(`/public_association?id=${id}`);
+    };
 
     const associations = [
         {
@@ -40,33 +48,59 @@ function MyAssos() {
         },
     ];
 
-    return (
 
+
+    return (
         <div className={styles.main}>
+<<<<<<< HEAD
             
             <div className={styles.leftSection}>
                 <Link href="/userProfil" className={styles.homeLink}>Retour à mon profil</Link>
                 <Link href="/" className={styles.homeLink}>Retour à la page d'accueil</Link>
+=======
+            {/* Section gauche */}
+            <div className={styles.leftSection}>
+                <Link href="/" className={styles.homeLink}>
+                    <FontAwesomeIcon icon={faArrowLeft} /> Retour à la page d'accueil
+                </Link>
+>>>>>>> 1c53b3babe47097f3f9ec0079244bc775c823ad4
             </div>
+
+            {/* Section droite */}
             <div className={styles.rightSection}>
                 <h1 className={styles.title}>Mes Associations</h1>
                 <div className={styles.container}>
-
-                    {followingAssociations && followingAssociations.length > 0 ? (
+                    {/* {followingAssociations && followingAssociations.length > 0 ? (
                         followingAssociations.map((associations) => (
                             <div
                                 key={associations.id}
                                 className={styles.assoBox}
                                 onClick={() => handleClick(associations.id)}
-                            >
-                                <Image
-                                    src='/asso.jpg'
-                                    alt="image d'association"
-                                    className={styles.myAssosImage}
-                                    width={200}
-                                    height={150}
-                                />
-                                {/* 
+                            
+                            > */}
+
+                    {followingAssociations && followingAssociations.length > 0 ? (
+                        followingAssociations.map((association) => (
+                            // <div
+                            //     key={association._id || index} // Utilisez un ID unique
+                            //     onClick={() => handleClick(association._id)}
+                            //     className={styles.card}
+                            // >
+                                // <div
+                                //     onClick={() => handleAssociationDisplay(data._id)}
+                                //     id={data._id}
+                                //     key={i}
+                                //     className={styles.card}
+                                // >
+                                    <Image
+                                        src={association.image || '/asso.jpg'} // Image par défaut si aucune image n'est fournie
+                                        alt={`Image de ${association.name}`}
+                                        className={styles.myAssosImage}
+                                        width={200}
+                                        height={150}
+                                    />
+
+                                    {/* 
                     {associations.map((public_association, index) => (
 
                         <div key={index} className={styles.associationBox} onClick={() => handleClick(public_association)}>
@@ -79,19 +113,15 @@ function MyAssos() {
                                 height={150}
                             /> */}
 
-                                <h3 className={styles.myAssosTitle}>Association Solidaire</h3>
-
-
-
+                                    <h3 className={styles.myAssosTitle}>{association.name}</h3>
+                                </div>
+                                ))
+                                ) : (
+                                <p>Aucune association trouvée.</p> // Message par défaut
+                )}
                             </div>
-               ))
-            ) : (
-                <p>Aucune association trouvée.</p> // Message par défaut si `likedEvents` est vide
-            )}
         </div>
-    </div>
-</div>
-);
+            </div>
+            );
 }
-
-export default MyAssos;
+            export default MyAssos;
