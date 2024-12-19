@@ -14,6 +14,8 @@ function SignInForm(props) {
     email: "",
     password: "",
   });
+  const [emailError, setEmailError] = useState(false);
+  const [connectionError, setConnectionerror] = useState(false);
   console.log(userInfo.email);
   console.log(isAsso, "<=asso,user =>", isUser);
 
@@ -23,6 +25,9 @@ function SignInForm(props) {
   // console.log('etat modal =>', user.modalState);
 
   const router = useRouter();
+
+  const EMAIL_REGEX =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   // Réinitialise les champs
   const resetForm = () => {
@@ -49,20 +54,36 @@ function SignInForm(props) {
   };
 
   const validateForm = () => {
-    const requiredFields = (isUser || isAsso) && ["email", "password"];
-    console.log("requiredFIelds ++++++++++++++", requiredFields, "user", isUser, "asso", isAsso);
-    if (!requiredFields) {
-      console.log("Champ pas correct");
-      setErrors([]);
-      return true;
+    let isValid = true;
+  
+    if (!EMAIL_REGEX.test(userInfo.email)) {
+      setEmailError(true);
+      isValid = false;
     }
+  
+    const requiredFields = ["email", "password"]; 
+  
     const missingFields = requiredFields.filter((field) => !userInfo[field]?.trim());
     setErrors(missingFields);
-    return missingFields.length === 0;
+  
+    if (missingFields.length > 0) {
+      isValid = false;
+    }
+
+    if(connectionError) {isValid=false};
+  console.log("isvalid--->" + isValid)
+  console.log(connectionError)
+    return isValid; 
   };
+
+
+
   const handleConnect = async (e) => {
+    console.log ("handle connect called")
+    console.log("Validate Form -->"+ validateForm());
     e.preventDefault();
     if (!validateForm()) {
+      console.log('pas valid')
       return;
     }
 
@@ -89,19 +110,20 @@ function SignInForm(props) {
             followingAssociations: data.followingAssociations,
           })
         );
-        dispatch(isModalVisible(false));
         dispatch(setFormType(""));
         console.log("Connected data succès => ", data);
         resetForm();
+        dispatch(isModalVisible(false));
       } else {
         console.error("Erreur de connexion : ", data.result);
+        setConnectionerror(true)
       }
     } catch (error) {
       console.error("Erreur :", error.message);
     }
 
     console.log("Données soumises :", userInfo);
-    resetForm();
+    // resetForm();
   };
 
   const handleAsso = () => {
@@ -117,25 +139,40 @@ function SignInForm(props) {
   };
 
   let formulaire = (
-    <form className={styles.form} onSubmit={handleConnect}>
-      <h2>J'ai déjà un compte</h2>
+    <div className={styles.form} >
+      <h2>J'ai dèjà un compte</h2>
       <label>
         Email :
-        <input type="email" name="email" value={userInfo.email} onChange={handleChange} />
-        {errors.includes("email") && (
+        <input
+          type="email"
+          name="email"
+          value={userInfo.email}
+          onChange={handleChange}
+        />
+         {errors.includes("password") &&(
           <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>
         )}
       </label>
 
+      {!connectionError && emailError && <p className={styles.txtEmptyChamp}>Merci de renseigner une adresse email valide.</p>}
+     
+      {connectionError && <p className={styles.txtEmptyChamp}>Le nom d'utilisateur ou le mot de passe est incorrect.
+      </p>}
+
       <label>
         Mot de passe :
-        <input type="password" name="password" value={userInfo.password} onChange={handleChange} />
+        <input
+          type="password"
+          name="password"
+          value={userInfo.password}
+          onChange={handleChange}
+        />
         {errors.includes("password") && (
           <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>
         )}
       </label>
       <Button onClick={handleConnect}>Se connecter</Button>
-    </form>
+    </div>
   );
 
   return <div>{formulaire}</div>;

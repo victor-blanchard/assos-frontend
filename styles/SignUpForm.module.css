@@ -43,3 +43,10 @@
     font-size: 16px;
     margin: 10px;
   }
+
+  .txtEmptyChamp {
+    font-size: 12px;
+    color: red;
+    font-weight: bold;
+    margin-top: 5px;
+  }
