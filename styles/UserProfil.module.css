@@ -15,34 +15,17 @@
 }
 
 .leftSection {
-    /* display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 10%;
-    height: auto;
-    min-height: 600px; */
     display: flex;
+    width: 30%;
+    height: auto;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: #000000;
     background-color: #eed1e5;
     padding: 20px;
 }
 
-.userImgProfil {
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    margin-top: -250px;
-    margin-left: 100px;
-}
-
-
-.imgProfil {
-    border-radius: 70%;
-    width: 100px;
-    height: 100px;
-}
 
 .rightSection {
     flex: 3;
@@ -52,7 +35,8 @@
 }
 
 .memberInfo {
-    margin-right: 100px;
+   text-align: center;
+   text-shadow: 2px 2px 2px rgba(206,89,55,0);
 }
 .assoCard {
     display: flex;
@@ -161,3 +145,44 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+.photoProfil {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid black;
+    border-radius: 50%;
+    width: 50%;
+    height: 50%;
+  }
+  
+  .imgProfil {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .btn {
+    background-color: #0093E9;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+  }
+  
+  .iconEdit {
+    position: relative;
+    bottom: 1px;
+    z-index: 1;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .iconEdit:hover {
+    transform: scale(1.1);
+  }

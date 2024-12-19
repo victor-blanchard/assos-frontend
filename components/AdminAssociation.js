@@ -50,7 +50,6 @@ function AdminAssociation() {
   const [editingEvent, setEditingEvent] = useState(null);
   const user = useSelector((state) => state.users.value);
   const fileInputRef = useRef(null);
-  const cameraRef = useRef(null);
 
 
   const categoriesOptions = [
@@ -510,9 +509,20 @@ function AdminAssociation() {
                 <FontAwesomeIcon onClick={handleIconClick} icon={faPenToSquare} className={styles.iconEdit} />             
               </>
     
-              ) : (<button onClick={handleIconClick} className={styles.btn}>
+              ) : (
+              <>
+              <Image
+                  src="/user_profil.jpg"
+                  width={100}
+                  height={100}
+                  alt="Photo Preview"
+                  className={styles.imgProfil}
+                />
+                <button onClick={handleIconClick} className={styles.btn}>
                 Ajouter une photo
-              </button>)} <input type="file"  ref={fileInputRef} style={{display: 'none'}} id="photo" onChange={handlePhotoChangeAndSend } />
+              </button>
+              </>
+              )} <input type="file"  ref={fileInputRef} style={{display: 'none'}} id="photo" onChange={handlePhotoChangeAndSend } />
               <h2>{name}</h2>
             </div>
           </div>

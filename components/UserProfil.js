@@ -1,21 +1,30 @@
 import styles from '../styles/UserProfil.module.css';
 import Image from 'next/image';
+import { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import AssociationCard from './AssociationCards';
 import { useRouter } from "next/router";
 import { Modal, Button, DatePicker } from 'antd';
 import { Input, Form } from "antd/lib";
 import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { addPhoto } from '../reducers/users'
 
 function UserProfil() {
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
-  const associations = useSelector((state) => state.associations.value);
   const token = user.token;
+
+  const photoProfilUrl = useSelector((state) => state.users.value.photoProfil.photoUrl);
+  const associations = useSelector((state) => state.associations.value);
+  const fileInputRef = useRef(null);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
+  const [photoFile, setPhotoFile] = useState(null);
+  const [photoPreview, setPhotoPreview] = useState(null);
 
   const [userData, setUserData] = useState({
     firstname: " ",
@@ -96,6 +105,68 @@ function UserProfil() {
   //     </div>
   //     )
 
+
+  const handlePhotoChangeAndSend = async (event) => {
+      const file = event.target.files[0];
+      if (!file) {
+        console.error('Aucun fichier selectionné.');
+        return;
+      }
+    
+      // Mise à jour de l'aperçu
+      setPhotoFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPhotoPreview(reader.result);
+        // dispatch(addPhoto(reader.result)); // Mise à jour locale avant l'envoi
+      };
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('token', token);
+      console.log('file',file)
+    
+      try {
+        const response = await fetch(`http://localhost:3000/users/upload/`, {
+          method: 'POST',
+          body: formData,
+        });
+        console.log('1')
+        if (!response.ok) {
+          console.error('Erreur lors de l\'envoi du fichier');
+          alert('Erreur lors de l\'envoi du fichier. Veuillez réessayer.');
+          return;
+        };
+  
+        console.log('2')
+    
+        const data = await response.json();
+        console.log('3 data', data)
+        // Vérification si les données renvoyées sont valides
+        if (data.result && data.photoUrl && data.publicId) {
+          dispatch(addPhoto({ photoUrl: data.photoUrl, publicId: data.publicId }));
+          console.log('Photo envoyée avec succès :', data);
+        } else {
+          console.error('Réponse invalide lors de l\'upload.');
+          alert('Erreur lors de l\'upload. Veuillez réessayer.');
+        }
+    
+      } catch (error) {
+        console.error('Erreur lors de l\'envoi de la photo :', error.message);
+        alert('Erreur serveur. Veuillez réessayer.');
+      }
+    };
+
+  const handleIconClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click(); // Simule un clic sur l'input
+    }
+    console.log('click icon edit')
+  };
+ 
   const onChange = (date, dateString) => {
     setUserData({ ...userData, birthDate: dateString });
   }
@@ -105,17 +176,37 @@ function UserProfil() {
   <section className={styles.section}>
 
     <div className={styles.leftSection}>
-      <div className={styles.userImgProfil}>
+    <div className={styles.photoProfil}>
+      {photoProfilUrl ? (
+      <>
         <Image
-          src="/user_profil.jpg"
-          width={200}
-          height={200}
-          alt="asso"
+          src={photoProfilUrl}
+          width={100}
+          height={100}
+          alt="Photo Preview"
           className={styles.imgProfil}
         />
-      </div>
+      </>
+
+      ) : (
+      <>
+      <Image
+          src="/user_profil.jpg"
+          width={100}
+          height={100}
+          alt="Photo Preview"
+          className={styles.imgProfil}
+        />
+        <button onClick={handleIconClick} className={styles.btn}>
+        Ajouter une photo
+      </button>
+      </>
+      )} <input type="file" title="modifier l'image"  ref={fileInputRef} style={{display: 'none'}} id="photo" onChange={handlePhotoChangeAndSend } />
+      
+    </div>
+    <FontAwesomeIcon onClick={handleIconClick} icon={faPenToSquare} className={styles.iconEdit} />             
       <div className={styles.memberInfo}>
-        <h2>{user.firstname}</h2>
+        <h2>{user.username}</h2>
         <p>{user.email}</p>
         <Button type="primary" onClick={showModal}>
           Modifier mes informations
