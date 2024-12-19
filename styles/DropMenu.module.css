@@ -1,24 +1,22 @@
 .userIcon {
-    cursor: pointer;
-    transition: 0.3 ease-in-out;
-    background-color: white;
-    color:  #0093e9;
-    border-radius: 5px;
-    
-  }
+  cursor: pointer;
+  transition: 0.3 ease-in-out;
+  color: #0175b8;
+  border-radius: 5px;
+  margin-left: 50%;
+  margin-bottom: 60%;
+}
 
-  .userIcon:hover {
-    /* background-color: #67a2e6; Couleur plus foncée au survol */
+/* .userIcon:hover {
+  border: none;
+  color: #e0e0e0; 
+  box-shadow: 0 8px 25px #0175b8, 0 4px 10px rgba(11, 50, 94, 0.5);
+  transform: translateY(-3px); 
+  cursor: pointer;
+} */
 
-     border: none;
-    /* color: #e0e0e0; Couleur du texte légèrement plus claire */
-    box-shadow: 0 8px 25px rgba(0, 147, 233, 0.7), 0 4px 10px rgba(11, 50, 94, 0.5);
-    transform: translateY(-3px); /* Effet de levée */
-    cursor: pointer;
-  }
-
-  .dropSpan {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+.dropSpan {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

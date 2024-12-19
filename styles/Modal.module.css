@@ -69,19 +69,27 @@
   	border-radius: 10px;
   	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 	
-	  
-	 
+
 	
+
 }
-.ant-modal-title {
-	font-size: 20px;
+/* .ant-modal-title {
+	font-size: 40px;
 	font-weight: bold;
 	color: #872d2d;
 	text-align: center;
-  }
-  .ant-modal-body {
-	font-size: 1.5rem;
+  } */
+  /* .ant-modal-body {
+	font-size: 10rem;
 	font-weight: bold;
 	background-color: #872d2d;
 	text-align: center;
-  }
+  } */
+
+  /* .modal .ant-modal-title { 
+	font-size: 100px;
+	font-weight: bold;
+	color: #872d2d;
+	text-align: center;
+  } */
+  
