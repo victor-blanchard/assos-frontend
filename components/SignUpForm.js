@@ -22,6 +22,10 @@ function SignUpForm(props) {
         // siret: ''
     });
     const [errors, setErrors] = useState([]);
+    const [emailError, setEmailError] = useState(false);
+
+  const EMAIL_REGEX =
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     // Réinitialise les champs
     const resetForm = () => {
@@ -53,14 +57,26 @@ function SignUpForm(props) {
     };
 
     const validateForm = () => {
+        let isValid = true; 
+      
+        if (!EMAIL_REGEX.test(userInfo.email)) {
+          setEmailError(true);
+          isValid = false; 
+        }
+      
         const requiredFields = isUser
             ? ['firstname', 'lastname', 'email', 'password', 'zipcode']
             : ['firstname', 'lastname', 'email', 'password', 'zipcode', /*'siret'*/];
-
+      
         const missingFields = requiredFields.filter((field) => !userInfo[field].trim());
         setErrors(missingFields);
-        return missingFields.length === 0;
-    };
+      
+        if (missingFields.length > 0) {
+          isValid = false; 
+        }
+      
+        return isValid; 
+      };
 
     const handleSubmit = async (e) => {
         // e.preventDefault();
@@ -139,6 +155,8 @@ function SignUpForm(props) {
                     <input type="email" name="email" value={userInfo.email} onChange={handleChange} />
                     {errors.includes('email') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
                 </label>
+                {emailError && <p className={styles.txtEmptyChamp}>Merci de renseigner une adresse email valide.</p>}
+
                 <label htmlFor='password'>
                     Mot de passe :
                     <input type="password" name="password" value={userInfo.password} onChange={handleChange} />
