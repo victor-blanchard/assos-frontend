@@ -53,11 +53,11 @@ function MyAssos() {
             likedAssos.map((asso) => (
               <div key={asso._id} className={styles.eventBox} onClick={() => handleClick(asso._id)}>
                 {/* <Image
-                  src={asso.image}
+                  src={`/${asso.image}`}
                   alt={asso.title}
                   className={styles.eventImage}
                   width={100}
-                  height={100}
+                  height={80}
                 /> */}
                 <div className={styles.eventDetails}>
                   <h2 className={styles.eventTitle}>{asso?.name}</h2>

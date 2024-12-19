@@ -101,9 +101,9 @@ function MyEvents() {
         className={styles.card}
       >
         <Image
-          src="https://secure.meetupstatic.com/photos/event/2/1/7/600_525000535.webp?w=750"
+          src={`/${data.image}`}
           width={180}
-          height={100}
+          height={120}
           alt="image de l'événement"
           className={styles.cardImage}
         />
