@@ -1,7 +1,7 @@
 import styles from "../styles/SignUpForm.module.css";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { isModalVisible, isReset, setFormType } from "../reducers/users";
+import { isModalVisible, isReset, setFormType, login } from "../reducers/users";
 import { Button } from "antd";
 
 function SignUpForm(props) {
@@ -102,6 +102,18 @@ function SignUpForm(props) {
 
       const data = await response.json();
       if (data.result) {
+        dispatch(
+          login({
+            email: data.email,
+            token: data.token,
+            username: data.firstname,
+            isAssociationOwner: data.isAssociationOwner,
+            likedEvents: data.likedEvents,
+            followingAssociations: data.followingAssociations,
+            photoUrl: data.photoUrl,
+            publicId: data.publicId,
+          }),
+        );
         dispatch(isModalVisible(false));
         dispatch(setFormType(""));
         resetForm();
