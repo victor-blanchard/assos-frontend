@@ -23,10 +23,9 @@ import { addPhoto } from '../reducers/users'
 
 function AdminAssociation() {
   const infosAsso = useSelector((state) => state.associations.value.assoInfos);
-  const photoProfilData = useSelector((state) => state.users.value.photosProfil);
-  console.log('PP=========================', photoProfilData);
+  const photoProfilUrl = useSelector((state) => state.users.value.photoProfil.photoUrl);
   const dispatch = useDispatch();
-  console.log('Page admin INFO ASSO ===>', infosAsso[0]?.id);
+  
   const [association, setAssociation] = useState(null);
   const [id, setId] = useState(infosAsso[0]?.id);
   const [name, setName] = useState(infosAsso[0]?.name);
@@ -136,9 +135,8 @@ function AdminAssociation() {
   // };
 
   const handleSubmitAsso = async () => {
-    console.log("submit clicked avant le try==================================");
+    
     try {
-      console.log("après le try===================================");
       const response = await fetch(`http://localhost:3000/associations/update/${id}`, {
 
         method: "PUT",
@@ -213,56 +211,6 @@ function AdminAssociation() {
 
   ////// END - EDIT THE ASSOCIATION DATA ////
 
-  // const handlePhotoChangeAndSend = async (event) => {
-  //   const file = event.target.files[0];
-  //   if (!file) {
-  //     console.error('Aucun fichier selectionné.');
-  //     return;
-  //   }
-
-  //   //mise à jour de l'aperçu
-  //   setPhotoFile(file);
-  //   // Create a preview of photo
-  //   const reader = new FileReader();
-  //   reader.onloadend = () => {
-  //     setPhotoPreview(reader.result);
-  //     // dispatch(addPhoto(reader.result));//mise à jour local avant l'envoi
-  //   };
-  //   if (file) {
-  //     reader.readAsDataURL(file);
-  //   }
-
-  //   const formData = new FormData();
-  //     formData.append(`file`, file);
-  //     const oldImageId = photoProfilData.publicId;
-  //     if (oldImageId) {
-  //       formData.append('oldImageId', oldImageId);
-  //     };
-  //   try {
-
-  //     const response = await fetch(`http://localhost:3000/users/upload/${token}`, {
-  //       method: 'POST',
-  //       body: formData,
-  //     });
-  //     console.log('RESPONSE =>',response)
-  //     if (!response.ok) {
-  //       console.error('Erreur lors de l\'envoi du fichier');
-  //     };
-      
-  //     const data = await response.json();
-  //     //Mise à jour de Redux avec la nouvelle url et le publicId
-  //     if (data.result) {
-  //       dispatch(addPhoto({url: data.url, publicId: data.publicId}));
-  //       console.log('Photo envoyée avec succée :', data);
-
-  //     }
-
-  //   } catch(error) {
-  //     console.error('Erreur lors de l\'envoi de la photo :', error.message);
-  //   }
-
-
-  // };
 
   const handlePhotoChangeAndSend = async (event) => {
     const file = event.target.files[0];
@@ -284,24 +232,28 @@ function AdminAssociation() {
   
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('token', token);
+    console.log('file',file)
   
     try {
       const response = await fetch(`http://localhost:3000/users/upload/`, {
         method: 'POST',
         body: formData,
       });
-  
+      console.log('1')
       if (!response.ok) {
         console.error('Erreur lors de l\'envoi du fichier');
         alert('Erreur lors de l\'envoi du fichier. Veuillez réessayer.');
         return;
-      }
+      };
+
+      console.log('2')
   
       const data = await response.json();
-  
+      console.log('3 data', data)
       // Vérification si les données renvoyées sont valides
-      if (data.result && data.url && data.publicId) {
-        dispatch(addPhoto({ url: data.url, publicId: data.publicId }));
+      if (data.result && data.photoUrl && data.publicId) {
+        dispatch(addPhoto({ photoUrl: data.photoUrl, publicId: data.publicId }));
         console.log('Photo envoyée avec succès :', data);
       } else {
         console.error('Réponse invalide lors de l\'upload.');
@@ -546,10 +498,10 @@ function AdminAssociation() {
           <div className={styles.assoEditInput}>
             <label htmlFor="photo"></label>
             <div className={styles.photoProfil}>
-              {photoProfilData.url ? (
+              {photoProfilUrl ? (
               <>
                 <Image
-                  src={photoProfilData.url}
+                  src={photoProfilUrl}
                   width={100}
                   height={100}
                   alt="Photo Preview"

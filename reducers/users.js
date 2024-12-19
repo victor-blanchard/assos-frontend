@@ -12,8 +12,8 @@ const initialState = {
     isAssociationOwner: false,
     likedEvents: [],
     followingAssociations: [],
-    photosProfil: {
-      url: '',
+    photoProfil: {
+      photoUrl: '',
       publicId: '',
   },
   },
@@ -43,6 +43,11 @@ export const usersSlice = createSlice({
             state.value.id = action.payload.id;
             state.value.likedEvents = action.payload.likedEvents;
             state.value.followingAssociations = action.payload.followingAssociations;
+            state.value.photoProfil = {
+              photoUrl: action.payload.photoUrl,
+              publicId: action.payload.publicId,
+            };
+
           },
 
     logout: (state) => {
@@ -52,8 +57,8 @@ export const usersSlice = createSlice({
       state.value.isAssociationOwner = false;
       state.value.likedEvents = [];
       state.value.followingAssociations = [];
-      state.value.photosProfil = {//supprime la photo du localstorage lors de la connexion
-        url: '',
+      state.value.photoProfil = {//supprime la photo du localstorage lors de la connexion
+        photoUrl: '',
         publicId: '',
       };
     },
@@ -62,8 +67,8 @@ export const usersSlice = createSlice({
     },
 
     addPhoto: (state, action) => {
-      const { url, publicId } = action.payload; 
-      state.value.photosProfil = { url, publicId };
+      const { photoUrl, publicId } = action.payload; 
+      state.value.photoProfil = { photoUrl, publicId };
   },
   },
 });

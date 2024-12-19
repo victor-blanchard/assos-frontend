@@ -14,14 +14,10 @@ function SignInForm(props) {
     email: "",
     password: "",
   });
-  console.log(userInfo.email);
-  console.log(isAsso, "<=asso,user =>", isUser);
-
   //Gestion du store
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
-  const photoProfil = useSelector((state) => state.associations.value.photosProfil.url)
-  // console.log('etat modal =>', user.modalState);
+  const photoProfil = useSelector((state) => state.users.value.photosProfil.photoUrl)
 
   const router = useRouter();
 
@@ -51,7 +47,6 @@ function SignInForm(props) {
 
     const validateForm = () => {
         const requiredFields = (isUser || isAsso) && ['email', 'password'];
-        console.log("requiredFIelds ++++++++++++++", requiredFields,'user', isUser, 'asso', isAsso)
         if (!requiredFields) {
             console.log('Champ pas correct');
             setErrors([]);
@@ -80,7 +75,6 @@ function SignInForm(props) {
             
 
       const data = await response.json();
-      console.log('dataaaaaaa =>', data)
       if (data.result) {
         dispatch(
           login({
@@ -90,8 +84,11 @@ function SignInForm(props) {
             isAssociationOwner: data.isAssociationOwner,
             likedEvents: data.likedEvents,
             followingAssociations: data.followingAssociations,
-          })
+            photoUrl: data.photoUrl,
+            publicId: data.publicId,
+          }),
         );
+       
         dispatch(isModalVisible(false));
         dispatch(setFormType(""));
         console.log("Connected data succès => ", data);
