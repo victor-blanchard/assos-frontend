@@ -46,7 +46,7 @@ function Event() {
         .then((response) => response.json())
         .then((data) => {
           if (data.result) {
-            if (data.likedEvents.includes(eventId)) {
+            if (data?.likedEvents?.includes(eventId)) {
               setLike(true);
               console.log("event dans les events likés");
             }

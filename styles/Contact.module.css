@@ -1,58 +1,60 @@
 .All {
-    display: flex;
-    flex-direction: row; 
-    align-items: center; 
-    justify-content: center; 
-    width: 100%; 
-    margin: 0 auto; 
-  
-  }
-  
-  .tables {
-    width: 40%; 
-    margin: 10px;
-  
-    padding: 20px;
-  
-  }
-  
-  .image {
-    width: 20%; 
-    height: auto;
-    padding-bottom: 10px;
-    margin: 10px;
-  }
-  
-  .row {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; 
-    margin: 20px; 
-  }
-  
-  .subRow {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; 
-    margin-bottom: 20px; 
-  }
-  
-  .formControl {
-    width: 300px;
-    background-color: #d8d8d8;
-    border-radius: 10px;
-    border: none;
-    padding: 10px;
-  }
-  
-  .button {
-    color: white;
-    background-color: #0093e9;
-    border: none;
-    border-radius: 15px;
-    padding: 10px 20px; 
-    font-size: 16px;
-    font-weight: 400;
-    cursor: pointer;
-    white-space: nowrap; 
-  }
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+  background-color: #fcf6f6;
+}
+
+.tables {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 40%;
+  margin: 10px;
+  padding: 20px;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  padding-bottom: 10px;
+  margin: 10px;
+  border-radius: 15px;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 20px;
+}
+
+.subRow {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.formControl {
+  width: 300px;
+  background-color: #efe9e9;
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
+}
+
+.button {
+  color: white;
+  background-color: #0093e9;
+  border: none;
+  border-radius: 15px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
+  white-space: nowrap;
+}

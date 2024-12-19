@@ -18,13 +18,15 @@
 }
 
 .eventTitle {
+  margin-left: 2%;
   font-size: 200%;
-  margin-top: 2%;
+  margin-top: 5%;
   margin-bottom: 2%;
   color: #393939;
 }
 
 .eventImage {
+  margin-left: 2%;
   object-fit: cover;
   width: 100%;
   height: auto;
@@ -32,24 +34,27 @@
 }
 
 .eventLabelDetails {
+  margin-left: 2%;
   font-weight: 700;
   margin-top: 2vh;
 }
 
 .eventDescription {
-  width: 95%;
+  margin-left: 2%;
+  width: 85%;
   font-weight: 500;
   margin-top: 1vh;
   flex-wrap: wrap;
   justify-self: start;
   text-align: justify;
+  line-height: 190%;
 }
 
 .rightContainer {
   display: flex;
   flex-direction: column;
   align-items: end;
-  margin-right: 2%;
+  margin-right: 4%;
 }
 
 .contactButton {
