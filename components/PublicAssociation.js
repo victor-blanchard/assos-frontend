@@ -30,6 +30,9 @@ function PublicAssociation() {
   const [events, setEvents] = useState([]);
   const [sortOrder, setSortOrder] = useState({});
   const [assoLikeStatus, setAssolikeStatus] = useState(false);
+  const user = useSelector((state) => {
+    return state.users.value;
+  });
 
   const [associationId, setAssociationId] = useState(null);
   // const eventSelectedId = useSelector((state) => state.searchResults.value.selectedEventId);
@@ -72,8 +75,9 @@ function PublicAssociation() {
     })
       .then((response) => response.json())
       .then((data) => {
+        const likedAssosId = data?.followingAssociations?.map((event) => event._id);
         if (data?.result) {
-          if (data?.followingAssociations?.includes(associationId)) {
+          if (likedAssosId?.includes(associationId)) {
             setAssolikeStatus(true);
             console.log("asso dans les asso likés");
           }
@@ -82,7 +86,7 @@ function PublicAssociation() {
       .catch((error) =>
         console.error("Erreur lors de la récupération des following associations :", error)
       );
-  }, [associationId]);
+  }, [associationId, user, assoLikeStatus]);
 
   // Effet pour récupérer les événements de l'association
   useEffect(() => {
@@ -175,9 +179,6 @@ function PublicAssociation() {
 
   console.log("likestatusavantchargement=>" + assoLikeStatus);
   ///// START - LIKE OF THE ASSOCIATION /////
-  const user = useSelector((state) => {
-    return state.users.value;
-  });
 
   function truncateText(text, maxLength) {
     if (!text) {
@@ -294,6 +295,10 @@ function PublicAssociation() {
               <div>{association?.address?.street || "Adresse non disponible"}</div>
               <div>{association?.address?.city || "Ville non disponible"}</div>
               <div>{association?.address?.zipcode || "Code postal non disponible"}</div>
+            </div>
+            <div>
+              <div className={styles.assoEmail}>{association?.email}</div>
+              <div className={styles.assoContact}>{association?.phone}</div>
             </div>
             <div className={styles.assoCategoriesContainer}>
               <div className={styles.assoCategoriesLabel}>Thèmes</div>

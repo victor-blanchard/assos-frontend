@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../styles/MyAssos.module.css";
 import Link from "next/link";
+import { Button } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
@@ -28,17 +29,21 @@ function MyAssos() {
     }
   }, [user]);
 
-  const handleClick = (eventId) => {
-    router.push(`/event/${eventId}`);
+  const handleClick = (assoId) => {
+    router.push(`/public_association?id=${assoId}`);
+  };
+
+  const handleGoBack = () => {
+    router.back();
   };
 
   return (
     <div className={styles.main}>
       <div className={styles.leftSection}>
-
-      <Link href="/" className={styles.homeLink}>
-        <FontAwesomeIcon icon={faArrowLeft} /> Retour A la page d'accueil
-      </Link>
+        <Button className={styles.backButton} onClick={handleGoBack}>
+          <FontAwesomeIcon className={styles.btnSearch} icon={faArrowLeft} />
+          Retour
+        </Button>
       </div>
 
       <div className={styles.rightSection}>
@@ -46,27 +51,20 @@ function MyAssos() {
         <div className={styles.container}>
           {likedAssos.length > 0 ? (
             likedAssos.map((asso) => (
-              <div
-                key={asso._id}
-                className={styles.eventBox}
-                onClick={() => handleClick(asso._id)}
-              >
-                <Image
+              <div key={asso._id} className={styles.eventBox} onClick={() => handleClick(asso._id)}>
+                {/* <Image
                   src={asso.image}
                   alt={asso.title}
                   className={styles.eventImage}
                   width={100}
                   height={100}
-                />
+                /> */}
                 <div className={styles.eventDetails}>
-                  <h2 className={styles.eventTitle}>{asso.name}</h2>
-                  <p className={styles.eventDescription}>{asso.description}</p>
-                  <p className={styles.eventDescription}>{asso.categories.join(', ')}</p>
-                  <p className={styles.eventDate}>Rue: {asso.address.street}</p>
-                  <p className={styles.eventDate}>Ville: {asso.address.city}</p>
-                  <p className={styles.eventDate}>Code Postale: {asso.address.zipcode}</p>
-                  <p className={styles.eventDate}>E-mail: {asso.email}</p>
-                  <p className={styles.eventDate}>Téléphone: {asso.phone}</p>
+                  <h2 className={styles.eventTitle}>{asso?.name}</h2>
+                  <p className={styles.description}>{asso?.description}</p>
+                  <p className={styles.eventDescription}>{asso?.categories?.join(", ")}</p>
+                  <p className={styles.eventDate}>{asso?.address?.city}</p>
+                  <p className={styles.eventDate}>{asso?.address?.zipcode}</p>
                 </div>
               </div>
             ))

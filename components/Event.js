@@ -46,9 +46,12 @@ function Event() {
         .then((response) => response.json())
         .then((data) => {
           if (data.result) {
-            if (data?.likedEvents?.includes(eventId)) {
+            const likedEventId = data?.likedEvents?.map((event) => event._id);
+            if (likedEventId?.includes(eventId)) {
               setLike(true);
               console.log("event dans les events likés");
+            } else {
+              console.log("event pas dans les events likés");
             }
           }
         })
@@ -56,7 +59,7 @@ function Event() {
           console.error("Erreur lors de la récupération des liked events :", error)
         );
     }
-  }, [eventId]);
+  }, [eventId, user]);
 
   const handleGoBack = () => {
     router.back();
@@ -99,7 +102,7 @@ function Event() {
         .then((data) => {
           if (data.result) {
             console.log(`like ajouté `);
-            setLike(!like);
+            setLike(true);
             console.log(data.likedEvents);
           } else {
             console.error("Erreur : erreur dans l'ajout du like");
@@ -115,7 +118,7 @@ function Event() {
         .then((data) => {
           if (data.result) {
             console.log(`like ajouté `);
-            setLike(!like);
+            setLike(false);
             console.log(data.likedEvents);
           } else {
             console.error("Erreur : erreur dans la suppression du like");
