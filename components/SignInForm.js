@@ -1,144 +1,181 @@
-import styles from '../styles/SignInForm.module.css';
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { isModalVisible, isReset, login, setFormType } from '../reducers/users';
-import { Button } from 'antd';
-import { useRouter } from 'next/router';
+import styles from "../styles/SignInForm.module.css";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { isModalVisible, isReset, login, setFormType } from "../reducers/users";
+import { Button } from "antd";
+import { useRouter } from "next/router";
 
 function SignInForm(props) {
-    //Gestion des users
-    const [isAsso, setIsAsso] = useState(false); // Permet de vérifier si c'est une asso
-    const [isUser, setIsUser] = useState(false); // Permet de vérifier si c'est un particulier
-    const [errors, setErrors] = useState([]);
-    const [userInfo, setUserInfo] = useState({
-        email: '',
-        password: '',
+  //Gestion des users
+  const [isAsso, setIsAsso] = useState(false); // Permet de vérifier si c'est une asso
+  const [isUser, setIsUser] = useState(false); // Permet de vérifier si c'est un particulier
+  const [errors, setErrors] = useState([]);
+  const [userInfo, setUserInfo] = useState({
+    email: "",
+    password: "",
+  });
+  const [emailError, setEmailError] = useState(false);
+  const [connectionError, setConnectionerror] = useState(false);
+  console.log(userInfo.email);
+  console.log(isAsso, "<=asso,user =>", isUser);
+
+  //Gestion du store
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.users.value);
+  // console.log('etat modal =>', user.modalState);
+
+  const router = useRouter();
+
+  const EMAIL_REGEX =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  // Réinitialise les champs
+  const resetForm = () => {
+    setIsAsso(false);
+    setIsUser(false);
+    setUserInfo({
+      email: "",
+      password: "",
     });
-    console.log(userInfo.email)
-    console.log(isAsso,'<=asso,user =>',isUser)
+    setErrors([]);
+    // dispatch(isReset(true));
+  };
 
-    //Gestion du store
-    const dispatch = useDispatch();
-    const user = useSelector((state) => state.users.value);
-    // console.log('etat modal =>', user.modalState);
-    
-    const router = useRouter();
+  // Utilisé pour réinitialiser le formulaire si la modal n'est pas visible
+  useEffect(() => {
+    if (user.modalState) {
+      resetForm();
+    }
+  }, [user.modalState]);
 
-   
+  const handleChange = (e) => {
+    const { name, value } = e.target; // destructuration, permet d'assigné une même valeur à plusieurs éléments
+    setUserInfo((prevState) => ({ ...prevState, [name]: value }));
+  };
 
+  const validateForm = () => {
+    let isValid = true;
+  
+    if (!EMAIL_REGEX.test(userInfo.email)) {
+      setEmailError(true);
+      isValid = false;
+    }
+  
+    const requiredFields = ["email", "password"]; 
+  
+    const missingFields = requiredFields.filter((field) => !userInfo[field]?.trim());
+    setErrors(missingFields);
+  
+    if (missingFields.length > 0) {
+      isValid = false;
+    }
 
-    // Réinitialise les champs
-    const resetForm = () => {
-        setIsAsso(false);
-        setIsUser(false);
-        setUserInfo({
-            email: '',
-            password: '',
-        });
-        setErrors([]);
-        // dispatch(isReset(true));
-    };
-
-    // Utilisé pour réinitialiser le formulaire si la modal n'est pas visible
-    useEffect(() => {
-        if (user.modalState) {
-            resetForm();
-        }
-    }, [user.modalState]);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target; // destructuration, permet d'assigné une même valeur à plusieurs éléments
-        setUserInfo(prevState => ({ ...prevState, [name]: value }));
-    };
-
-    const validateForm = () => {
-        const requiredFields = (isUser || isAsso) && ['email', 'password'];
-        console.log("requiredFIelds ++++++++++++++", requiredFields,'user', isUser, 'asso', isAsso)
-        if (!requiredFields) {
-            console.log('Champ pas correct');
-            setErrors([]);
-            return true;
-        }
-        const missingFields = requiredFields.filter((field) => !userInfo[field]?.trim());
-        setErrors(missingFields);
-        return missingFields.length === 0;
-    };
-    const handleConnect = async (e) => {
-        e.preventDefault();
-        if (!validateForm()) {
-
-            return;
-        } 
-
-        try {
-            const response = await fetch('http://localhost:3000/users/signin', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(userInfo)
-            });
-            console.log('Données envoyées :', JSON.stringify(userInfo));
-            if (!response.ok) {
-                throw new Error('Erreur r&seau ou serveur.');
-            }
-            
-
-            const data = await response.json();
-            if (data.result) {
-                dispatch(login({email: data.email, token: data.token, username: data.firstname, isAssociationOwner: data.isAssociationOwner}));
-                dispatch(isModalVisible(false));
-                dispatch(setFormType(''));
-                console.log('Connected data succès => ', data);
-                resetForm();
+    if(connectionError) {isValid=false};
+  console.log("isvalid--->" + isValid)
+  console.log(connectionError)
+    return isValid; 
+  };
 
 
-            }else {
-                console.error('Erreur de connexion : ', data.result);
-            }
-            
 
-        } catch (error) {
-            console.error('Erreur :', error.message);
-        }
+  const handleConnect = async (e) => {
+    console.log ("handle connect called")
+    console.log("Validate Form -->"+ validateForm());
+    e.preventDefault();
+    if (!validateForm()) {
+      console.log('pas valid')
+      return;
+    }
 
-        console.log('Données soumises :', userInfo);
-        resetForm();
-    };
+    try {
+      const response = await fetch("http://localhost:3000/users/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userInfo),
+      });
+      console.log("Données envoyées :", JSON.stringify(userInfo));
+      if (!response.ok) {
+        throw new Error("Erreur r&seau ou serveur.");
+      }
 
-    const handleAsso = () => {
-        setIsAsso(true);
-        setIsUser(false);
-        // dispatch(isReset(false));
-    };
-
-    const handleUser = () => {
-        setIsAsso(false);
-        setIsUser(true);
-        // dispatch(isReset(false));
-    };
-
-    let formulaire = (
-            <form className={styles.form} onSubmit={handleConnect}>
-                <h2>J'ai déjà un compte</h2>
-                <label>
-                    Email :
-                    <input type="email" name="email" value={userInfo.email} onChange={handleChange} />
-                    {errors.includes('email') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
-                </label>
-
-                <label>
-                    Mot de passe :
-                    <input type="password" name="password" value={userInfo.password} onChange={handleChange} />
-                    {errors.includes('password') && <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>}
-                </label>
-                <Button onClick={handleConnect}>Se connecter</Button>
-            </form>
+      const data = await response.json();
+      if (data.result) {
+        dispatch(
+          login({
+            email: data.email,
+            token: data.token,
+            username: data.firstname,
+            isAssociationOwner: data.isAssociationOwner,
+            likedEvents: data.likedEvents,
+            followingAssociations: data.followingAssociations,
+          })
         );
+        dispatch(setFormType(""));
+        console.log("Connected data succès => ", data);
+        resetForm();
+        dispatch(isModalVisible(false));
+      } else {
+        console.error("Erreur de connexion : ", data.result);
+        setConnectionerror(true)
+      }
+    } catch (error) {
+      console.error("Erreur :", error.message);
+    }
 
-    return (
-        <div>
-            {formulaire}
-        </div>
-    );
+    console.log("Données soumises :", userInfo);
+    // resetForm();
+  };
+
+  const handleAsso = () => {
+    setIsAsso(true);
+    setIsUser(false);
+    // dispatch(isReset(false));
+  };
+
+  const handleUser = () => {
+    setIsAsso(false);
+    setIsUser(true);
+    // dispatch(isReset(false));
+  };
+
+  let formulaire = (
+    <div className={styles.form} >
+      <h2 className={styles.titleH2}>J'ai dèjà un compte</h2>
+      <label>
+        Email :
+        <input
+          type="email"
+          name="email"
+          value={userInfo.email}
+          onChange={handleChange}
+        />
+         {errors.includes("password") &&(
+          <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>
+        )}
+      </label>
+
+      {!connectionError && emailError && <p className={styles.txtEmptyChamp}>Merci de renseigner une adresse email valide.</p>}
+     
+      {connectionError && <p className={styles.txtEmptyChamp}>Le nom d'utilisateur ou le mot de passe est incorrect.
+      </p>}
+
+      <label>
+        Mot de passe :
+        <input
+          type="password"
+          name="password"
+          value={userInfo.password}
+          onChange={handleChange}
+        />
+        {errors.includes("password") && (
+          <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>
+        )}
+      </label>
+      <Button onClick={handleConnect}>Se connecter</Button>
+    </div>
+  );
+
+  return <div>{formulaire}</div>;
 }
 
 export default SignInForm;

@@ -1,386 +1,161 @@
-// import React, { useState } from 'react';
-// import styles from "../styles/MyEvents.module.css";
-// import Link from "next/link";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-// import Image from 'next/image';
-// import { Tabs } from "antd/lib";
-
-// function MyEvents() {
-
-//     const [tab, setTab] = useState("upcoming"); // État pour gérer l'onglet actif
-//     // const displayedEvents = tab === "upcoming" ? events.upcoming : events.past;
-
-//     const events = {
-//         upcoming: [
-//             {
-//                 id: 1,
-//                 image: "/event1.jpg",
-//                 date: "2024-12-20",
-//                 title: "Conférence Tech",
-//                 description: "Une conférence sur les dernières avancées en technologie.",
-//             },
-//             {
-//                 id: 2,
-//                 image: "/event2.jpg",
-//                 date: "2024-12-25",
-//                 title: "Concert de Noël",
-//                 description: "Un magnifique concert pour célébrer les fêtes.",
-//             },
-//         ],
-//         past: [
-//             {
-//                 id: 3,
-//                 image: "/event3.jpg",
-//                 date: "2024-11-10",
-//                 title: "Atelier de cuisine",
-//                 description: "Un atelier de cuisine pour apprendre les bases.",
-//             },
-//         ],
-//     };
-
-
-//     // Récupérer les événements correspondant à l'onglet actif
-//     const displayedEvents = events[activeTab];
-
-//     const items = [
-//         {
-//             key: "upcoming",
-//             label: "À venir",
-//         },
-//         {
-//             key: "past",
-//             label: "Passés",
-//         },
-//     ];
-// }
-//     // const items = [
-//     //     { 
-//     //       key: "1",
-//     //       label: "À venir",
-//     //       children: (
-//     //         <div>
-//     //           {events.upcoming.length > 0 ? (
-//     //             events.upcoming.map((event) => (
-//     //               <div key={event.id} className="event-card">
-//     //                 <h3>{event.title}</h3>
-//     //                 <p>Date : {event.date}</p>
-//     //               </div>
-//     //             ))
-//     //           ) : (
-//     //             <p>Aucun événement à venir.</p>
-//     //           )}
-//     //         </div>
-//     //       ),
-//     //     },
-//     //     {
-//     //       key: "2",
-//     //       label: "Passés",
-//     //       children: (
-//     //         <div>
-//     //           {events.past.length > 0 ? (
-//     //             events.past.map((event) => (
-//     //               <div key={event.id} className="event-card">
-//     //                 <h3>{event.title}</h3>
-//     //                 <p>Date : {event.date}</p>
-//     //               </div>
-//     //             ))
-//     //           ) : (
-//     //             <p>Aucun événement passé.</p>
-//     //           )}
-//     //         </div>
-//     //       ),
-//     //     },
-//     //   ];
-
-
-
-
-//     return (
-//         <div className={styles.main}>
-//             {/* Section gauche */}
-//             <div className={styles.leftSection}>
-//                 <Link href="/" className={styles.homeLink}>
-//                     <FontAwesomeIcon icon={faArrowLeft} /> Retour à la page d'accueil
-//                 </Link>
-//                 <div className={styles.tabs}>
-//                     <Tabs
-//                         tabPosition="left"
-//                         defaultActiveKey="upcoming"
-//                         items={items}
-//                         onChange={(key) => setActiveTab(key)} // Mise à jour de l'onglet actif
-//                     />
-//                 </div>
-//             </div>
-
-//             {/* Section droite */}
-//             <div className={styles.rightSection}>
-//                 <h1 className={styles.title}>Mes Évènements</h1>
-//                 {displayedEvents && displayedEvents.length > 0 ? (
-//                     displayedEvents.map((event) => (
-//                         <div key={event.id} className={styles.eventBox}>
-//                             <Image
-//                                 src={event.image}
-//                                 alt={event.title}
-//                                 className={styles.eventImage}
-//                                 width={150}
-//                                 height={100}
-//                             />
-//                             <div className={styles.eventDetails}>
-//                                 <p className={styles.eventDate}>{event.date}</p>
-//                                 <h3 className={styles.eventTitle}>{event.title}</h3>
-//                                 <p className={styles.eventDescription}>{event.description}</p>
-//                             </div>
-//                         </div>
-//                     ))
-//                 ) : (
-//                     <p>Aucun événement dans cette catégorie.</p>
-//                 )}
-//             </div>
-//         </div>
-//     );
-
-//     export default MyEvents;
-
-
-    {/* Tabs */ }
-    {/* <div className={styles.tabs}>
-                    <button
-                        className={`${styles.tab} ${tab === "upcoming" ? styles.active : ""}`}
-                        onClick={() => setTab("upcoming")}
-                    >
-                        À venir
-                    </button>
-                    <button
-                        className={`${styles.tab} ${tab === "past" ? styles.active : ""}`}
-                        onClick={() => setTab("past")}
-                    >
-                        Passés
-                    </button>
-                </div>  */}
-
-    {/* Tabs avec gestion des clics */ }
-
-
-
-
-    {/* <div className={styles.tabs}>
-                    <Tabs tabPosition="left" defaultActiveKey="1" centered items={items} />
-                </div> */}
-           
-
-        {/* Partie droite */ }
-    {/* <div className={styles.rightSection}>
-                <h1 className={styles.title}>Mes Évènements</h1>
-                {displayedEvents.map((event) => (
-                    <div key={event.id} className={styles.eventBox}>
-                        <Image
-                            src='/cooking.jpg'
-                            alt="image d'évènement culinaire"
-                            className={styles.eventImage}
-                            width={150}
-                            height={100}
-                        />
-                        <div className={styles.eventDetails}>
-                            <p className={styles.eventDate}>{event.date}</p>
-                            <h3 className={styles.eventTitle}>{event.title}</h3>
-                            <p className={styles.eventDescription}>{event.description}</p>
-                            
-                        </div>
-                    </div> */}
-    {/* ))}
-            </div> */}
-
-
-
-
-//     <div className={styles.main}>
-//         {/* Section gauche */}
-//         <div className={styles.leftSection}>
-//             <Link href="/" className={styles.homeLink}>
-//                 <FontAwesomeIcon icon={faArrowLeft} /> Retour à la page d'accueil
-//             </Link>
-
-//             {/* Tabs avec gestion des clics */}
-//             <div className={styles.tabs}>
-//                 <Tabs
-//                     tabPosition="left"
-//                     defaultActiveKey="upcoming"
-//                     items={items}
-//                     onChange={(key) => setActiveTab(key)} // Mise à jour de l'onglet actif
-//                 />
-//             </div>
-//         </div>
-
-//         {/* Section droite */}
-//         <div className={styles.rightSection}>
-//             <h1 className={styles.title}>Mes Évènements</h1>
-//             {displayedEvents && displayedEvents.length > 0 ? (
-//                 displayedEvents.map((event) => (
-//                     <div key={event.id} className={styles.eventBox}>
-//                         <Image
-//                             src={event.image}
-//                             alt={event.title}
-//                             className={styles.eventImage}
-//                             width={150}
-//                             height={100}
-//                         />
-//                         <div className={styles.eventDetails}>
-//                             <p className={styles.eventDate}>{event.date}</p>
-//                             <h3 className={styles.eventTitle}>{event.title}</h3>
-//                             <p className={styles.eventDescription}>{event.description}</p>
-//                         </div>
-//                     </div>
-//                 ))
-//             ) : (
-//                 <p>Aucun événement dans cette catégorie.</p>
-//             )}
-//         </div>
-//     </div>
- 
-
-// export default MyEvents;
-
-
-
-
-import React, { useState } from 'react';
 import styles from "../styles/MyEvents.module.css";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import Image from 'next/image';
-import { Tabs } from "antd";
+import Image from "next/image";
+import { Tabs, Button } from "antd";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 
 function MyEvents() {
-    const router = useRouter();
-    // const user = useSelector((state) => state.users.value);
+  const router = useRouter();
+  const user = useSelector((state) => state.users.value);
+  const token = user.token;
+  console.log("token of user in Event pasge ==> " + token);
 
-    // Accéder aux événements favoris depuis le store Redux
-    const likedEvents = useSelector((state) => state.users.value.likedEvents);
+  const [likedEvents, setLikedEvents] = useState([]);
+  const [activeTab, setActiveTab] = useState("upcoming");
 
+  useEffect(() => {
+    if (user && user.token) {
+      fetch(`http://localhost:3000/users/getUserLikedEvents/${user.token}`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("API response:", data);
+          setLikedEvents(data.likedEvents); // likedEvents dizisini al
+        })
+        .catch((error) => console.error("API fetch error:", error));
+    }
+  }, [user]);
 
-
-     // Fonction pour rediriger à la page d'un événement
- const handleClick = (eventId) => {
+  const handleClick = (eventId) => {
     router.push(`/event/${eventId}`);
-};
-     
+  };
 
-    const [activeTab, setActiveTab] = useState("upcoming"); // État pour gérer l'onglet actif
-    const events = {
-        upcoming: [
-            {
-                id: 1,
-                image: "/cooking.jpg",
-                date: "2024-12-20",
-                title: "Conférence Tech",
-                description: "Une conférence sur les dernières avancées en technologie.",
-            },
-            {
-                id: 2,
-                image: "/cooking.jpg",
-                date: "2024-12-25",
-                title: "Concert de Noël",
-                description: "Un magnifique concert pour célébrer les fêtes.",
-            },
-        ],
-        past: [
-            {
-                id: 3,
-                image: "/cooking.jpg",
-                date: "2024-11-10",
-                title: "Atelier de cuisine",
-                description: "Un atelier de cuisine pour apprendre les bases.",
-            },
-        ],
-    };
+  const handleGoBack = () => {
+    router.back();
+  };
 
-    const items = [
-        {
-            key: "upcoming",
-            label: "À venir",
-            children: null, 
-        },
-        {
-            key: "past",
-            label: "Passés",
-            children: null,
-        },
-    ];
+  const items = [
+    {
+      key: "upcoming",
+      label: "A venir",
+      children: null,
+    },
+    {
+      key: "past",
+      label: "Passés",
+      children: null,
+    },
+  ];
 
-    const displayedEvents = activeTab === "upcoming" ? events.upcoming : events.past;
+  // Event'leri filtrele
+  const displayedEvents = likedEvents.filter((event) => {
+    const now = new Date();
+    const startDate = new Date(event.startDate);
+    const endDate = new Date(event.endDate);
 
-        // // Fonction pour rediriger à la page de l'évènement
-        // const handleClick = (link) => {
-        //     console.log(link)
-        //     router.push('/event');
-        // };
+    if (activeTab === "upcoming") {
+      return startDate > now;
+    } else {
+      return endDate < now;
+    }
+  });
 
+  function sliceByWords(text, maxLength) {
+    if (text.length <= maxLength) return text;
+    const words = text.split(" ");
+    let result = "";
+    for (const word of words) {
+      if (result.length + word.length + 1 > maxLength) break;
+      result += (result.length ? " " : "") + word;
+    }
+    return result + "...";
+  }
 
+  const handleEventDisplay = (id) => {
+    router.push(`/event?id=${id}`); //gere la navigation au click vers la page search en évitant la page blanche
+  };
+
+  const eventsToDisplay = displayedEvents.map((data, i) => {
+    const categoriesToDisplay = data.categories.map((data, i) => {
+      return (
+        <div key={data} className={styles.cardCategory}>
+          {data}
+        </div>
+      );
+    });
+
+    const formattedDate = new Intl.DateTimeFormat("fr-FR", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    }).format(new Date(data.startDate));
 
     return (
-        <div className={styles.main}>
-            {/* Section gauche */}
-            <div className={styles.leftSection}>
-                <Link href="/" className={styles.homeLink}>
-                    <FontAwesomeIcon icon={faArrowLeft} /> Retour à la page d'accueil
-                </Link>
-                <div className={styles.tabs}>
-                    <Tabs
-                        tabPosition="left"
-                        defaultActiveKey="upcoming"
-                        items={items}
-                        onChange={(key) => setActiveTab(key)} // Mise à jour de l'onglet actif
-                    />
-                </div>
-            </div>
+      <div
+        onClick={() => handleEventDisplay(data._id)}
+        key={data._id}
+        id={data._id}
+        className={styles.card}
+      >
+        <Image
+          src="https://secure.meetupstatic.com/photos/event/2/1/7/600_525000535.webp?w=750"
+          width={180}
+          height={100}
+          alt="image de l'événement"
+          className={styles.cardImage}
+        />
+        <div className={styles.cardInfos}>
+          <div className={styles.cardDate}>{formattedDate}</div>
+          <div className={styles.cardName}>{data.name}</div>
+          {/* <div className={styles.cardOrganiser}>{data.organiser.name}</div> */}
+          <div className={styles.cardDescription}>{sliceByWords(data.description, 200)}</div>
 
-            {/* Section droite */}
-            <div className={styles.rightSection}>
-                <h1 className={styles.title}>Mes Évènements</h1>
-                <div className={styles.container}>
-                {likedEvents && likedEvents.length > 0 ? (
-                    likedEvents.map((event) => (
-                        <div
-                            key={event.id}
-                            className={styles.eventBox}
-                            onClick={() => handleClick(event.id)}
-                        >
-                               <Image
-                                src={event.image}
-                                alt={event.title}
-                                className={styles.eventImage}
-                                width={100}
-                                height={100}
-                            />
-                {/* {displayedEvents && displayedEvents.length > 0 ? (
-                    displayedEvents.map((event) => (
-                        <div key={event} className={styles.eventBox} onClick={() => handleClick(event)}>
-                            <Image
-                                src={event.image}
-                                alt={event.title}
-                                className={styles.eventImage}
-                                width={100}
-                                height={100}
-                            /> */}
-                            <div className={styles.eventDetails}>
-                                <p className={styles.eventDate}>{event.date}</p>
-                                <h3 className={styles.eventTitle}>{event.title}</h3>
-                                <p className={styles.eventDescription}>{event.description}</p>
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    <p>Aucun événement dans cette catégorie.</p>
-                )}
-                
-                </div>
-            </div>
+          <div className={styles.cardSlotsAvailable}>{data.slotsAvailable} Places </div>
         </div>
+        <div className={styles.cardType}>
+          <div className={styles.cardCategories}>{categoriesToDisplay}</div>
+          <div className={styles.cardTarget}>{data.target.join(" ")}</div>
+          <div className={styles.cardAddress}>
+            <div className={styles.cardCity}>{data.address.city}</div>
+            <div className={styles.cardZipcode}>{data.address.zipcode}</div>
+          </div>
+        </div>
+      </div>
     );
+  });
+
+  return (
+    <div className={styles.main}>
+      <div className={styles.leftSection}>
+        <Button className={styles.backButton} onClick={handleGoBack}>
+          <FontAwesomeIcon className={styles.btnSearch} icon={faArrowLeft} />
+          Retour
+        </Button>
+        <div className={styles.tabs}>
+          <Tabs
+            tabPosition="left"
+            defaultActiveKey="upcoming"
+            items={items}
+            onChange={(key) => setActiveTab(key)} // Mise à  jour de l'onglet actif
+          />
+        </div>
+      </div>
+
+      <div className={styles.rightSection}>
+        <h1 className={styles.title}>Mes évenements</h1>
+        <div className={styles.container}>
+          {displayedEvents.length > 0 ? (
+            eventsToDisplay
+          ) : (
+            <p>Aucun évenement dans cette catégorie.</p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default MyEvents;

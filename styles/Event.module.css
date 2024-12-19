@@ -18,13 +18,15 @@
 }
 
 .eventTitle {
+  margin-left: 2%;
   font-size: 200%;
-  margin-top: 2%;
+  margin-top: 5%;
   margin-bottom: 2%;
   color: #393939;
 }
 
 .eventImage {
+  margin-left: 2%;
   object-fit: cover;
   width: 100%;
   height: auto;
@@ -32,35 +34,53 @@
 }
 
 .eventLabelDetails {
+  margin-left: 2%;
   font-weight: 700;
   margin-top: 2vh;
 }
 
 .eventDescription {
-  width: 95%;
+  margin-left: 2%;
+  width: 85%;
   font-weight: 500;
   margin-top: 1vh;
   flex-wrap: wrap;
   justify-self: start;
   text-align: justify;
+  line-height: 190%;
 }
 
 .rightContainer {
   display: flex;
   flex-direction: column;
   align-items: end;
-  margin-right: 2%;
+  margin-right: 4%;
 }
 
 .contactButton {
-  margin-top: 10%;
-  margin-bottom: 10%;
   background-color: #0093ea;
   color: white;
   width: 17vw;
   height: 5vh;
   font-size: large;
-  display: no;
+}
+
+.eventButtons {
+  margin-top: 10%;
+  margin-bottom: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 28vw;
+  height: 5vh;
+  /* background-color: #0093ea; */
+}
+
+.likeButton {
+  color: #af1d1d;
+  height: 4vh;
+  cursor: pointer;
 }
 
 .associationCard {

@@ -14,6 +14,7 @@
 
 .logo {
   cursor: pointer;
+  margin-left: 40%;
 }
 
 .logoAndSearchContainer {
@@ -65,7 +66,7 @@
 .btnSignup {
   /* background-color: #0093e9;
   color: white;
-  border-radius: 15px;
+  border-radius: 12px;
   border: none;
   font-size: 16px;
   padding: 10px;
@@ -77,16 +78,16 @@
   color: #ffffff;
   font-size: 13px;
   font-weight: 400;
-  border-radius: 15px;
+  border-radius: 12px;
   border-color: #0093e9;
   width: 142px;
   padding: 10px;
   margin: 10px;
   -webkit-box-shadow: inset -1px 3px 8px 5px #1f87ff, 2px 5px 16px 0px #0b325e,
-    -4px 5px 28px 1px rgba(6, 103, 122, 0); /*Permet l'utilisation avec firefox*/
-  box-shadow: inset -1px 3px 8px 5px #0093e9, 2px 5px 16px 0px #0b325e,
-    -4px 5px 28px 1px rgba(6, 103, 122, 0);
-  transition: 0.2 ease-in-out;
+  -4px 5px 28px 1px rgba(6, 103, 122, 0); /*Permet l'utilisation avec firefox*/
+box-shadow: inset -1px 3px 8px 5px #0093e9, 2px 5px 16px 0px #0b325e,
+  -4px 5px 28px 1px rgba(6, 103, 122, 0);
+transition: 0.3 ease-in-out;
 }
 .btnSignin:hover,
 .btnSignup:hover {
@@ -95,19 +96,22 @@
   box-shadow: 0 8px 25px rgba(0, 147, 233, 0.7), 0 4px 10px rgba(11, 50, 94, 0.5);
   transform: translateY(-3px); /* Effet de levée */
   cursor: pointer;
+ 
 }
 
 .shortcut {
   display: flex;
+  flex-direction: row;
   width: 40%;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .iconContainer {
   display: flex;
+  flex-direction: row;
   width: 40%;
   /* border: 1px solid black; */
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   font-size: 25px;
   /* color: #0093e9; */
@@ -131,7 +135,7 @@
 .logout {
   font-size: 20px;
   /* margin: 0 10px; */
-  color: #0093e9;
+  color: #0175b8;
 }
 
 .txtLogout {
@@ -141,48 +145,40 @@
 
 .headerIcon {
   cursor: pointer;
-  color: #0093e9;
-}
-
-.bellIcon {
-  color: #0093e9;
-}
-
-.bellIcon:hover {
-  color: #0093e9;
-  box-shadow: 0 8px 25px rgba(0, 147, 233, 0.7), 0 4px 10px rgba(11, 50, 94, 0.5);
-  transform: translateY(-2px);
-  background-color: none;
-  cursor: pointer;
-  border-radius: 8px;
-}
-
-.contactIcon {
-  color: #0093e9;
-  /* background-color: #0093e9; */
+  color: #494949;
 }
 
 .contactIcon:hover {
-  
   box-shadow: 0 8px 25px rgba(0, 147, 233, 0.7), 0 4px 10px rgba(11, 50, 94, 0.5);
   transform: translateY(-2px);
   cursor: pointer;
 }
 
-.calendarIcon {
-  color: #0093e9;
+.myEvents {
+  text-align: justify;
+  color: #0175b8;
+  font-size: medium;
+  white-space: nowrap;
+  cursor: pointer;
+  font-weight: 500;
+  /* background-color: #0078c1; */
+  padding: 10px;
+  margin: 2px;
 }
 
-
-.calendarIcon:hover {
-  box-shadow: 0 8px 25px rgba(0, 147, 233, 0.7), 0 4px 10px rgba(11, 50, 94, 0.5);
-  transform: translateY(-2px);
-  cursor: pointer;
+.spacer {
+  color: #0175b8;
+  font-size: medium;
+  font-weight: 500;
+  /* background-color: #0078c1; */
+  margin: 2px;
 }
 
 .txtWelcome {
-  font-size: 16px;
-  color: #0093e9;
+  font-size: 17px;
+  font-weight: 400;
+  color: #767676;
+  margin-right: 10px;
 }
 
 .createAssoMsg {

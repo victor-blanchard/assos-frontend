@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 import styles from "../styles/DropMenu.module.css";
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../reducers/users';
-import Link from 'next/link';
-import { DownOutlined, UserOutlined } from '@ant-design/icons';
-import { Dropdown, Space } from 'antd';
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../reducers/users";
+import Link from "next/link";
+import { DownOutlined, UserOutlined } from "@ant-design/icons";
+import { Dropdown, Space } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faRightFromBracket, faHeart } from "@fortawesome/free-solid-svg-icons";
 
@@ -19,38 +19,35 @@ const DropMenu = (props) => {
   const items = [
     {
       label: (
-        <Link className={styles.link} href={isAssociationOwner ? '/admin_association': '/userProfil'}>
-          {isAssociationOwner ? 'Mon compte' : 'Ma page'}
+        <Link
+          className={styles.link}
+          href={isAssociationOwner ? "/admin_association" : "/userProfil"}
+        >
+          {isAssociationOwner ? "Mon compte" : "Mon profil"}
         </Link>
-        
       ),
-      key: '0',
+      key: "0",
+    },
+
+    {
+      type: "divider",
     },
     {
       label: (
-        <span className={styles.dropSpan}>
-          Mes favoris
-          <FontAwesomeIcon onClick={() =>console.log('coeur')} className={` ${styles.iconInDrop}`} icon={faHeart} />  
-        </span>
-      ),
-      key: '1',
-    },
-    {
-      type: 'divider',
-    },
-    {
-      label: (
-        <span onClick={props.onLogout}className={styles.dropSpan}>
+        <span onClick={props.onLogout} className={styles.dropSpan}>
           Déconnexion
-          <FontAwesomeIcon  className={`${styles.logout} ${styles.iconInDrop}`} icon={faRightFromBracket} />  
+          {/* <FontAwesomeIcon
+            className={`${styles.logout} ${styles.iconInDrop}`}
+            icon={faRightFromBracket}
+          /> */}
         </span>
       ),
-      key: '3',
+      key: "3",
     },
   ];
 
   const handleUserMenu = () => {
-    console.log('Menu utilisateur ouvert');
+    console.log("Menu utilisateur ouvert");
   };
 
   return (
@@ -58,7 +55,7 @@ const DropMenu = (props) => {
       menu={{
         items,
       }}
-      trigger={['click']}
+      trigger={["click"]}
     >
       <a onClick={(e) => e.preventDefault()}>
         <Space>
