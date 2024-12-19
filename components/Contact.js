@@ -28,28 +28,21 @@ function Contact() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    emailjs
-      .sendForm(
-        "service_vcekf98",
-        "template_3h6k34a",
-        e.target,
-        "VJDA6kgRI7pMWQtp7"
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
+    emailjs.sendForm("service_vcekf98", "template_3h6k34a", e.target, "VJDA6kgRI7pMWQtp7").then(
+      (result) => {
+        console.log(result.text);
+      },
+      (error) => {
+        console.log(error.text);
+      }
+    );
 
     setContactData({ ...initialFormState });
   };
 
   return (
     <div className={styles.All}>
-      <div className={styles.tables}> 
+      <div className={styles.tables}>
         <h2>Contact</h2>
         <p>L'équipe La Sauce est à votre entière disposition !</p>
         <form className={styles.form} onSubmit={handleSubmit}>
@@ -102,12 +95,12 @@ function Contact() {
           </div>
         </form>
       </div>
-      <div className={styles.image}>
+      <div>
         <Image
+          className={styles.image}
           src={require("../public/home.jpg")}
           alt="Contact Image"
-          width={300}
-       
+          width={350}
         />
       </div>
     </div>

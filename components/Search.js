@@ -113,7 +113,7 @@ const EventSearchContent = () => {
           <div className={styles.cardDate}>{formattedDate}</div>
           <div className={styles.cardName}>{data.name}</div>
           {/* <div className={styles.cardOrganiser}>{data.organiser.name}</div> */}
-          <div className={styles.cardDescription}>{data.description}</div>
+          <div className={styles.cardDescription}>{sliceByWords(data.description, 200)}</div>
 
           <div className={styles.cardSlotsAvailable}>{data.slotsAvailable} Places </div>
         </div>
@@ -263,6 +263,18 @@ const EventSearchContent = () => {
     </div>
   );
 };
+
+function sliceByWords(text, maxLength) {
+  if (text.length <= maxLength) return text;
+  const words = text.split(" ");
+  let result = "";
+  for (const word of words) {
+    if (result.length + word.length + 1 > maxLength) break;
+    result += (result.length ? " " : "") + word;
+  }
+  return result + "...";
+}
+
 const AssociationSearchContent = () => {
   const router = useRouter();
   const associations = useSelector((state) => state.searchResults.value.associations);
@@ -279,17 +291,6 @@ const AssociationSearchContent = () => {
         </div>
       );
     });
-
-    function sliceByWords(text, maxLength) {
-      if (text.length <= maxLength) return text;
-      const words = text.split(" ");
-      let result = "";
-      for (const word of words) {
-        if (result.length + word.length + 1 > maxLength) break;
-        result += (result.length ? " " : "") + word;
-      }
-      return result + "...";
-    }
 
     return (
       <div
@@ -308,7 +309,7 @@ const AssociationSearchContent = () => {
         <div className={styles.cardInfos}>
           <div className={styles.cardName}>{data.name}</div>
           {/* <div className={styles.cardOrganiser}>{data.organiser.name}</div> */}
-          <div className={styles.cardDescription}>{sliceByWords(data.description, 150)}</div>
+          <div className={styles.cardDescription}>{sliceByWords(data.description, 300)}</div>
         </div>
         <div className={styles.cardType}>
           <div className={styles.cardCategories}>{categoriesToDisplay}</div>

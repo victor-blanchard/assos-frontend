@@ -46,7 +46,7 @@ function PublicAssociation() {
     const fetchAssociation = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/associations/getasso/${associationId}`,
+          `http://localhost:3000/associations/getAssoInfos/${associationId}`,
           {
             method: "GET",
             headers: { "Content-Type": "application/json" },
@@ -55,80 +55,45 @@ function PublicAssociation() {
         const data = await response.json();
 
         if (data.result) {
-          console.log(
-            `Données de l'association--- ${associationId} -----récupérées`
-          );
+          console.log(`Données de l'association--- ${associationId} -----récupérées`);
           setAssociation(data.association);
         } else {
           console.error("Erreur : Association non trouvée");
         }
       } catch (error) {
-        console.error(
-          "Erreur lors de la récupération de l'association :",
-          error
-        );
+        console.error("Erreur lors de la récupération de l'association :", error);
       }
     };
-
     fetchAssociation();
+
+    fetch(`http://localhost:3000/users/followingAssociations/${user.token}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data?.result) {
+          if (data?.followingAssociations?.includes(associationId)) {
+            setAssolikeStatus(true);
+            console.log("asso dans les asso likés");
+          }
+        }
+      })
+      .catch((error) =>
+        console.error("Erreur lors de la récupération des following associations :", error)
+      );
   }, [associationId]);
 
-  // Effet pour récupérer les événements associés
+  // Effet pour récupérer les événements de l'association
   useEffect(() => {
     if (associationId) {
       fetch(`http://localhost:3000/events/getAllEvents/${associationId}`)
         .then((response) => response.json())
         .then((data) => setEvents(data.events))
-        .catch((error) =>
-          console.error(
-            "Erreur lors de la récupération des événements :",
-            error
-          )
-        );
+        .catch((error) => console.error("Erreur lors de la récupération des événements :", error));
       console.log("Events de l'association récupérés");
     }
   }, [associationId]);
-
-  // Fonction pour tronquer le texte
-  const truncateText = (text, maxLength) =>
-    text?.length > maxLength
-      ? text.substring(0, maxLength) + "..."
-      : text || "";
-
-  // Gestion du tri
-  const handleSort = (column) => {
-    const newOrder = sortOrder[column] === "asc" ? "desc" : "asc";
-
-    const sortedEvents = [...events].sort((a, b) => {
-      const valueA = a[column];
-      const valueB = b[column];
-
-      if (column.includes("Date")) {
-        return newOrder === "asc"
-          ? new Date(valueA) - new Date(valueB)
-          : new Date(valueB) - new Date(valueA);
-      } else if (typeof valueA === "string") {
-        return newOrder === "asc"
-          ? valueA.localeCompare(valueB)
-          : valueB.localeCompare(valueA);
-      }
-      return newOrder === "asc" ? valueA - valueB : valueB - valueA;
-    });
-
-    setSortOrder({ ...sortOrder, [column]: newOrder });
-    setEvents(sortedEvents);
-  };
-
-  // Rendu de l'icône de tri
-  const renderSortIcon = (column) => {
-    return sortOrder[column] === "asc" ? (
-      <FontAwesomeIcon className={styles.eventSortIcon} icon={faSortUp} />
-    ) : sortOrder[column] === "desc" ? (
-      <FontAwesomeIcon className={styles.eventSortIcon} icon={faSortDown} />
-    ) : (
-      <FontAwesomeIcon className={styles.eventSortIcon} icon={faSort} />
-    );
-  };
 
   const categoriesToDisplay = association?.categories.map((data, i) => {
     return (
@@ -186,12 +151,12 @@ function PublicAssociation() {
     {
       title: "Description",
       dataIndex: "description",
-      // onCell: (e) => ({ style: { textAlign: "justify" } }),
+      onCell: (e) => ({ style: { textAlign: "justify" } }),
     },
-    {
-      title: "Adresse",
-      dataIndex: "address.city",
-    },
+    // {
+    //   title: "Adresse",
+    //   dataIndex: "address.city",
+    // },
     {
       title: "Catégories",
       dataIndex: "categories",
@@ -214,19 +179,27 @@ function PublicAssociation() {
     return state.users.value;
   });
 
+  function truncateText(text, maxLength) {
+    if (!text) {
+      // if text undefined or null
+      return ""; // Return a blank
+    }
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + "...";
+    }
+    return text;
+  }
+
   const likeAsso = async (token, assoId) => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/users/addLikeAsso/${token}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            token: token,
-            assoId: assoId,
-          }),
-        }
-      );
+      const response = await fetch(`http://localhost:3000/users/addLikeAsso/${token}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          token: token,
+          assoId: assoId,
+        }),
+      });
       response.json().then((data) => {
         if (data.result) {
           console.log(`Données de l'association ${assoId} récupérées`);
@@ -255,17 +228,14 @@ function PublicAssociation() {
 
   const dislikeAsso = async (token, assoId) => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/users/removeLikeAsso/${token}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            token: token,
-            assoId: assoId,
-          }),
-        }
-      );
+      const response = await fetch(`http://localhost:3000/users/removeLikeAsso/${token}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          token: token,
+          assoId: assoId,
+        }),
+      });
       response.json().then((data) => {
         if (data.result) {
           console.log(`Données de l'association ${assoId} récupérées`);
@@ -296,8 +266,7 @@ function PublicAssociation() {
     <div className={styles.publicAssoMain}>
       <div className={styles.leftContainer}>
         <Button className={styles.backButton} onClick={() => router.back()}>
-          <FontAwesomeIcon className={styles.btnBack} icon={faArrowLeft} />{" "}
-          Retour
+          <FontAwesomeIcon className={styles.btnBack} icon={faArrowLeft} /> Retour
         </Button>
         <Image
           src="https://secure.meetupstatic.com/photos/event/2/1/7/600_525000535.webp?w=750"
@@ -322,87 +291,45 @@ function PublicAssociation() {
               <div className={styles.assoSiret}>{association?.siret}</div>
             </div>
             <div className={styles.assoLocation}>
-              <div>
-                {association?.address?.street || "Adresse non disponible"}
-              </div>
+              <div>{association?.address?.street || "Adresse non disponible"}</div>
               <div>{association?.address?.city || "Ville non disponible"}</div>
-              <div>
-                {association?.address?.zipcode || "Code postal non disponible"}
-              </div>
+              <div>{association?.address?.zipcode || "Code postal non disponible"}</div>
             </div>
             <div className={styles.assoCategoriesContainer}>
               <div className={styles.assoCategoriesLabel}>Thèmes</div>
               <div className={styles.assoCategories}>
-                <div className={styles.cardCategories}>
-                  {categoriesToDisplay}
-                </div>
+                <div className={styles.cardCategories}>{categoriesToDisplay}</div>
               </div>
             </div>
           </div>
-          {assoLikeStatus ? (
-  <Button
-    className={styles.subButton}
-    onClick={() => handledislikeAsso(associationId)}
-  >
-    Ne plus suivre l'association
-  </Button>
-) : (
-  <Button
-    className={styles.subButton}
-    onClick={() => handleLikeAsso(associationId)}
-  >
-    Suivre l'association
-  </Button>
-)}
+          {!user?.isAssociationOwner && user.token ? (
+            assoLikeStatus ? (
+              <Button
+                className={styles.subButton}
+                style={{ color: "#0093e9", backgroundColor: "white" }}
+                onClick={() => handledislikeAsso(associationId)}
+              >
+                Ne plus suivre l'association
+              </Button>
+            ) : (
+              <Button className={styles.subButton} onClick={() => handleLikeAsso(associationId)}>
+                Suivre l'association
+              </Button>
+            )
+          ) : (
+            <div></div>
+          )}
         </div>
 
         <h1>Événements</h1>
         <Table
           locale={{
-            emptyText: (
-              <Empty description="Pas d'événements à afficher"></Empty>
-            ),
+            emptyText: <Empty description="Pas d'événements à afficher"></Empty>,
           }}
           columns={columns}
           dataSource={data}
           onChange={onChange}
         />
-        {/* <div className={styles.eventsSection}>
-          <table className={styles.tableOfEvents}>
-            <thead>
-              <tr>
-                <th>Nom</th>
-                <th className={styles.eventsStartDate} onClick={() => handleSort("startDate")}>
-                  Date de début {renderSortIcon("startDate")}
-                </th>
-                <th onClick={() => handleSort("endDate")}>
-                  Date de fin {renderSortIcon("endDate")}
-                </th>
-                <th>Description</th>
-                <th>Adresse</th>
-                <th>Code postal</th>
-                <th>Ville</th>
-                <th>Catégories</th>
-                <th>Places disponibles</th>
-              </tr>
-            </thead>
-            <tbody>
-              {events?.map((event) => (
-                <tr key={event._id}>
-                  <td>{truncateText(event.name, 40)}</td>
-                  <td>{new Date(event.startDate).toLocaleDateString("fr-FR")}</td>
-                  <td>{new Date(event.endDate).toLocaleDateString("fr-FR")}</td>
-                  <td>{truncateText(event.description, 40)}</td>
-                  <td>{event.address?.street || "N/A"}</td>
-                  <td>{event.address?.zipcode || "N/A"}</td>
-                  <td>{event.address?.city || "N/A"}</td>
-                  <td>{event.categories?.join(", ") || "N/A"}</td>
-                  <td>{event.slotsAvailable || "N/A"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div> */}
       </div>
     </div>
   );

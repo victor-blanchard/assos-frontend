@@ -123,8 +123,9 @@
   /* height: 10vh; */
   display: flex;
   flex-direction: row;
-  align-items: start;
-  /* justify-content: space-between; */
+  align-items: center;
+
+  justify-content: space-between;
   /* background-color: aquamarine; */
   padding-top: 2vh;
   padding-bottom: 2vh;
@@ -164,12 +165,14 @@
   font-weight: 400;
   text-align: justify;
   margin-bottom: 1%;
-  line-height: 110%;
+  line-height: 140%;
+  margin-top: 1%;
 }
 .cardInfos {
   display: flex;
   flex-direction: column;
   align-items: start;
+  justify-content: space-around;
   width: 50vw;
   height: 13vh;
 }
