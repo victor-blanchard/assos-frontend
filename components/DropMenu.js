@@ -26,15 +26,7 @@ const DropMenu = (props) => {
       ),
       key: '0',
     },
-    {
-      label: (
-        <span className={styles.dropSpan}>
-          Mes favoris
-          <FontAwesomeIcon onClick={() =>console.log('coeur')} className={` ${styles.iconInDrop}`} icon={faHeart} />  
-        </span>
-      ),
-      key: '1',
-    },
+    
     {
       type: 'divider',
     },

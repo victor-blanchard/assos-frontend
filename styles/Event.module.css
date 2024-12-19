@@ -53,14 +53,29 @@
 }
 
 .contactButton {
-  margin-top: 10%;
-  margin-bottom: 10%;
   background-color: #0093ea;
   color: white;
   width: 17vw;
   height: 5vh;
   font-size: large;
-  display: no;
+}
+
+.eventButtons {
+  margin-top: 10%;
+  margin-bottom: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 28vw;
+  height: 5vh;
+  /* background-color: #0093ea; */
+}
+
+.likeButton {
+  color: #af1d1d;
+  height: 4vh;
+  cursor: pointer;
 }
 
 .associationCard {
