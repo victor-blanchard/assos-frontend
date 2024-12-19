@@ -1,7 +1,7 @@
 import styles from "../styles/SignInForm.module.css";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { isModalVisible, isReset, login, setFormType } from "../reducers/users";
+import { isModalVisible, isReset, login, setFormType, addPhoto } from "../reducers/users";
 import { Button } from "antd";
 import { useRouter } from "next/router";
 
@@ -20,6 +20,7 @@ function SignInForm(props) {
   //Gestion du store
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
+  const photoProfil = useSelector((state) => state.associations.value.photosProfil.url)
   // console.log('etat modal =>', user.modalState);
 
   const router = useRouter();
@@ -79,6 +80,7 @@ function SignInForm(props) {
             
 
       const data = await response.json();
+      console.log('dataaaaaaa =>', data)
       if (data.result) {
         dispatch(
           login({

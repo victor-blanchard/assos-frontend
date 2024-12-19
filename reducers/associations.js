@@ -6,7 +6,6 @@ const initialState = {
         assosCreate: false,
         modalCreateState: false,
         assoInfos: {},
-        photosProfil: '',
         eventPhotos: [],
     },
 };
@@ -39,19 +38,12 @@ export const associationsSlice = createSlice({
 
         logoutAsso: (state, action) => {
             state.value.assoInfos = [];
-        },
-
-        addPhoto: (state, action) => {
-        state.value.photosProfil = action.payload;
-        },
-
-        removePhoto: (state, action) => {
-            state.value.photos = state.value.photos.filter((data) => data !== action.payload);
-        },
+            
+        },      
 
 
     }
 });
 
-export const { isCreateAsso, isModalCreateOpen, getAssoInfo, logoutAsso, addPhoto } = associationsSlice.actions;
+export const { isCreateAsso, isModalCreateOpen, getAssoInfo, logoutAsso } = associationsSlice.actions;
 export default associationsSlice.reducer;
