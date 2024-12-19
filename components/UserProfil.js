@@ -8,6 +8,45 @@ import { Input, Form } from "antd/lib";
 import React, { useState } from "react";
 
 function UserProfil() {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [form] = Form.useForm();
+
+  // Données utilisateur initiales (exemple)
+  const [userData, setUserData] = useState({
+    name: "John Doe",
+    email: "johndoe@example.com",
+    address: "123, Main Street",
+    birthDate: "1990-01-01",
+    password: "",
+  });
+
+  // Ouvrir la modale
+  const showModal = () => {
+    setIsModalVisible(true);
+    form.setFieldsValue(userData); // Pré-remplit les champs du formulaire
+  };
+
+  // Fermer la modale
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  // Soumettre les données mises à jour
+  const handleOk = () => {
+    form.validateFields()
+      .then((values) => {
+        console.log("Updated user data:", values);
+        setUserData({ ...userData, ...values });
+        setIsModalVisible(false);
+      })
+      .catch((info) => {
+        console.log("Validation Failed:", info);
+      });
+  };
+
+
+
+
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
@@ -61,7 +100,20 @@ function UserProfil() {
       router.push(route); // Redirection vers l'URL spécifiée
     }
 
+  const handleCardClick = (route) => {
+    // console.log('click', link);
+    if (route) {
+      router.push(route); // Redirection vers l'URL spécifiée
+    }
+
   };
+
+  const cards = titleCards.map((data, i) => (
+    <AssociationCard
+      key={i}
+      title={data.title}
+      description={data.description || 'Description non disponible.'}
+      onClick={() => handleCardClick(data.route)} // Passez le lien à la fonction onClick
 
   const cards = titleCards.map((data, i) => (
     <AssociationCard
@@ -73,6 +125,9 @@ function UserProfil() {
     />
 
 
+
+
+  ));
 
   ));
 
