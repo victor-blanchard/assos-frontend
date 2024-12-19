@@ -51,6 +51,7 @@ function SignInForm(props) {
   const handleChange = (e) => {
     const { name, value } = e.target; // destructuration, permet d'assigné une même valeur à plusieurs éléments
     setUserInfo((prevState) => ({ ...prevState, [name]: value }));
+    console.log(value)
   };
 
   const validateForm = () => {
