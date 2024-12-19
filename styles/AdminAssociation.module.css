@@ -17,10 +17,26 @@
   /* background-color: #d8d8d8; */
   background-color: #f0edfe;
   text-align: center;
-  
-
 }
 
+.photoProfil {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid black; */
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+.imgProfil {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
 
 .presentation {
   text-align: center;
@@ -33,13 +49,13 @@
   /* text-align: center; */
 }
 
-.presentation p {
-  
-}
+
 
 .blocModif {
   border: 1px solid #d8d8d8;
   text-align: center;
+  padding-bottom: 30px;
+
 }
 
 .identyProfil {
@@ -49,13 +65,28 @@
 }
 
 .eventsSection{
+display: flex;
+flex-direction: column;
+align-items: center;
 width: 70%;
-border: 1px solid #d8d8d8;
+/* border: 1px solid #d8d8d8; */
 padding: 10px; 
 height: auto;
+/* background-color: #000000; */
 }
 
+.editEventSection {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  /* align-items: center; */
+  width: 100%;
+  height: 70%;
+}
 .eventButton{
+  position: relative;
+  top: 0;
     background-color: #0093e9;
     margin: 4px;
     color: white;
@@ -71,15 +102,37 @@ height: auto;
 
 } 
 .tableContainer {
-  width: 100%;
-  height: auto;
+  width: 80%;
+  height: 80%;
   overflow: auto;
-  /* overflow-x: auto; */
+  overflow-x: auto;
+  border: 1px solid black;
+  border-radius: 25px;
   scrollbar-color: #0093e9 rgb(249, 249, 249) ;
   scrollbar-width: thin;
   font-size: 12px;
   background-color:white;
+  text-align: center;
+  
 }
+
+.tableContainer thead {
+  position: sticky;
+  top: 0;
+  background-color: #f0edfe;
+  border-radius: 25px 25px 0 0;
+  border-top: 1px solid;
+}
+
+.tableContainer tr {
+  border-bottom: 2px solid black;
+}
+
+.tableContainer td {
+  width: 2px;
+
+}
+
 .tableOfEvents{
     border: 1px solid #d8d8d8;
     border-collapse: collapse; 
@@ -149,18 +202,25 @@ height: auto;
 
   .editAsso{
 
-    background-color: #0093e9;
+    /* background-color: #0093e9; */
     margin: 4px;
-    color: white;
+    color: #0093e9;
     border-radius: 5px;
     border: none; 
     font-size: 14px;                  
-    padding: 4spx;
     cursor: pointer;
-    white-space: nowrap; 
     /* width: 50px;
     height: 30px; */
 
+  }
+
+  .iconEdit {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .iconEdit:hover {
+    transform: scale(1.1);
   }
 
   .assoEditInput{
@@ -170,15 +230,30 @@ height: auto;
     align-items: center;
     height: auto;
     border-bottom: 1px solid #d8d8d8;
-    margin: 10px;   
-
+    /* margin-bottom: 30px; */
+    padding: 20px 0;   
   }
 
   
-  .assoEditInput p {
-    font-size: 0.75rem;
-  }
+.assoEditInput p {
+  font-size: 0.75rem;
+}
+.assoEditInput input, .assoEditInput textarea {
+  width: 200px;
+  height: 30px;
+  border: none;
 
+}
+
+.btn {
+  background-color: #0093E9;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px;
+}
   .assoTitle{
 
     color: #0093e9;
