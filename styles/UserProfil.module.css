@@ -14,39 +14,46 @@
     padding: 5px;
 }
 
-.sectionLeftSIde {
-    display: flex;
+.leftSection {
+    /* display: flex;
     flex-direction: column;
     align-items: center;
-    width: 30%;
+    width: 10%;
     height: auto;
-    min-height: 600px;
+    min-height: 600px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: #eed1e5;
+    padding: 20px;
 }
 
 .userImgProfil {
     border-radius: 50%;
     width: 100px;
     height: 100px;
+    margin-top: -250px;
+    margin-left: 100px;
 }
 
+
 .imgProfil {
-    border-radius: 50%;
+    border-radius: 70%;
     width: 100px;
     height: 100px;
 }
 
-.sectionRightSide {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    border-left: 1px solid #d8d8d8;
-    /* background-color: rgb(240, 240, 240); */
-    width: 65%;
-    height: auto;
-    padding-bottom: 15px;
+.rightSection {
+    flex: 3;
     background-color: #f0edfe;
+    overflow-y: auto;
+    border-radius: 1px solid black;
 }
 
+.memberInfo {
+    margin-right: 100px;
+}
 .assoCard {
     display: flex;
     flex-direction: column;
@@ -153,8 +160,4 @@
     color: black;
     text-decoration: none;
     cursor: pointer;
-}
-
-.memberInfo {
-    
 }

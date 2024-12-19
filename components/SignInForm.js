@@ -1,7 +1,7 @@
 import styles from "../styles/SignInForm.module.css";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { isModalVisible, isReset, login, setFormType } from "../reducers/users";
+import { isModalVisible, isReset, login, setFormType, addPhoto } from "../reducers/users";
 import { Button } from "antd";
 import { useRouter } from "next/router";
 
@@ -22,7 +22,7 @@ function SignInForm(props) {
   //Gestion du store
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
-  // console.log('etat modal =>', user.modalState);
+  const photoProfil = useSelector((state) => state.users.value.photosProfil.photoUrl)
 
   const router = useRouter();
 
@@ -87,16 +87,17 @@ function SignInForm(props) {
       return;
     }
 
-    try {
-      const response = await fetch("http://localhost:3000/users/signin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userInfo),
-      });
-      console.log("Données envoyées :", JSON.stringify(userInfo));
-      if (!response.ok) {
-        throw new Error("Erreur r&seau ou serveur.");
-      }
+        try {
+            const response = await fetch('http://localhost:3000/users/signin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(userInfo)
+            });
+            console.log('Données envoyées :', JSON.stringify(userInfo));
+            if (!response.ok) {
+                throw new Error('Erreur reseau ou serveur.');
+            }
+            
 
       const data = await response.json();
       if (data.result) {
@@ -108,7 +109,9 @@ function SignInForm(props) {
             isAssociationOwner: data.isAssociationOwner,
             likedEvents: data.likedEvents,
             followingAssociations: data.followingAssociations,
-          })
+            photoUrl: data.photoUrl,
+            publicId: data.publicId,
+          }),
         );
         dispatch(setFormType(""));
         console.log("Connected data succès => ", data);

@@ -6,6 +6,7 @@ const initialState = {
         assosCreate: false,
         modalCreateState: false,
         assoInfos: {},
+        eventPhotos: [],
     },
 };
 
@@ -37,7 +38,8 @@ export const associationsSlice = createSlice({
 
         logoutAsso: (state, action) => {
             state.value.assoInfos = [];
-        }
+            
+        },      
 
 
     }
