@@ -29,10 +29,9 @@ function Header() {
   const token = user.token;
 
   const asso = useSelector((state) => state.associations.value.assoInfos);
- 
+
   const isAssociationOwner = useSelector((state) => state.users.value.isAssociationOwner);
   const isExistingAssociaiton = useSelector((state) => state.associations.value.assosCreate);
-
 
   // console.log("user : => ", user);
   // console.log("IsAssociaitonOwner =>", isAssociationOwner);
@@ -114,16 +113,11 @@ function Header() {
     console.log("contact");
     // router.push('/contact');
   };
-  const handleCalendar = () => {
-    console.log("calendrier");
-    //  router.push('/event');
+  const handleMyEvents = () => {
+    router.push("/my_events");
   };
-  const handleNotification = () => {
-    console.log("Notification");
-  };
-
-  const handleMyasso = () => {
-    console.log("Mes association");
+  const handleMyassos = () => {
+    router.push("/my_assos");
   };
 
   const handleCreateAsso = () => {
@@ -154,12 +148,10 @@ function Header() {
           )}
         </div>
         <div className={styles.iconContainer}>
-          <FontAwesomeIcon
-            title="Evenement à venir"
-            onClick={handleCalendar}
-            className={`${styles.headerIcon} ${styles.calendarIcon}`}
-            icon={faCalendarDays}
-          />
+          <div onClick={handleMyEvents} className={styles.myEvents}>
+            Mes évenements
+          </div>
+          <p className={styles.spacer}> | </p>
           {isAssociationOwner ? (
             <FontAwesomeIcon
               title="Contact"
@@ -168,19 +160,12 @@ function Header() {
               icon={faAddressCard}
             />
           ) : (
-            <FontAwesomeIcon
-              title="Mes associations"
-              onClick={handleMyasso}
-              className={`${styles.headerIcon} ${styles.contactIcon}`}
-              icon={faUsers}
-            />
+            <div>
+              <div onClick={handleMyassos} className={styles.myEvents}>
+                Mes associations
+              </div>
+            </div>
           )}
-          <FontAwesomeIcon
-            title="Notification"
-            onClick={handleNotification}
-            className={`${styles.headerIcon} ${styles.bellIcon}`}
-            icon={faBell}
-          />
           <DropMenu onLogout={handleLogout} />
         </div>
       </div>
