@@ -1,6 +1,7 @@
 import Link from "next/link";
 import styles from "../styles/AdminAssociation.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { Select } from "antd/lib";
 import {
   faHeart,
@@ -11,15 +12,20 @@ import {
   faSortDown,
   faTrash,
   faPen,
+  faPenToSquare,
+  faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../reducers/users";
+import { addPhoto } from '../reducers/associations'
 
 function AdminAssociation() {
   const infosAsso = useSelector((state) => state.associations.value.assoInfos);
-
+  const photoProfilUrl = useSelector((state) => state.associations.value.photosProfil);
+  console.log('PP=========================', photoProfilUrl);
+  const dispatch = useDispatch();
   console.log('Page admin INFO ASSO ===>', infosAsso[0]?.id);
   const [association, setAssociation] = useState(null);
   const [id, setId] = useState(infosAsso[0]?.id);
@@ -27,24 +33,26 @@ function AdminAssociation() {
   const [nameEditable, setNameEditable] = useState(false);
   const [description, setDescription] = useState(infosAsso[0]?.description);
   const [descriptionEditable, setDescriptionEditable] = useState(false);
-  const [siret, setSiret] = useState(infosAsso[0].siret);
+  const [siret, setSiret] = useState(infosAsso[0]?.siret);
   const [siretEditable, setSiretEditable] = useState(false);
-  const [address, setAddress] = useState(infosAsso[0].address);
-  const [street, setStreet] = useState(infosAsso[0].address.street);
+  const [address, setAddress] = useState(infosAsso[0]?.address);
+  const [street, setStreet] = useState(infosAsso[0]?.address.street);
   const [streetEditable, setStreetEditable] = useState(false);
-  const [zipcode, setZipcode] = useState(infosAsso[0].address.zipcode);
+  const [zipcode, setZipcode] = useState(infosAsso[0]?.address.zipcode);
   const [zipcodeEditable, setZipcodeEditable] = useState(false);
-  const [city, setCity] = useState(infosAsso[0].address.city);
+  const [city, setCity] = useState(infosAsso[0]?.address.city);
   const [cityEditable, setCityEditable] = useState(false);
+  const [categories, setCategories] = useState("");
+  const [target, setTarget] = useState("");
   // const { street, city, zipcode } = address;
-  console.log("State address :", address);
-  console.log("Address street :", address ? address.street : "Adresse est undefined");
-
   const [photoFile, setPhotoFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
   const [showModal, setShowModal] = useState(false); // State for modal visibility
   const [editingEvent, setEditingEvent] = useState(null);
   const user = useSelector((state) => state.users.value);
+  const fileInputRef = useRef(null);
+  const cameraRef = useRef(null);
+
 
   const categoriesOptions = [
     { label: "Aide à la personne", value: "Aide à la personne" },
@@ -64,8 +72,13 @@ function AdminAssociation() {
     { label: "Senior", value: "Senior" },
   ];
 
-  const [categories, setCategories] = useState("");
-  const [target, setTarget] = useState("");
+  //Add pictures //
+  const sendProfilPicture = async () => {
+    // const photo = await
+    
+      
+      // dispatch(addPhoto())
+  }
 
   ///START - ASSOCIATION IDENTITY INFORMATION EDIT SECTION
 
@@ -80,6 +93,7 @@ function AdminAssociation() {
     try {
       const response = await fetch(`http://localhost:3000/associations/getasso/${id}`);
       const data = await response.json();
+      console.log('fetch asso', data);
 
       // setAssociation(data.association);
       // setAddress(data.association.address);
@@ -199,18 +213,56 @@ function AdminAssociation() {
 
   ////// END - EDIT THE ASSOCIATION DATA ////
 
-  const handlePhotoChange = (event) => {
+  const handlePhotoChangeAndSend = async (event) => {
     const file = event.target.files[0];
-    setPhotoFile(file);
+    if (!file) {
+      console.error('Aucun fichier selectionné.');
+      return;
+    }
 
+    //mise à jour de l'aperçu
+    setPhotoFile(file);
     // Create a preview of photo
     const reader = new FileReader();
     reader.onloadend = () => {
       setPhotoPreview(reader.result);
+      dispatch(addPhoto(reader.result));
     };
     if (file) {
       reader.readAsDataURL(file);
     }
+
+    // const formData = new FormData();
+    //   formData.append(`file`, file);
+    // try {
+
+    //   const response = await fetch('http://localhost:3000/associations/upload', {
+    //     method: 'POST',
+          // headers: {'Content-Type' : 'application/json'}
+    //     body: formData,
+    //   });
+    //   console.log('RESPONSE =>',response)
+    //   if (!response.ok) {
+    //     console.error('Erreur lors de l\'envoi du fichier');
+    //   };
+      
+    //   const data = await response.json();
+    //   //Mise à jour de Redux 
+    //   dispatch(addPhoto(data.url));
+    //   console.log('Photo envoyée avec succée :', data);
+
+    // } catch(error) {
+    //   console.error('Erreur lors de l\'envoi de la photo :', error.message);
+    // }
+
+
+  };
+
+  const handleIconClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click(); // Simule un clic sur l'input
+    }
+    console.log('click icon edit')
   };
   //END - ASSOCIATION IDENTITY INFORMATION EDIT SECTION
   //EVENT CREATION & UPDATES & DELETES SECTION /////////////////////////////////////////////////////////
@@ -437,16 +489,21 @@ function AdminAssociation() {
           <div className={styles.assoEditInput}>
             <label htmlFor="photo"></label>
             <div className={styles.photoProfil}>
-            {photoPreview ? (
-              <Image
-                src={photoPreview}
-                width={100}
-                height={100}
-                alt="Photo Preview"
-                className={styles.imgProfil}
-              />
-            
-          ) : (<input type="file" id="photo" onChange={handlePhotoChange} />)}
+              {photoProfilUrl ? (
+              <>
+                <Image
+                  src={photoProfilUrl}
+                  width={100}
+                  height={100}
+                  alt="Photo Preview"
+                  className={styles.imgProfil}
+                />
+                <FontAwesomeIcon onClick={handleIconClick} icon={faPenToSquare} className={styles.iconEdit} />             
+              </>
+    
+              ) : (<button onClick={handleIconClick} className={styles.btn}>
+                Ajouter une photo
+              </button>)} <input type="file"  ref={fileInputRef} style={{display: 'none'}} id="photo" onChange={handlePhotoChangeAndSend } />
               <h2>{name}</h2>
             </div>
           </div>
@@ -472,7 +529,7 @@ function AdminAssociation() {
               )}{" "}
               {
                 <button className={styles.editAsso} onClick={() => setNameEditable(!nameEditable)}>
-                  {nameEditable ? "Cancel" : "Edit"}
+                  {nameEditable ? <FontAwesomeIcon className={styles.iconCancel} icon={faCircleXmark} /> : <FontAwesomeIcon icon={faPenToSquare} className={styles.iconEdit} />}
                 </button>
               }
             </div>
@@ -492,7 +549,7 @@ function AdminAssociation() {
                   className={styles.editAsso}
                   onClick={() => setDescriptionEditable(!descriptionEditable)}
                 >
-                  {descriptionEditable ? "Cancel" : "Edit"}
+                  {descriptionEditable ? <FontAwesomeIcon className={styles.iconCancel} icon={faCircleXmark} /> : <FontAwesomeIcon icon={faPenToSquare} className={styles.iconEdit} />}
                 </button>
               }
             </div>
@@ -515,7 +572,7 @@ function AdminAssociation() {
                   className={styles.editAsso}
                   onClick={() => setSiretEditable(!siretEditable)}
                 >
-                  {siretEditable ? "Cancel" : "Edit"}
+                  {siretEditable ? <FontAwesomeIcon className={styles.iconCancel} icon={faCircleXmark} /> : <FontAwesomeIcon icon={faPenToSquare} className={styles.iconEdit} />}
                 </button>
               }
             </div>
@@ -539,7 +596,7 @@ function AdminAssociation() {
                   className={styles.editAsso}
                   onClick={() => setStreetEditable(!streetEditable)}
                 >
-                  {streetEditable ? "Cancel" : "Edit"}
+                  {streetEditable ? <FontAwesomeIcon className={styles.iconCancel} icon={faCircleXmark} /> : <FontAwesomeIcon icon={faPenToSquare} className={styles.iconEdit} />}
                 </button>
               }
             </div>
@@ -562,7 +619,7 @@ function AdminAssociation() {
                   className={styles.editAsso}
                   onClick={() => setZipcodeEditable(!zipcodeEditable)}
                 >
-                  {zipcodeEditable ? "Cancel" : "Edit"}
+                  {zipcodeEditable ? <FontAwesomeIcon className={styles.iconCancel} icon={faCircleXmark} /> : <FontAwesomeIcon icon={faPenToSquare} className={styles.iconEdit} />}
                 </button>
               }
             </div>
@@ -582,7 +639,7 @@ function AdminAssociation() {
               )}
               {
                 <button className={styles.editAsso} onClick={() => setCityEditable(!cityEditable)}>
-                  {cityEditable ? "Cancel" : "Edit"}
+                  {cityEditable ? <FontAwesomeIcon className={styles.iconCancel} icon={faCircleXmark} /> : <FontAwesomeIcon icon={faPenToSquare} className={styles.iconEdit} />}
                 </button>
               }
             </div>
@@ -653,7 +710,7 @@ function AdminAssociation() {
                   name="endDate"
                   defaultValue={
                     editingEvent ? new Date(editingEvent.endDate).toISOString().slice(0, 10) : ""
-                    editingEvent
+                    
                       ? new Date(editingEvent.endDate)
                         .toISOString()
                         .slice(0, 10)

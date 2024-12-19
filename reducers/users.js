@@ -10,7 +10,7 @@ const initialState = {
         username: null,
         id: null,
         isAssociationOwner: false,
-        likedEvents: [],
+        // likedEvents: [],
     },
 };
 
@@ -36,7 +36,7 @@ export const usersSlice = createSlice({
             state.value.username = action.payload.username;
             state.value.isAssociationOwner = action.payload.isAssociationOwner;
             state.value.id = action.payload.id;
-            // state.value.likedEvents.push(action.payload)
+            // state.value.likedEvents.push(action.payload);
           },
 
         logout: (state) => {

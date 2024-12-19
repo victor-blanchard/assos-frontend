@@ -66,7 +66,6 @@ function SignInForm(props) {
     const handleConnect = async (e) => {
         e.preventDefault();
         if (!validateForm()) {
-
             return;
         } 
 
@@ -78,7 +77,7 @@ function SignInForm(props) {
             });
             console.log('Données envoyées :', JSON.stringify(userInfo));
             if (!response.ok) {
-                throw new Error('Erreur r&seau ou serveur.');
+                throw new Error('Erreur reseau ou serveur.');
             }
             
 
@@ -97,7 +96,7 @@ function SignInForm(props) {
             
 
         } catch (error) {
-            console.error('Erreur :', error.message);
+            console.error('Erreur réseau :', error.message);
         }
 
         console.log('Données soumises :', userInfo);

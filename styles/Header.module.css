@@ -183,6 +183,7 @@
 .txtWelcome {
   font-size: 16px;
   color: #0093e9;
+  text-align: center;
 }
 
 .createAssoMsg {
