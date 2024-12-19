@@ -150,7 +150,7 @@ function Event() {
         </Button>
         <h2 className={styles.eventTitle}>{event?.name || "Nom de l'événement non disponible"}</h2>
         <Image
-          src="https://secure.meetupstatic.com/photos/event/7/e/1/600_500402017.webp?w=750"
+          src={`/${event?.image}`}
           width={"35vw"}
           className={styles.eventImage}
           preview={false}
@@ -177,8 +177,8 @@ function Event() {
             {event?.organiser?.name || "Nom de l'association non disponible"}
           </div>
           <Image
-            src="https://secure.meetupstatic.com/photos/event/2/1/7/600_525000535.webp?w=750"
-            width={70}
+            src={`/${event?.organiser?.image}`}
+            width={100}
             height={70}
             className={styles.associationImage}
             preview={false}

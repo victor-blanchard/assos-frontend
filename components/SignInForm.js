@@ -55,35 +55,35 @@ function SignInForm(props) {
 
   const validateForm = () => {
     let isValid = true;
-  
+
     if (!EMAIL_REGEX.test(userInfo.email)) {
       setEmailError(true);
       isValid = false;
     }
-  
-    const requiredFields = ["email", "password"]; 
-  
+
+    const requiredFields = ["email", "password"];
+
     const missingFields = requiredFields.filter((field) => !userInfo[field]?.trim());
     setErrors(missingFields);
-  
+
     if (missingFields.length > 0) {
       isValid = false;
     }
 
-    if(connectionError) {isValid=false};
-  console.log("isvalid--->" + isValid)
-  console.log(connectionError)
-    return isValid; 
+    if (connectionError) {
+      isValid = false;
+    }
+    console.log("isvalid--->" + isValid);
+    console.log(connectionError);
+    return isValid;
   };
 
-
-
   const handleConnect = async (e) => {
-    console.log ("handle connect called")
-    console.log("Validate Form -->"+ validateForm());
+    console.log("handle connect called");
+    console.log("Validate Form -->" + validateForm());
     e.preventDefault();
     if (!validateForm()) {
-      console.log('pas valid')
+      console.log("pas valid");
       return;
     }
 
@@ -108,6 +108,8 @@ function SignInForm(props) {
             isAssociationOwner: data.isAssociationOwner,
             likedEvents: data.likedEvents,
             followingAssociations: data.followingAssociations,
+            birthday: data.birthday,
+            zipcode: data.zipcode,
           })
         );
         dispatch(setFormType(""));
@@ -116,7 +118,7 @@ function SignInForm(props) {
         dispatch(isModalVisible(false));
       } else {
         console.error("Erreur de connexion : ", data.result);
-        setConnectionerror(true)
+        setConnectionerror(true);
       }
     } catch (error) {
       console.error("Erreur :", error.message);
@@ -139,34 +141,29 @@ function SignInForm(props) {
   };
 
   let formulaire = (
-    <div className={styles.form} >
+    <div className={styles.form}>
       <h2>J'ai dèjà un compte</h2>
       <label>
         Email :
-        <input
-          type="email"
-          name="email"
-          value={userInfo.email}
-          onChange={handleChange}
-        />
-         {errors.includes("password") &&(
+        <input type="email" name="email" value={userInfo.email} onChange={handleChange} />
+        {errors.includes("password") && (
           <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>
         )}
       </label>
 
-      {!connectionError && emailError && <p className={styles.txtEmptyChamp}>Merci de renseigner une adresse email valide.</p>}
-     
-      {connectionError && <p className={styles.txtEmptyChamp}>Le nom d'utilisateur ou le mot de passe est incorrect.
-      </p>}
+      {!connectionError && emailError && (
+        <p className={styles.txtEmptyChamp}>Merci de renseigner une adresse email valide.</p>
+      )}
+
+      {connectionError && (
+        <p className={styles.txtEmptyChamp}>
+          Le nom d'utilisateur ou le mot de passe est incorrect.
+        </p>
+      )}
 
       <label>
         Mot de passe :
-        <input
-          type="password"
-          name="password"
-          value={userInfo.password}
-          onChange={handleChange}
-        />
+        <input type="password" name="password" value={userInfo.password} onChange={handleChange} />
         {errors.includes("password") && (
           <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>
         )}
