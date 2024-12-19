@@ -140,7 +140,7 @@ function SignInForm(props) {
 
   let formulaire = (
     <div className={styles.form} >
-      <h2>J'ai dèjà un compte</h2>
+      <h2 className={styles.titleH2}>J'ai dèjà un compte</h2>
       <label>
         Email :
         <input
