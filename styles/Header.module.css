@@ -4,13 +4,12 @@
   align-items: center;
   height: 9vh;
   border-bottom: 1px solid #d8d8d8;
-  /* position: fixed; */
   position: sticky;
   top: 0;
   width: 100%;
-  max-width: 100vw;
+  /* max-width: 100vw; */
   z-index: 1;
-  overflow-x: auto;
+  /* overflow-x: auto; */
   background-color: white;
 }
 
