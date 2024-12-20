@@ -22,7 +22,7 @@ function SignInForm(props) {
   //Gestion du store
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
-  const photoProfil = useSelector((state) => state?.users?.value?.photosProfil?.photoUrl);
+  const photoProfil = useSelector((state) => state.users.value.photosProfil.photoUrl);
 
   const router = useRouter();
 

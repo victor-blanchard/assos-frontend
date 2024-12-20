@@ -257,25 +257,7 @@ const EventSearchContent = () => {
           Actualiser
         </Button>
       </div>
-
-      <div className={styles.resultContainer}>
-        {eventsToDisplay?.length > 0 ? (
-          eventsToDisplay
-        ) : (
-          <div className={styles.notFoundSlot}>
-            <Image
-              src="/notFoundDog.png"
-              width={200}
-              height={200}
-              alt="image de l'association"
-              className={styles.notFoundImage}
-            />
-            <div className={styles.emptyResult}>
-              Pas d'événements correspondants, essaye d'autres critères{" "}
-            </div>
-          </div>
-        )}
-      </div>
+      <div className={styles.resultContainer}>{eventsToDisplay}</div>
 
       {/* <div className={styles.map}></div> */}
     </div>
@@ -419,24 +401,7 @@ const AssociationSearchContent = () => {
           </Button>
         </div>
       </div>
-      <div className={styles.resultContainer}>
-        {associationsToDisplay?.length > 0 ? (
-          associationsToDisplay
-        ) : (
-          <div className={styles.notFoundSlot}>
-            <Image
-              src="/notFoundDog.png"
-              width={200}
-              height={200}
-              alt="image de l'association"
-              className={styles.notFoundImage}
-            />
-            <div className={styles.emptyResult}>
-              Pas d'associations correspondantes, essaye d'autres critères{" "}
-            </div>
-          </div>
-        )}
-      </div>
+      <div className={styles.resultContainer}>{associationsToDisplay}</div>
 
       {/* <div className={styles.map}></div> */}
     </div>
