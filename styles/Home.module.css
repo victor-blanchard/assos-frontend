@@ -4,9 +4,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 86vh;
+  height: auto;
   /* padding: 4rem 0; */
-  flex-grow: 1;
+  /* flex-grow: 1; */
   background-color: #f0edfe;
 }
 
@@ -14,7 +14,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  padding: 20px;
+  /* padding: 20px; */
 }
 
 .mainText {
