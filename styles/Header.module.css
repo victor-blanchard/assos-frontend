@@ -9,7 +9,7 @@
   width: 100%;
   /* max-width: 100vw; */
   z-index: 1;
-  /* overflow-x: auto; */
+  overflow-x: auto;
   background-color: white;
 }
 
