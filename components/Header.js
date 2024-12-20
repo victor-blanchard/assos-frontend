@@ -18,7 +18,7 @@ import {
   faBell,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import { addEvents, deleteEvents, addFilters, deleteFilters, addPhoto } from "../reducers/searchResults";
+import { addEvents, deleteEvents, addFilters, deleteFilters } from "../reducers/searchResults";
 import DropMenu from "./DropMenu";
 import ModalCreate from "./ModalCreate";
 
@@ -27,10 +27,9 @@ function Header() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
   const token = user.token;
+
   const asso = useSelector((state) => state.associations.value.assoInfos);
-  const assoCrea = useSelector((state) => state.associations.value.assosCreate)
-  console.log("getAsso =>", asso);
-  console.log('----------------------------->',assoCrea)
+
   const isAssociationOwner = useSelector((state) => state.users.value.isAssociationOwner);
   const isExistingAssociaiton = useSelector((state) => state.associations.value.assosCreate);
 
@@ -92,7 +91,7 @@ function Header() {
           }
         });
     }
-  }, [token, assoCrea]);
+  }, [token]);
 
   const handleSignUp = () => {
     dispatch(setFormType("signup"));
