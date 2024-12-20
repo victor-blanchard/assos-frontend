@@ -169,68 +169,55 @@ function UserProfil() {
 
   return (
     <main className={styles.mainContainer}>
-      <section className={styles.section}>
-        <div className={styles.leftSection}>
-          <h1>Espace personnel</h1>
-          <div className={styles.userImgProfil}>
-            {photoProfilUrl ? (
-              <>
-                <Image
-                  src={photoProfilUrl}
-                  width={100}
-                  height={100}
-                  alt="Photo Preview"
-                  className={styles.imgProfil}
-                />
-                <FontAwesomeIcon
-                  onClick={handleIconClick}
-                  icon={faPenToSquare}
-                  className={styles.iconEdit}
-                />
-              </>
-            ) : (
-              <>
-                <Image
-                  src="/user_profil.jpg"
-                  width={200}
-                  height={200}
-                  alt="photo de profil"
-                  className={styles.imgProfil}
-                />
-                <FontAwesomeIcon
-                  onClick={handleIconClick}
-                  icon={faPenToSquare}
-                  className={styles.iconEdit}
-                />
-              </>
-            )}{" "}
-            <input
-              type="file"
-              ref={fileInputRef}
-              style={{ display: "none" }}
-              id="photo"
-              onChange={handlePhotoChangeAndSend}
-            />
-          </div>
-          <div className={styles.memberInfo}>
-            <h2>{user?.username}</h2>
-            <div className={styles.eventSlot}>
-              <p className={styles.eventLabel}>Email </p>
-              <p className={styles.eventData}>{user.email}</p>
-            </div>
-            <div className={styles.eventSlot}>
-              <p className={styles.eventLabel}>Code postal </p>
-              <p className={styles.eventData}>{user.zipcode}</p>
-            </div>
-            <div className={styles.eventSlot}>
-              <p className={styles.eventLabel}>Date de naissance</p>
-              <p className={styles.eventData}>{formattedBirthday}</p>
-            </div>
-            <Button type="primary" onClick={showModal}>
-              Modifier mes informations
-            </Button>
-          </div>
+    <section className={styles.section}>
+      <div className={styles.leftSection}>
+        <h1>Espace personnel</h1>
+        <div className={styles.userImgProfil}>
+          {photoProfilUrl ? (
+            <>
+              <Image
+                src={photoProfilUrl}
+                width={100}
+                height={100}
+                alt="Photo Preview"
+                className={styles.imgProfil}
+              />
+              <FontAwesomeIcon onClick={handleIconClick} icon={faPenToSquare} className={styles.iconEdit} />             
+              </>   
+          ) : (
+            <>
+              <Image
+                src="/user_profil.jpg"
+                width={100}
+                height={100}
+                alt="photo de profil"
+                className={styles.imgProfil}
+              />
+              <FontAwesomeIcon onClick={handleIconClick} icon={faPenToSquare} className={styles.iconEdit} />             
+
+            </>
+          )} <input type="file"  ref={fileInputRef} style={{display: 'none'}} id="photo" onChange={handlePhotoChangeAndSend } />
+          
         </div>
+        <div className={styles.memberInfo}>
+          <h2>{user?.username}</h2>
+          <div className={styles.eventSlot}>
+            <p className={styles.eventLabel}>Email </p>
+            <p className={styles.eventData}>{user.email}</p>
+          </div>
+          {/* <div className={styles.eventSlot}>
+            <p className={styles.eventLabel}>Code postal </p>
+            <p className={styles.eventData}>{user.zipcode}</p>
+          </div> */}
+          {/* <div className={styles.eventSlot}>
+            <p className={styles.eventLabel}>Date de naissance</p>
+            <p className={styles.eventData}>{formattedBirthday}</p>
+          </div> */}
+          <Button type="primary" onClick={showModal}>
+            Modifier mes informations
+          </Button>
+        </div>
+      </div>
 
         <Modal
           title="Modifier mes informations"
