@@ -165,9 +165,10 @@ function Header() {
               <div onClick={handleMyassos} className={styles.myEvents}>
                 Mes associations
               </div>
+              {/* <p className={styles.spacer}> | </p> */}
             </div>
           )}
-          <DropMenu onLogout={handleLogout} />
+          <DropMenu className={styles.dropMenu} onLogout={handleLogout} />
         </div>
       </div>
     );
@@ -187,7 +188,7 @@ function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.logoAndSearchContainer}>
-        <Link href="/">
+        <Link className={styles.logoContainer} href="/">
           <Image className={styles.logo} src="/logo.png" alt="Logo" width={100} height={50} />
         </Link>
         <div className={styles.searchContainers}>

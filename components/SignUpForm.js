@@ -69,9 +69,7 @@ function SignUpForm(props) {
       ? ["firstname", "lastname", "email", "password", "zipcode"]
       : ["firstname", "lastname", "email", "password", "zipcode" /*'siret'*/];
 
-    const missingFields = requiredFields.filter(
-      (field) => !userInfo[field].trim()
-    );
+    const missingFields = requiredFields.filter((field) => !userInfo[field].trim());
     setErrors(missingFields);
 
     if (missingFields.length > 0) {
@@ -165,104 +163,90 @@ function SignUpForm(props) {
       <form className={styles.form} onSubmit={handleSubmit}>
         <h2 className={styles.titleH2}>Je m'inscris en tant que particulier</h2>
         <div className={styles.allSections}>
-        <div className={styles.section}>
-        <label htmlFor="firstname">
-          Prénom :
-          <input
-            type="text"
-            name="firstname"
-            value={userInfo.firstname}
-            onChange={handleChange}
-          />
-          {errors.includes("firstname") && (
-            <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>
-          )}
-        </label>
-        <label htmlFor="lastname">
-          Nom :
-          <input
-            type="text"
-            name="lastname"
-            value={userInfo.lastname}
-            onChange={handleChange}
-          />
-          {errors.includes("lastname") && (
-            <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>
-          )}
-        </label>
-        </div>
-        <div className={styles.section}>
-        <label htmlFor="email">
-          Email :
-          <input
-            type="email"
-            name="email"
-            value={userInfo.email}
-            onChange={handleChange}
-          />
-          {errors.includes("email") && (
-            <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>
-          )}
-        </label>
-        {!connectionError && emailError && (
-          <p className={styles.txtEmptyChamp}>
-            Merci de renseigner une adresse email valide.
-          </p>
-        )}
+          <div className={styles.section}>
+            <label htmlFor="firstname">
+              Prénom :
+              <input
+                type="text"
+                name="firstname"
+                value={userInfo.firstname}
+                onChange={handleChange}
+              />
+              {errors.includes("firstname") && (
+                <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>
+              )}
+            </label>
+            <label htmlFor="lastname">
+              Nom :
+              <input
+                type="text"
+                name="lastname"
+                value={userInfo.lastname}
+                onChange={handleChange}
+              />
+              {errors.includes("lastname") && (
+                <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>
+              )}
+            </label>
+          </div>
+          <div className={styles.section}>
+            <label htmlFor="email">
+              Email :
+              <input type="email" name="email" value={userInfo.email} onChange={handleChange} />
+              {errors.includes("email") && (
+                <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>
+              )}
+            </label>
+            {!connectionError && emailError && (
+              <p className={styles.txtEmptyChamp}>Merci de renseigner une adresse email valide.</p>
+            )}
 
-        <label htmlFor="password">
-          Mot de passe :
-          <input
-            type="password"
-            name="password"
-            value={userInfo.password}
-            onChange={handleChange}
-          />
-          {errors.includes("password") && (
-            <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>
-          )}
-        </label>
+            <label htmlFor="password">
+              Mot de passe :
+              <input
+                type="password"
+                name="password"
+                value={userInfo.password}
+                onChange={handleChange}
+              />
+              {errors.includes("password") && (
+                <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>
+              )}
+            </label>
+          </div>
+          <div className={styles.section}>
+            <label htmlFor="birthday">
+              Date de naissance :
+              <input
+                type="date"
+                name="birthday"
+                value={userInfo.birthday}
+                onChange={handleChange}
+              />
+            </label>
+            <label htmlFor="zipcode">
+              Code postal :
+              <input type="text" name="zipcode" value={userInfo.zipcode} onChange={handleChange} />
+              {errors.includes("zipcode") && (
+                <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>
+              )}
+            </label>
+          </div>
         </div>
-        <div className={styles.section}>
-        <label htmlFor="birthday">
-          Date de naissance :
-          <input
-            type="date"
-            name="birthday"
-            value={userInfo.birthday}
-            onChange={handleChange}
-          />
-        </label>
-        <label htmlFor="zipcode">
-          Code postal :
-          <input
-            type="text"
-            name="zipcode"
-            value={userInfo.zipcode}
-            onChange={handleChange}
-          />
-          {errors.includes("zipcode") && (
-            <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>
-          )}
-        </label>
-        </div></div>
         <div className={styles.buttons}>
-    
-        <Button className={styles.button} onClick={handleSubmit}>
-          S'inscrire
-        </Button>
-        <Button className={styles.button} onClick={returnToFormulaire}>
-          Retour
-        </Button>
+          <Button className={styles.button} onClick={handleSubmit}>
+            S'inscrire
+          </Button>
+          <Button className={styles.button} onClick={returnToFormulaire}>
+            Retour
+          </Button>
         </div>
       </form>
     );
   } else if (isAsso) {
     formulaire = (
       <form className={styles.form} onSubmit={handleSubmit}>
-        <h2 className={styles.titleH2}>
-          Je m'inscris pour représenter mon association
-        </h2>
+        <h2 className={styles.titleH2}>Je m'inscris pour représenter mon association</h2>
         <div className={styles.allSections}>
           <div className={styles.section}>
             <label htmlFor="firstname">
@@ -298,12 +282,7 @@ function SignUpForm(props) {
           <div className={styles.section}>
             <label htmlFor="email">
               Email :
-              <input
-                type="email"
-                name="email"
-                value={userInfo.email}
-                onChange={handleChange}
-              />
+              <input type="email" name="email" value={userInfo.email} onChange={handleChange} />
               {errors.includes("email") && (
                 <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>
               )}
@@ -333,12 +312,7 @@ function SignUpForm(props) {
             </label>
             <label htmlFor="zipcode">
               Code postal :
-              <input
-                type="text"
-                name="zipcode"
-                value={userInfo.zipcode}
-                onChange={handleChange}
-              />
+              <input type="text" name="zipcode" value={userInfo.zipcode} onChange={handleChange} />
               {errors.includes("zipcode") && (
                 <p className={styles.txtEmptyChamp}>Ce champ est obligatoire</p>
               )}
