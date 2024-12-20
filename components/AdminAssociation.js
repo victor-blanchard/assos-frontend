@@ -22,8 +22,8 @@ import { login } from "../reducers/users";
 import { addPhoto } from "../reducers/users";
 
 function AdminAssociation() {
-  const infosAsso = useSelector((state) => state.associations?.value?.assoInfos);
-  const photoProfilUrl = useSelector((state) => state.users?.value?.photoProfil?.photoUrl);
+  const infosAsso = useSelector((state) => state.associations.value.assoInfos);
+  const photoProfilUrl = useSelector((state) => state.users.value.photoProfil.photoUrl);
   const dispatch = useDispatch();
 
   const [association, setAssociation] = useState(null);
@@ -48,7 +48,7 @@ function AdminAssociation() {
   const [photoPreview, setPhotoPreview] = useState(null);
   const [showModal, setShowModal] = useState(false); // State for modal visibility
   const [editingEvent, setEditingEvent] = useState(null);
-  const user = useSelector((state) => state?.users?.value);
+  const user = useSelector((state) => state.users.value);
   const fileInputRef = useRef(null);
 
   const categoriesOptions = [
@@ -86,7 +86,7 @@ function AdminAssociation() {
     console.log("fetch start");
 
     try {
-      const response = await fetch(`http://localhost:3000/associations/getasso/${token}`);
+      const response = await fetch(`http://localhost:3000/associations/getasso/${id}`);
       const data = await response.json();
       console.log("fetch asso", data);
 
@@ -271,7 +271,7 @@ function AdminAssociation() {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/events/getAllEvents/${id}`);
+      const response = await fetch(`http://localhost:3000/events/getAllEvents?id=${id}`);
       const data = await response.json();
 
       setEvents(data.events);
@@ -899,7 +899,7 @@ function AdminAssociation() {
                 </tr>
               </thead>
               <tbody>
-                {events?.map((event) => (
+                {events.map((event) => (
                   <tr key={event._id}>
                     <td>{truncateText(event.name, 40)}</td>
                     <td>{new Date(event.startDate).toLocaleDateString("fr-FR")}</td>

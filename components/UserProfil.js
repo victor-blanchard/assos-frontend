@@ -27,11 +27,11 @@ function UserProfil() {
   const [photoPreview, setPhotoPreview] = useState(null);
 
   const [userData, setUserData] = useState({
-    firstname: "",
-    lastname: "",
-    email: "",
-    password: "",
-    zipcode: "",
+    firstname: " ",
+    lastname: " ",
+    email: " ",
+    password: " ",
+    zipcode: " ",
     birthDate: "",
   });
 
@@ -295,6 +295,7 @@ function UserProfil() {
         </Modal>
 
         <div className={styles.rightSection}>
+          <h1>Espace personnel</h1>
           {cards.length > 0 ? cards : <p>Aucune donnée disponible pour le moment.</p>}
         </div>
       </section>

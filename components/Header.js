@@ -18,13 +18,7 @@ import {
   faBell,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  addEvents,
-  deleteEvents,
-  addFilters,
-  deleteFilters,
-  addPhoto,
-} from "../reducers/searchResults";
+import { addEvents, deleteEvents, addFilters, deleteFilters, addPhoto } from "../reducers/searchResults";
 import DropMenu from "./DropMenu";
 import ModalCreate from "./ModalCreate";
 
@@ -35,9 +29,9 @@ function Header() {
   const token = user.token;
 
   const asso = useSelector((state) => state.associations.value.assoInfos);
-  const assoCrea = useSelector((state) => state.associations.value.assosCreate);
+  const assoCrea = useSelector((state) => state.associations.value.assosCreate)
   console.log("getAsso =>", asso);
-  console.log("----------------------------->", assoCrea);
+  console.log('----------------------------->',assoCrea)
   const isAssociationOwner = useSelector((state) => state.users.value.isAssociationOwner);
   const isExistingAssociaiton = useSelector((state) => state.associations.value.assosCreate);
 
@@ -124,9 +118,6 @@ function Header() {
   const handleMyEvents = () => {
     router.push("/my_events");
   };
-  const handleMyAssoEvents = () => {
-    router.push("/admin_association");
-  };
   const handleMyassos = () => {
     router.push("/my_assos");
   };
@@ -159,28 +150,26 @@ function Header() {
           )}
         </div>
         <div className={styles.iconContainer}>
+          <div onClick={handleMyEvents} className={styles.myEvents}>
+            Mes évenements
+          </div>
+          <p className={styles.spacer}> | </p>
           {isAssociationOwner ? (
-            <div>
-              <div onClick={handleMyAssoEvents} className={styles.myEvents}>
-                Mes évenements
-              </div>
-            </div>
+            <FontAwesomeIcon
+              title="Contact"
+              onClick={handleContact}
+              className={`${styles.headerIcon} ${styles.contactIcon}`}
+              icon={faAddressCard}
+            />
           ) : (
-            <div className={styles.iconContainer}>
-              <p className={styles.spacer}> | </p>
-              <div onClick={handleMyEvents} className={styles.myEvents}>
-                Mes évenements
+            <div>
+              <div onClick={handleMyassos} className={styles.myEvents}>
+                Mes associations
               </div>
-              <p className={styles.spacer}> | </p>
-              <div>
-                <div onClick={handleMyassos} className={styles.myEvents}>
-                  Mes associations
-                </div>
-                {/* <p className={styles.spacer}> | </p> */}
-              </div>
-              <DropMenu className={styles.dropMenu} onLogout={handleLogout} />
+              {/* <p className={styles.spacer}> | </p> */}
             </div>
           )}
+          <DropMenu className={styles.dropMenu} onLogout={handleLogout} />
         </div>
       </div>
     );
@@ -229,7 +218,7 @@ function Header() {
           />
         </div>
       </div>
-      <div>{signSection}</div>
+      {signSection}
     </header>
   );
 }

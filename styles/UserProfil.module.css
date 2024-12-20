@@ -1,35 +1,39 @@
-.mainContainer {
+.main {
   display: flex;
-  flex-direction: row;
-
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  height: 90vh;
-  width: 100vw;
+  height: auto;
 }
 
 .section {
   display: flex;
   justify-content: space-between;
+  padding: 5px;
 }
 
 .leftSection {
+  /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 10%;
+    height: auto;
+    min-height: 600px; */
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  width: 40vw;
-  background-color: #f1ddeb;
-  padding-top: 2vh;
+  color: white;
+  background-color: #eed1e5;
+  padding: 20px;
 }
 
-.rightSection {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: center;
-  background-color: #f0edfe;
-  overflow-y: auto;
-  border-radius: 1px solid black;
-  width: 60vw;
+.userImgProfil {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  margin-top: -250px;
+  margin-left: 100px;
 }
 
 .imgProfil {
@@ -39,38 +43,15 @@
   object-fit: cover;
 }
 
-.eventSlot {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-  font-size: 100%;
-  margin-bottom: 2vh;
-}
-
-.eventLabel {
-  display: flex;
-  flex-direction: row;
-  font-weight: 600;
-  margin-right: 1%;
-  width: 55%;
-  line-height: 130%;
-  text-wrap: nowrap;
-}
-
-.eventData {
-  margin-left: 10%;
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  align-items: end;
+.rightSection {
+  flex: 3;
+  background-color: #f0edfe;
+  overflow-y: auto;
+  border-radius: 1px solid black;
 }
 
 .memberInfo {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  margin-right: 100px;
 }
 .assoCard {
   display: flex;
