@@ -27,11 +27,11 @@ function UserProfil() {
   const [photoPreview, setPhotoPreview] = useState(null);
 
   const [userData, setUserData] = useState({
-    firstname: " ",
-    lastname: " ",
-    email: " ",
-    password: " ",
-    zipcode: " ",
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+    zipcode: "",
     birthDate: "",
   });
 
@@ -82,29 +82,6 @@ function UserProfil() {
 
   ));
 
-  // const userProfil = (
-  //     <div className={styles.leftContainer}>
-  //         <div className={styles.userImgProfil}>
-  //             <Image
-  //                 src="/user_profil.jpg"
-  //                 width={200}
-  //                 height={200}
-  //                 alt="asso"
-  //                 className={styles.imgProfil}
-  //             />
-  //         </div>
-  //         <div>
-  //             <h2>Profil de {user.username}</h2>
-  //             <p>Adresse mail: {user.email}</p>
-  //             <div className={styles.memberInfo}>
-  //               <p>Groupes</p>
-  //               <p>Centres d'intérêt</p>
-  //               <p>Inscriptions</p>
-  //             </div>
-  //         </div>
-  //     </div>
-  //     )
-
 
   const handlePhotoChangeAndSend = async (event) => {
       const file = event.target.files[0];
@@ -151,7 +128,7 @@ function UserProfil() {
           console.log('Photo envoyée avec succès :', data);
         } else {
           console.error('Réponse invalide lors de l\'upload.');
-          alert('Erreur lors de l\'upload. Veuillez réessayer.');
+          alert('Erreur lors de l\'upload. Veuillez réessayer.', data.message);
         }
     
       } catch (error) {
@@ -170,92 +147,140 @@ function UserProfil() {
   const onChange = (date, dateString) => {
     setUserData({ ...userData, birthDate: dateString });
   }
+  const formatDateTime = (date) => {
+    if (!date) return "Non défini";
+    try {
+      return new Intl.DateTimeFormat("fr-FR", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      }).format(new Date(date));
+    } catch {
+      return "Date invalide";
+    }
+  };
+
+  const formattedBirthday = formatDateTime(user.birthday);
 
   return (
     <main className={styles.mainContainer}>
-  <section className={styles.section}>
+    <section className={styles.section}>
+      <div className={styles.leftSection}>
+        <h1>Espace personnel</h1>
+        <div className={styles.userImgProfil}>
+          {photoProfilUrl ? (
+            <>
+              <Image
+                src={photoProfilUrl}
+                width={100}
+                height={100}
+                alt="Photo Preview"
+                className={styles.imgProfil}
+              />
+              <FontAwesomeIcon onClick={handleIconClick} icon={faPenToSquare} className={styles.iconEdit} />             
+              </>   
+          ) : (
+            <>
+              <Image
+                src="/user_profil.jpg"
+                width={200}
+                height={200}
+                alt="photo de profil"
+                className={styles.imgProfil}
+              />
+              <FontAwesomeIcon onClick={handleIconClick} icon={faPenToSquare} className={styles.iconEdit} />             
 
-    <div className={styles.leftSection}>
-    <div className={styles.photoProfil}>
-      {photoProfilUrl ? (
-      <>
-        <Image
-          src={photoProfilUrl}
-          width={100}
-          height={100}
-          alt="Photo Preview"
-          className={styles.imgProfil}
-        />
-      </>
-
-      ) : (
-      <>
-      <Image
-          src="/user_profil.jpg"
-          width={100}
-          height={100}
-          alt="Photo Preview"
-          className={styles.imgProfil}
-        />
-        <button onClick={handleIconClick} className={styles.btn}>
-        Ajouter une photo
-      </button>
-      </>
-      )} <input type="file" title="modifier l'image"  ref={fileInputRef} style={{display: 'none'}} id="photo" onChange={handlePhotoChangeAndSend } />
-      
-    </div>
-    <FontAwesomeIcon onClick={handleIconClick} icon={faPenToSquare} className={styles.iconEdit} />             
-      <div className={styles.memberInfo}>
-        <h2>{user.username}</h2>
-        <p>{user.email}</p>
-        <Button type="primary" onClick={showModal}>
-          Modifier mes informations
-        </Button>
+            </>
+          )} <input type="file"  ref={fileInputRef} style={{display: 'none'}} id="photo" onChange={handlePhotoChangeAndSend } />
+          
+        </div>
+        <div className={styles.memberInfo}>
+          <h2>{user?.username}</h2>
+          <div className={styles.eventSlot}>
+            <p className={styles.eventLabel}>Email </p>
+            <p className={styles.eventData}>{user.email}</p>
+          </div>
+          <div className={styles.eventSlot}>
+            <p className={styles.eventLabel}>Code postal </p>
+            <p className={styles.eventData}>{user.zipcode}</p>
+          </div>
+          <div className={styles.eventSlot}>
+            <p className={styles.eventLabel}>Date de naissance</p>
+            <p className={styles.eventData}>{formattedBirthday}</p>
+          </div>
+          <Button type="primary" onClick={showModal}>
+            Modifier mes informations
+          </Button>
+        </div>
       </div>
-    </div>
 
+      <Modal
+        title="Modifier mes informations"
+        open={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        okText="Enregistrer"
+        cancelText="Annuler"
+      >
+        <Form form={form} layout="vertical" initialValues={userData}>
+          <Form.Item
+            label="First Name"
+            name="firstname"
+            rules={[{ required: false, message: "Veuillez entrer votre prénom" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Last Name"
+            name="lastname"
+            rules={[{ required: false, message: "Veuillez entrer votre nom" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              { required: false, type: "email", message: "Veuillez entrer un email valide" },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Mot de passe"
+            name="password"
+            rules={[
+              {
+                required: false,
+                min: 6,
+                message: "Le mot de passe doit contenir au moins 6 caractères",
+              },
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
+          <Form.Item
+            label="Zipcode"
+            name="zipcode"
+            rules={[{ required: false, message: "Veuillez entrer votre code postal" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Date de naissance"
+            name="birthDate"
+            rules={[{ required: false, message: "Veuillez entrer votre date de naissance" }]}
+          >
+            <DatePicker onChange={onChange} format="YYYY-MM-DD" />
+          </Form.Item>
+        </Form>
+      </Modal>
 
-    <Modal
-      title="Modifier mes informations"
-      visible={isModalVisible}
-      onOk={handleOk}
-      onCancel={handleCancel}
-      okText="Enregistrer"
-      cancelText="Annuler"
-    >
-      <Form form={form} layout="vertical" initialValues={userData}>
-        <Form.Item label="First Name" name="firstname" rules={[{ required: true, message: "Veuillez entrer votre prénom" }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item label="Last Name" name="lastname" rules={[{ required: true, message: "Veuillez entrer votre nom" }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item label="Email" name="email" rules={[{ required: true, type: "email", message: "Veuillez entrer un email valide" }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item label="Mot de passe" name="password" rules={[{ required: true, min: 6, message: "Le mot de passe doit contenir au moins 6 caractères" }]}>
-          <Input.Password />
-        </Form.Item>
-        <Form.Item label="Zipcode" name="zipcode" rules={[{ required: true, message: "Veuillez entrer votre code postal" }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item label="Date de naissance" name="birthDate" rules={[{ required: true, message: "Veuillez entrer votre date de naissance" }]}>
-          <DatePicker onChange={onChange} format="YYYY-MM-DD" />
-        </Form.Item>
-
-      </Form>
-    </Modal>
-
-    <div className={styles.rightSection}>
-      <h1>Espace personnel</h1>
-      {cards.length > 0 ? (
-        cards
-      ) : (
-        <p>Aucune donnée disponible pour le moment.</p>
-      )}
-    </div>
-  </section>
-</main>
+      <div className={styles.rightSection}>
+        {cards.length > 0 ? cards : <p>Aucune donnée disponible pour le moment.</p>}
+      </div>
+    </section>
+  </main>
 
   )
 }
