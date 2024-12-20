@@ -1,6 +1,6 @@
 .header {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   height: 9vh;
   border-bottom: 1px solid #d8d8d8;
@@ -9,7 +9,7 @@
   width: 100%;
   /* max-width: 100vw; */
   z-index: 1;
-  /* overflow-x: auto; */
+  overflow-x: auto;
   background-color: white;
 }
 
@@ -42,7 +42,6 @@
 
 .dropMenu {
   margin-left: 100%;
-  background-color: #0078c1;
 }
 
 .searchText,
@@ -101,10 +100,10 @@
   padding: 10px;
   margin: 10px;
   -webkit-box-shadow: inset -1px 3px 8px 5px #1f87ff, 2px 5px 16px 0px #0b325e,
-  -4px 5px 28px 1px rgba(6, 103, 122, 0); /*Permet l'utilisation avec firefox*/
-box-shadow: inset -1px 3px 8px 5px #0093e9, 2px 5px 16px 0px #0b325e,
-  -4px 5px 28px 1px rgba(6, 103, 122, 0);
-transition: 0.3 ease-in-out;
+    -4px 5px 28px 1px rgba(6, 103, 122, 0); /*Permet l'utilisation avec firefox*/
+  box-shadow: inset -1px 3px 8px 5px #0093e9, 2px 5px 16px 0px #0b325e,
+    -4px 5px 28px 1px rgba(6, 103, 122, 0);
+  transition: 0.3 ease-in-out;
 }
 .btnSignin:hover,
 .btnSignup:hover {
@@ -113,7 +112,6 @@ transition: 0.3 ease-in-out;
   box-shadow: 0 8px 25px rgba(0, 147, 233, 0.7), 0 4px 10px rgba(11, 50, 94, 0.5);
   transform: translateY(-3px); /* Effet de levée */
   cursor: pointer;
- 
 }
 
 .shortcut {
@@ -202,12 +200,13 @@ transition: 0.3 ease-in-out;
 .createAssoMsg {
   display: flex;
   align-items: center;
-  font-size: 12px;
+  font-size: 14px;
   color: #0093e9;
   cursor: pointer;
   margin: 10px;
   border-bottom: 1px solid #0093e9;
   font-style: italic;
+  text-wrap: nowrap;
 }
 
 .infoSession {

@@ -19,13 +19,13 @@ import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../reducers/users";
-import { addPhoto } from '../reducers/users'
+import { addPhoto } from "../reducers/users";
 
 function AdminAssociation() {
-  const infosAsso = useSelector((state) => state.associations.value.assoInfos);
-  const photoProfilUrl = useSelector((state) => state.users.value.photoProfil.photoUrl);
+  const infosAsso = useSelector((state) => state.associations?.value?.assoInfos);
+  const photoProfilUrl = useSelector((state) => state.users?.value?.photoProfil?.photoUrl);
   const dispatch = useDispatch();
-  
+
   const [association, setAssociation] = useState(null);
   const [id, setId] = useState(infosAsso[0]?.id);
   const [name, setName] = useState(infosAsso[0]?.name);
@@ -48,9 +48,8 @@ function AdminAssociation() {
   const [photoPreview, setPhotoPreview] = useState(null);
   const [showModal, setShowModal] = useState(false); // State for modal visibility
   const [editingEvent, setEditingEvent] = useState(null);
-  const user = useSelector((state) => state.users.value);
+  const user = useSelector((state) => state?.users?.value);
   const fileInputRef = useRef(null);
-
 
   const categoriesOptions = [
     { label: "Aide à la personne", value: "Aide à la personne" },
@@ -73,10 +72,8 @@ function AdminAssociation() {
   //Add pictures //
   const sendProfilPicture = async () => {
     // const photo = await
-    
-      
-      // dispatch(addPhoto())
-  }
+    // dispatch(addPhoto())
+  };
 
   ///START - ASSOCIATION IDENTITY INFORMATION EDIT SECTION
 
@@ -89,9 +86,9 @@ function AdminAssociation() {
     console.log("fetch start");
 
     try {
-      const response = await fetch(`http://localhost:3000/associations/getasso/${id}`);
+      const response = await fetch(`http://localhost:3000/associations/getasso/${token}`);
       const data = await response.json();
-      console.log('fetch asso', data);
+      console.log("fetch asso", data);
 
       // setAssociation(data.association);
       // setAddress(data.association.address);
@@ -134,10 +131,8 @@ function AdminAssociation() {
   // };
 
   const handleSubmitAsso = async () => {
-    
     try {
       const response = await fetch(`http://localhost:3000/associations/update/${id}`, {
-
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -148,10 +143,9 @@ function AdminAssociation() {
             street: street,
             zipcode: zipcode,
             city: city,
-          }
+          },
         }),
-      },
-      );
+      });
 
       console.log(
         "BODY +++++++>>>>> :",
@@ -210,14 +204,13 @@ function AdminAssociation() {
 
   ////// END - EDIT THE ASSOCIATION DATA ////
 
-
   const handlePhotoChangeAndSend = async (event) => {
     const file = event.target.files[0];
     if (!file) {
-      console.error('Aucun fichier selectionné.');
+      console.error("Aucun fichier selectionné.");
       return;
     }
-  
+
     // Mise à jour de l'aperçu
     setPhotoFile(file);
     const reader = new FileReader();
@@ -228,49 +221,47 @@ function AdminAssociation() {
     if (file) {
       reader.readAsDataURL(file);
     }
-  
+
     const formData = new FormData();
-    formData.append('file', file);
-    formData.append('token', token);
-    console.log('file',file)
-  
+    formData.append("file", file);
+    formData.append("token", token);
+    console.log("file", file);
+
     try {
       const response = await fetch(`http://localhost:3000/users/upload/`, {
-        method: 'POST',
+        method: "POST",
         body: formData,
       });
-      console.log('1')
+      console.log("1");
       if (!response.ok) {
-        console.error('Erreur lors de l\'envoi du fichier');
-        alert('Erreur lors de l\'envoi du fichier. Veuillez réessayer.');
+        console.error("Erreur lors de l'envoi du fichier");
+        alert("Erreur lors de l'envoi du fichier. Veuillez réessayer.");
         return;
-      };
+      }
 
-      console.log('2')
-  
+      console.log("2");
+
       const data = await response.json();
-      console.log('3 data', data)
+      console.log("3 data", data);
       // Vérification si les données renvoyées sont valides
       if (data.result && data.photoUrl && data.publicId) {
         dispatch(addPhoto({ photoUrl: data.photoUrl, publicId: data.publicId }));
-        console.log('Photo envoyée avec succès :', data);
+        console.log("Photo envoyée avec succès :", data);
       } else {
-        console.error('Réponse invalide lors de l\'upload.');
-        alert('Erreur lors de l\'upload. Veuillez réessayer.');
+        console.error("Réponse invalide lors de l'upload.");
+        alert("Erreur lors de l'upload. Veuillez réessayer.");
       }
-  
     } catch (error) {
-      console.error('Erreur lors de l\'envoi de la photo :', error.message);
-      alert('Erreur serveur. Veuillez réessayer.');
+      console.error("Erreur lors de l'envoi de la photo :", error.message);
+      alert("Erreur serveur. Veuillez réessayer.");
     }
   };
-  
 
   const handleIconClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click(); // Simule un clic sur l'input
     }
-    console.log('click icon edit')
+    console.log("click icon edit");
   };
   //END - ASSOCIATION IDENTITY INFORMATION EDIT SECTION
   //EVENT CREATION & UPDATES & DELETES SECTION /////////////////////////////////////////////////////////
@@ -280,7 +271,7 @@ function AdminAssociation() {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/events/getAllEvents?id=${id}`);
+      const response = await fetch(`http://localhost:3000/events/getAllEvents/${id}`);
       const data = await response.json();
 
       setEvents(data.events);
@@ -498,44 +489,53 @@ function AdminAssociation() {
             <label htmlFor="photo"></label>
             <div className={styles.photoProfil}>
               {photoProfilUrl ? (
-              <>
-                <Image
-                  src={photoProfilUrl}
-                  width={100}
-                  height={100}
-                  alt="Photo Preview"
-                  className={styles.imgProfil}
-                />
-                <FontAwesomeIcon onClick={handleIconClick} icon={faPenToSquare} className={styles.iconEdit} />             
-              </>
-    
+                <>
+                  <Image
+                    src={photoProfilUrl}
+                    width={100}
+                    height={100}
+                    alt="Photo Preview"
+                    className={styles.imgProfil}
+                  />
+                  <FontAwesomeIcon
+                    onClick={handleIconClick}
+                    icon={faPenToSquare}
+                    className={styles.iconEdit}
+                  />
+                </>
               ) : (
-              <>
-              <Image
-                  src="/user_profil.jpg"
-                  width={100}
-                  height={100}
-                  alt="Photo Preview"
-                  className={styles.imgProfil}
-                />
-                <button onClick={handleIconClick} className={styles.btn}>
-                Ajouter une photo
-              </button>
-              </>
-              )} <input type="file"  ref={fileInputRef} style={{display: 'none'}} id="photo" onChange={handlePhotoChangeAndSend } />
+                <>
+                  <Image
+                    src="/user_profil.jpg"
+                    width={100}
+                    height={100}
+                    alt="Photo Preview"
+                    className={styles.imgProfil}
+                  />
+                  <button onClick={handleIconClick} className={styles.btn}>
+                    Ajouter une photo
+                  </button>
+                </>
+              )}{" "}
+              <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                id="photo"
+                onChange={handlePhotoChangeAndSend}
+              />
               <h2>{name}</h2>
             </div>
           </div>
           <div className={styles.presentation}>
-            
             <p>{description}</p>
           </div>
           <h3>Modification</h3>
           <div className={styles.blocModif}>
-
             <div className={styles.assoEditInput}>
-              <label htmlFor="description" className={styles.assoTitle}>Nom de l'associaiton</label>
-
+              <label htmlFor="description" className={styles.assoTitle}>
+                Nom de l'associaiton
+              </label>
               {nameEditable ? (
                 <input
                   type="text"
@@ -548,12 +548,18 @@ function AdminAssociation() {
               )}{" "}
               {
                 <button className={styles.editAsso} onClick={() => setNameEditable(!nameEditable)}>
-                  {nameEditable ? <FontAwesomeIcon className={styles.iconCancel} icon={faCircleXmark} /> : <FontAwesomeIcon icon={faPenToSquare} className={styles.iconEdit} />}
+                  {nameEditable ? (
+                    <FontAwesomeIcon className={styles.iconCancel} icon={faCircleXmark} />
+                  ) : (
+                    <FontAwesomeIcon icon={faPenToSquare} className={styles.iconEdit} />
+                  )}
                 </button>
               }
             </div>
             <div className={styles.assoEditInput}>
-              <label htmlFor="description" className={styles.assoTitle}>Description</label>
+              <label htmlFor="description" className={styles.assoTitle}>
+                Description
+              </label>
               {descriptionEditable ? (
                 <textarea
                   id="description"
@@ -568,7 +574,11 @@ function AdminAssociation() {
                   className={styles.editAsso}
                   onClick={() => setDescriptionEditable(!descriptionEditable)}
                 >
-                  {descriptionEditable ? <FontAwesomeIcon className={styles.iconCancel} icon={faCircleXmark} /> : <FontAwesomeIcon icon={faPenToSquare} className={styles.iconEdit} />}
+                  {descriptionEditable ? (
+                    <FontAwesomeIcon className={styles.iconCancel} icon={faCircleXmark} />
+                  ) : (
+                    <FontAwesomeIcon icon={faPenToSquare} className={styles.iconEdit} />
+                  )}
                 </button>
               }
             </div>
@@ -591,7 +601,11 @@ function AdminAssociation() {
                   className={styles.editAsso}
                   onClick={() => setSiretEditable(!siretEditable)}
                 >
-                  {siretEditable ? <FontAwesomeIcon className={styles.iconCancel} icon={faCircleXmark} /> : <FontAwesomeIcon icon={faPenToSquare} className={styles.iconEdit} />}
+                  {siretEditable ? (
+                    <FontAwesomeIcon className={styles.iconCancel} icon={faCircleXmark} />
+                  ) : (
+                    <FontAwesomeIcon icon={faPenToSquare} className={styles.iconEdit} />
+                  )}
                 </button>
               }
             </div>
@@ -615,7 +629,11 @@ function AdminAssociation() {
                   className={styles.editAsso}
                   onClick={() => setStreetEditable(!streetEditable)}
                 >
-                  {streetEditable ? <FontAwesomeIcon className={styles.iconCancel} icon={faCircleXmark} /> : <FontAwesomeIcon icon={faPenToSquare} className={styles.iconEdit} />}
+                  {streetEditable ? (
+                    <FontAwesomeIcon className={styles.iconCancel} icon={faCircleXmark} />
+                  ) : (
+                    <FontAwesomeIcon icon={faPenToSquare} className={styles.iconEdit} />
+                  )}
                 </button>
               }
             </div>
@@ -638,7 +656,11 @@ function AdminAssociation() {
                   className={styles.editAsso}
                   onClick={() => setZipcodeEditable(!zipcodeEditable)}
                 >
-                  {zipcodeEditable ? <FontAwesomeIcon className={styles.iconCancel} icon={faCircleXmark} /> : <FontAwesomeIcon icon={faPenToSquare} className={styles.iconEdit} />}
+                  {zipcodeEditable ? (
+                    <FontAwesomeIcon className={styles.iconCancel} icon={faCircleXmark} />
+                  ) : (
+                    <FontAwesomeIcon icon={faPenToSquare} className={styles.iconEdit} />
+                  )}
                 </button>
               }
             </div>
@@ -658,7 +680,11 @@ function AdminAssociation() {
               )}
               {
                 <button className={styles.editAsso} onClick={() => setCityEditable(!cityEditable)}>
-                  {cityEditable ? <FontAwesomeIcon className={styles.iconCancel} icon={faCircleXmark} /> : <FontAwesomeIcon icon={faPenToSquare} className={styles.iconEdit} />}
+                  {cityEditable ? (
+                    <FontAwesomeIcon className={styles.iconCancel} icon={faCircleXmark} />
+                  ) : (
+                    <FontAwesomeIcon icon={faPenToSquare} className={styles.iconEdit} />
+                  )}
                 </button>
               }
             </div>
@@ -669,14 +695,10 @@ function AdminAssociation() {
               streetEditable ||
               zipcodeEditable ||
               cityEditable) && (
-                <button
-                  className={styles.editAsso}
-                  onClick={() => handleSubmitAsso()}
-                >
-                  Save{" "}
-                </button>
-              )}
-
+              <button className={styles.editAsso} onClick={() => handleSubmitAsso()}>
+                Save{" "}
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -728,11 +750,10 @@ function AdminAssociation() {
                   id="endDate"
                   name="endDate"
                   defaultValue={
-                    editingEvent ? new Date(editingEvent.endDate).toISOString().slice(0, 10) : ""
-                    
-                      ? new Date(editingEvent.endDate)
-                        .toISOString()
-                        .slice(0, 10)
+                    editingEvent
+                      ? new Date(editingEvent.endDate).toISOString().slice(0, 10)
+                      : ""
+                      ? new Date(editingEvent.endDate).toISOString().slice(0, 10)
                       : ""
                   }
                   required
@@ -745,11 +766,7 @@ function AdminAssociation() {
                   id="limitDate"
                   name="limitDate"
                   defaultValue={
-                    editingEvent
-                      ? new Date(editingEvent.limitDate)
-                        .toISOString()
-                        .slice(0, 10)
-                      : ""
+                    editingEvent ? new Date(editingEvent.limitDate).toISOString().slice(0, 10) : ""
                   }
                   required
                 />
@@ -844,58 +861,31 @@ function AdminAssociation() {
                   <th onClick={() => handleSort("startDate")}>
                     Start Date
                     {sortOrder.startDate === "asc" ? (
-                      <FontAwesomeIcon
-                        className={styles.eventSortIcon}
-                        icon={faSortUp}
-                      />
+                      <FontAwesomeIcon className={styles.eventSortIcon} icon={faSortUp} />
                     ) : sortOrder.startDate === "desc" ? (
-                      <FontAwesomeIcon
-                        className={styles.eventSortIcon}
-                        icon={faSortDown}
-                      />
+                      <FontAwesomeIcon className={styles.eventSortIcon} icon={faSortDown} />
                     ) : (
-                      <FontAwesomeIcon
-                        className={styles.eventSortIcon}
-                        icon={faSort}
-                      />
+                      <FontAwesomeIcon className={styles.eventSortIcon} icon={faSort} />
                     )}
                   </th>
                   <th onClick={() => handleSort("endDate")}>
                     End Date
                     {sortOrder.endDate === "asc" ? (
-                      <FontAwesomeIcon
-                        className={styles.eventSortIcon}
-                        icon={faSortUp}
-                      />
+                      <FontAwesomeIcon className={styles.eventSortIcon} icon={faSortUp} />
                     ) : sortOrder.endDate === "desc" ? (
-                      <FontAwesomeIcon
-                        className={styles.eventSortIcon}
-                        icon={faSortDown}
-                      />
+                      <FontAwesomeIcon className={styles.eventSortIcon} icon={faSortDown} />
                     ) : (
-                      <FontAwesomeIcon
-                        className={styles.eventSortIcon}
-                        icon={faSort}
-                      />
+                      <FontAwesomeIcon className={styles.eventSortIcon} icon={faSort} />
                     )}
                   </th>
                   <th onClick={() => handleSort("limitDate")}>
                     Limit Date
                     {sortOrder.limitDate === "asc" ? (
-                      <FontAwesomeIcon
-                        className={styles.eventSortIcon}
-                        icon={faSortUp}
-                      />
+                      <FontAwesomeIcon className={styles.eventSortIcon} icon={faSortUp} />
                     ) : sortOrder.limitDate === "desc" ? (
-                      <FontAwesomeIcon
-                        className={styles.eventSortIcon}
-                        icon={faSortDown}
-                      />
+                      <FontAwesomeIcon className={styles.eventSortIcon} icon={faSortDown} />
                     ) : (
-                      <FontAwesomeIcon
-                        className={styles.eventSortIcon}
-                        icon={faSort}
-                      />
+                      <FontAwesomeIcon className={styles.eventSortIcon} icon={faSort} />
                     )}
                   </th>
                   <th>Description</th>
@@ -909,7 +899,7 @@ function AdminAssociation() {
                 </tr>
               </thead>
               <tbody>
-                {events.map((event) => (
+                {events?.map((event) => (
                   <tr key={event._id}>
                     <td>{truncateText(event.name, 40)}</td>
                     <td>{new Date(event.startDate).toLocaleDateString("fr-FR")}</td>
@@ -941,7 +931,6 @@ function AdminAssociation() {
                 ))}
               </tbody>
             </table>
-
           </div>
         </div>
       </div>
