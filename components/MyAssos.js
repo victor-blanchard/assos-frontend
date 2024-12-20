@@ -69,7 +69,7 @@ function MyAssos() {
               </div>
             ))
           ) : (
-            <p>Aucun évenement dans cette catégorie.</p>
+            <p>Aucunes associations favorites pour l'instant.</p>
           )}
         </div>
       </div>
