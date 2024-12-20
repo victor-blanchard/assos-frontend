@@ -205,8 +205,7 @@ function UserProfil() {
         alert('Erreur serveur. Veuillez réessayer.');
       }
     };
->>>>>>> 96a1a0280866d8c7ea7b1bc22f2f2e63cc2d5d21
-
+//hello
   const handleIconClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click(); // Simule un clic sur l'input
