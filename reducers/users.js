@@ -9,6 +9,7 @@ const initialState = {
     email: null,
     username: null,
     id: null,
+    // zipcode: "",
     isAssociationOwner: false,
     likedEvents: [],
     followingAssociations: [],
@@ -41,6 +42,7 @@ export const usersSlice = createSlice({
       state.value.username = action.payload.username;
       state.value.isAssociationOwner = action.payload.isAssociationOwner;
       state.value.id = action.payload.id;
+      // state.value.zipcode = action.payload.zipcode;
       state.value.likedEvents = action.payload.likedEvents;
       state.value.followingAssociations = action.payload.followingAssociations;
       state.value.photoProfil = {
