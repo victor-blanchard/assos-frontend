@@ -140,10 +140,10 @@ function Header() {
     signSection = (
       <div className={styles.signinSignupContainer}>
         <Button onClick={handleSignIn} className={styles.btnSignin}>
-          Sign-in
+          Se connecter
         </Button>
         <Button onClick={handleSignUp} className={styles.btnSignup}>
-          Sign-up
+          S'inscrire
         </Button>
       </div>
     );

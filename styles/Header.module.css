@@ -80,23 +80,13 @@
 
 .btnSignin,
 .btnSignup {
-  /* background-color: #0093e9;
-  color: white;
-  border-radius: 12px;
-  border: none;
-  font-size: 16px;
-  padding: 10px;
-  cursor: pointer;
-  white-space: nowrap;
-  width: 40%;
-  padding: 10px; */
   background-color: #0093e9;
   color: #ffffff;
   font-size: 13px;
   font-weight: 400;
   border-radius: 12px;
   border-color: #0093e9;
-  width: 142px;
+  width: 18%;
   padding: 10px;
   margin: 10px;
   -webkit-box-shadow: inset -1px 3px 8px 5px #1f87ff, 2px 5px 16px 0px #0b325e,
