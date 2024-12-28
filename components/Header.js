@@ -160,24 +160,28 @@ function Header() {
         </div>
         <div className={styles.iconContainer}>
           {isAssociationOwner ? (
-            <div>
-              <div onClick={handleMyAssoEvents} className={styles.myEvents}>
+            <div className={styles.userLinkContainer}>
+              <p onClick={handleMyAssoEvents} className={styles.myEvents}>
                 Mes évenements
+              </p>
+              <div>
+              <DropMenu className={styles.dropMenu} onLogout={handleLogout} />
+
               </div>
             </div>
           ) : (
             <div className={styles.iconContainer}>
               <p className={styles.spacer}> | </p>
-              <div onClick={handleMyEvents} className={styles.myEvents}>
+              <p onClick={handleMyEvents} className={styles.myEvents}>
                 Mes évenements
-              </div>
+              </p>
               <p className={styles.spacer}> | </p>
-              <div>
-                <div onClick={handleMyassos} className={styles.myEvents}>
-                  Mes associations
-                </div>
+              
+              <p onClick={handleMyassos} className={styles.myEvents}>
+                Mes associations
+              </p>
                 {/* <p className={styles.spacer}> | </p> */}
-              </div>
+            
               <DropMenu className={styles.dropMenu} onLogout={handleLogout} />
             </div>
           )}
@@ -229,7 +233,7 @@ function Header() {
           />
         </div>
       </div>
-      <div>{signSection}</div>
+      <div className={styles.signContainer}>{signSection}</div>
     </header>
   );
 }

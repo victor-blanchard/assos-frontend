@@ -117,16 +117,15 @@
 .shortcut {
   display: flex;
   flex-direction: row;
-  width: 40%;
+  width: 100%;
   justify-content: center;
 }
 
 .iconContainer {
   display: flex;
   flex-direction: row;
-  width: 40%;
-  /* border: 1px solid black; */
-  justify-content: flex-start;
+  width: 100%;
+  justify-content: center;
   align-items: center;
   font-size: 25px;
   /* color: #0093e9; */
@@ -145,6 +144,12 @@
   align-items: center;
   margin-right: 25px;
   cursor: pointer;
+}
+
+.userLinkContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .logout {
@@ -172,7 +177,7 @@
 .myEvents {
   text-align: justify;
   color: #0175b8;
-  font-size: medium;
+  font-size: 0.80rem;
   white-space: nowrap;
   cursor: pointer;
   font-weight: 500;
@@ -209,9 +214,11 @@
   text-wrap: nowrap;
 }
 
+.signContainer {
+  width: 50%
+}
+
 .infoSession {
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
-  gap: 10px;
 }
