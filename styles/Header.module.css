@@ -71,11 +71,11 @@
 
 .signinSignupContainer {
   height: 100%;
-  width: 15%;
+  width: 90%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  margin-right: 10px;
+  /* margin-right: 10px; */
 }
 
 .btnSignin,
