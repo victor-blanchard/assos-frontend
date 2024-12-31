@@ -27,10 +27,13 @@ function Event() {
       setEventId(router.query.id);
     }
     if (eventId) {
-      fetch(`http://localhost:3000/events/eventById/${eventId}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      })
+      fetch(
+        `https://assos-backend-victors-projects-dcc70eda.vercel.app/events/eventById/${eventId}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
           if (data.result) {
@@ -39,10 +42,13 @@ function Event() {
         })
         .catch((error) => console.error("Erreur lors de la récupération de l'événement :", error));
 
-      fetch(`http://localhost:3000/users/getUserLikedEvents/${user.token}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      })
+      fetch(
+        `https://assos-backend-victors-projects-dcc70eda.vercel.app/users/getUserLikedEvents/${user.token}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
           if (data.result) {
@@ -93,11 +99,14 @@ function Event() {
 
   const handleLike = async () => {
     if (!like) {
-      await fetch(`http://localhost:3000/users/addLikeEvent/${user.token}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ eventId: eventId }),
-      })
+      await fetch(
+        `https://assos-backend-victors-projects-dcc70eda.vercel.app/users/addLikeEvent/${user.token}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ eventId: eventId }),
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
           if (data.result) {
@@ -109,11 +118,14 @@ function Event() {
           }
         });
     } else {
-      await fetch(`http://localhost:3000/users/removeLikeEvent/${user.token}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ eventId: eventId }),
-      })
+      await fetch(
+        `https://assos-backend-victors-projects-dcc70eda.vercel.app/users/removeLikeEvent/${user.token}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ eventId: eventId }),
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
           if (data.result) {

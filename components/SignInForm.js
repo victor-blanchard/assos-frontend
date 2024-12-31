@@ -89,11 +89,14 @@ function SignInForm(props) {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/users/signin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userInfo),
-      });
+      const response = await fetch(
+        "https://assos-backend-victors-projects-dcc70eda.vercel.app/users/signin",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(userInfo),
+        }
+      );
       console.log("Données envoyées :", JSON.stringify(userInfo));
       if (!response.ok) {
         throw new Error("Erreur reseau ou serveur.");

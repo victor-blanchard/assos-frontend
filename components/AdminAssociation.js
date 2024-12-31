@@ -88,7 +88,9 @@ function AdminAssociation() {
     console.log("fetch start");
 
     try {
-      const response = await fetch(`http://localhost:3000/associations/getasso/${id}`);
+      const response = await fetch(
+        `https://assos-backend-victors-projects-dcc70eda.vercel.app/associations/getasso/${token}`
+      );
       const data = await response.json();
       console.log("fetch asso", data);
 
@@ -134,20 +136,23 @@ function AdminAssociation() {
 
   const handleSubmitAsso = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/associations/update/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: name,
-          siret: siret,
-          token: token,
-          address: {
-            street: street,
-            zipcode: zipcode,
-            city: city,
-          },
-        }),
-      });
+      const response = await fetch(
+        `https://assos-backend-victors-projects-dcc70eda.vercel.app/associations/update/${id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: name,
+            siret: siret,
+            token: token,
+            address: {
+              street: street,
+              zipcode: zipcode,
+              city: city,
+            },
+          }),
+        }
+      );
 
       console.log(
         "BODY +++++++>>>>> :",
@@ -230,10 +235,13 @@ function AdminAssociation() {
     console.log("file", file);
 
     try {
-      const response = await fetch(`http://localhost:3000/users/upload/`, {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        `https://assos-backend-victors-projects-dcc70eda.vercel.app/users/upload/`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
       console.log("1");
       if (!response.ok) {
         console.error("Erreur lors de l'envoi du fichier");
@@ -273,7 +281,9 @@ function AdminAssociation() {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/events/getAllEvents?id=${id}`);
+      const response = await fetch(
+        `https://assos-backend-victors-projects-dcc70eda.vercel.app/events/getAllEvents/${id}`
+      );
       const data = await response.json();
 
       setEvents(data.events);
@@ -290,7 +300,7 @@ function AdminAssociation() {
   ///////////START - DELETE AN EXISTING EVENT ///////////////
 
   const handleDeleteEvent = (token, _id) => {
-    fetch("http://localhost:3000/events/delete", {
+    fetch("https://assos-backend-victors-projects-dcc70eda.vercel.app/events/delete", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token: token, _id: _id }),
@@ -348,20 +358,23 @@ function AdminAssociation() {
     try {
       console.log(
         "Sending PUT request to:",
-        `http://localhost:3000/events/update/${editingEvent._id}`
+        `https://assos-backend-victors-projects-dcc70eda.vercel.app/events/update/${editingEvent._id}`
       );
       console.log("Request body:", {
         token: token,
         event: updatedEvent,
       });
-      const response = await fetch(`http://localhost:3000/events/update/${editingEvent._id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          token: token,
-          ...updatedEvent,
-        }),
-      });
+      const response = await fetch(
+        `https://assos-backend-victors-projects-dcc70eda.vercel.app/events/update/${editingEvent._id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            token: token,
+            ...updatedEvent,
+          }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -396,26 +409,29 @@ function AdminAssociation() {
     const slotsAvailable = event.target.slotsAvailable.value;
 
     try {
-      const response = await fetch("http://localhost:3000/events/add", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          token: token,
-          name: eventName,
-          startDate: startDate,
-          description: eventDescription,
-          limitDate: limitDate,
-          endDate: endDate,
-          organiser: id,
-          street: street,
-          zipcode: zipcode,
-          city: city,
-          status: status,
-          target: target,
-          categories: categories,
-          slotsAvailable: slotsAvailable,
-        }),
-      });
+      const response = await fetch(
+        "https://assos-backend-victors-projects-dcc70eda.vercel.app/events/add",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            token: token,
+            name: eventName,
+            startDate: startDate,
+            description: eventDescription,
+            limitDate: limitDate,
+            endDate: endDate,
+            organiser: id,
+            street: street,
+            zipcode: zipcode,
+            city: city,
+            status: status,
+            target: target,
+            categories: categories,
+            slotsAvailable: slotsAvailable,
+          }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -712,7 +728,10 @@ function AdminAssociation() {
               &times;
             </span>{" "}
             <h2>{editingEvent ? "Edit Event" : "Create New Event"}</h2>
-            <form className={styles.form} onSubmit={editingEvent ? handleSubmitEditEvent : handleSubmitEvent}>
+            <form
+              className={styles.form}
+              onSubmit={editingEvent ? handleSubmitEditEvent : handleSubmitEvent}
+            >
               <div>
                 <label htmlFor="eventName">Name:</label>
                 <input

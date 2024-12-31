@@ -49,7 +49,7 @@ function PublicAssociation() {
     const fetchAssociation = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/associations/getAssoInfos/${associationId}`,
+          `https://assos-backend-victors-projects-dcc70eda.vercel.app/associations/getAssoInfos/${associationId}`,
           {
             method: "GET",
             headers: { "Content-Type": "application/json" },
@@ -69,10 +69,13 @@ function PublicAssociation() {
     };
     fetchAssociation();
 
-    fetch(`http://localhost:3000/users/followingAssociations/${user.token}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
+    fetch(
+      `https://assos-backend-victors-projects-dcc70eda.vercel.app/users/followingAssociations/${user.token}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         const likedAssosId = data?.followingAssociations?.map((event) => event._id);
@@ -91,7 +94,9 @@ function PublicAssociation() {
   // Effet pour récupérer les événements de l'association
   useEffect(() => {
     if (associationId) {
-      fetch(`http://localhost:3000/events/getAllEvents/${associationId}`)
+      fetch(
+        `https://assos-backend-victors-projects-dcc70eda.vercel.app/events/getAllEvents/${associationId}`
+      )
         .then((response) => response.json())
         .then((data) => setEvents(data.events))
         .catch((error) => console.error("Erreur lors de la récupération des événements :", error));
@@ -193,14 +198,17 @@ function PublicAssociation() {
 
   const likeAsso = async (token, assoId) => {
     try {
-      const response = await fetch(`http://localhost:3000/users/addLikeAsso/${token}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          token: token,
-          assoId: assoId,
-        }),
-      });
+      const response = await fetch(
+        `https://assos-backend-victors-projects-dcc70eda.vercel.app/users/addLikeAsso/${token}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            token: token,
+            assoId: assoId,
+          }),
+        }
+      );
       response.json().then((data) => {
         if (data.result) {
           console.log(`Données de l'association ${assoId} récupérées`);
@@ -229,14 +237,17 @@ function PublicAssociation() {
 
   const dislikeAsso = async (token, assoId) => {
     try {
-      const response = await fetch(`http://localhost:3000/users/removeLikeAsso/${token}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          token: token,
-          assoId: assoId,
-        }),
-      });
+      const response = await fetch(
+        `https://assos-backend-victors-projects-dcc70eda.vercel.app/users/removeLikeAsso/${token}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            token: token,
+            assoId: assoId,
+          }),
+        }
+      );
       response.json().then((data) => {
         if (data.result) {
           console.log(`Données de l'association ${assoId} récupérées`);
