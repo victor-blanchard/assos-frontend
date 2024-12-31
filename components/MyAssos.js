@@ -19,7 +19,9 @@ function MyAssos() {
 
   useEffect(() => {
     if (user && user.token) {
-      fetch(`http://localhost:3000/users/followingAssociations/${user.token}`)
+      fetch(
+        `https://assos-backend-victors-projects-dcc70eda.vercel.app/users/followingAssociations/${user.token}`
+      )
         .then((response) => response.json())
         .then((data) => {
           console.log("API response:", data);

@@ -158,10 +158,13 @@ const EventSearchContent = () => {
     // Remplacer %2C par ,
     const queryString = params.toString().replace(/%2C/g, ",");
 
-    fetch(`http://localhost:3000/events/filtered?${queryString}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
+    fetch(
+      `https://assos-backend-victors-projects-dcc70eda.vercel.app/events/filtered?${queryString}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
@@ -367,10 +370,13 @@ const AssociationSearchContent = () => {
     // Remplacer %2C par ,
     const queryString = params.toString().replace(/%2C/g, ",");
 
-    fetch(`http://localhost:3000/associations/filtered?${queryString}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
+    fetch(
+      `https://assos-backend-victors-projects-dcc70eda.vercel.app/associations/filtered?${queryString}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {

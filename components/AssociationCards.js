@@ -9,10 +9,13 @@ function AssociationCard({ title, description, onClick }) {
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch("http://localhost:3000/associations/filtered");
+        const response = await fetch(
+          "https://assos-backend-victors-projects-dcc70eda.vercel.app/associations/filtered"
+        );
         const data = await response.json();
         if (data.result) {
-          console.log("INFO ASSO ===>", data);
+          //assos-backend-victors-projects-dcc70eda.vercel.app
+          https: console.log("INFO ASSO ===>", data);
 
           setDataAsso((prevstate) => [...prevstate, data]);
           return data;

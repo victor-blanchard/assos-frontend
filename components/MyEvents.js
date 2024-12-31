@@ -19,7 +19,9 @@ function MyEvents() {
 
   useEffect(() => {
     if (user && user.token) {
-      fetch(`http://localhost:3000/users/getUserLikedEvents/${user.token}`)
+      fetch(
+        `https://assos-backend-victors-projects-dcc70eda.vercel.app/users/getUserLikedEvents/${user.token}`
+      )
         .then((response) => response.json())
         .then((data) => {
           console.log("API response:", data);

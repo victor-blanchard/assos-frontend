@@ -67,10 +67,13 @@ function Header() {
     // Remplacer %2C par ,
     const queryString = params.toString().replace(/%2C/g, ",");
 
-    fetch(`http://localhost:3000/events/filtered?${queryString}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
+    fetch(
+      `https://assos-backend-victors-projects-dcc70eda.vercel.app/events/filtered?${queryString}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
@@ -86,7 +89,9 @@ function Header() {
 
   useEffect(() => {
     if (token) {
-      fetch(`http://localhost:3000/associations/getasso/${token}`)
+      fetch(
+        `https://assos-backend-victors-projects-dcc70eda.vercel.app/associations/getasso/${token}`
+      )
         .then((response) => response.json())
         .then((data) => {
           if (data.result) {
@@ -165,8 +170,7 @@ function Header() {
                 Mes évenements
               </p>
               <div>
-              <DropMenu className={styles.dropMenu} onLogout={handleLogout} />
-
+                <DropMenu className={styles.dropMenu} onLogout={handleLogout} />
               </div>
             </div>
           ) : (
@@ -176,12 +180,12 @@ function Header() {
                 Mes évenements
               </p>
               <p className={styles.spacer}> | </p>
-              
+
               <p onClick={handleMyassos} className={styles.myEvents}>
                 Mes associations
               </p>
-                {/* <p className={styles.spacer}> | </p> */}
-            
+              {/* <p className={styles.spacer}> | </p> */}
+
               <DropMenu className={styles.dropMenu} onLogout={handleLogout} />
             </div>
           )}

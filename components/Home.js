@@ -46,8 +46,8 @@ function Home() {
     // setIsModalVisible(true)
     dispatch(isModalVisible(true));
     // console.log('open', modal)
-  }
-  
+  };
+
   /**
    * Permet de récuperer via le setter d'etat setIcon les données du tableau dataEVent
    * @param {object} event : les donnée du tableau dataEVent
@@ -58,7 +58,7 @@ function Home() {
   //       console.log('Pas d\'event')
   //       return;
   //     }
-  //     const response = await fetch(`http://localhost:3000/associations/filtered${event}`);
+  //     const response = await fetch(`https://assos-backend-victors-projects-dcc70eda.vercel.app/associations/filtered${event}`);
   //     const data = await response.json();
 
   //     if (!response.ok) {
@@ -83,10 +83,13 @@ function Home() {
     const params = new URLSearchParams({ categories: event, openOnly: true }); // Ajoute uniquement la categorie
     const queryString = params.toString().replace(/%2C/g, ",");
 
-    fetch(`http://localhost:3000/events/filtered?${queryString}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
+    fetch(
+      `https://assos-backend-victors-projects-dcc70eda.vercel.app/events/filtered?${queryString}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
