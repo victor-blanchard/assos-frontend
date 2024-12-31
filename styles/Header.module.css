@@ -72,32 +72,22 @@
 
 .signinSignupContainer {
   height: 100%;
-  width: 15%;
+  width: 90%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  margin-right: 10px;
+  /* margin-right: 10px; */
 }
 
 .btnSignin,
 .btnSignup {
-  /* background-color: #0093e9;
-  color: white;
-  border-radius: 12px;
-  border: none;
-  font-size: 16px;
-  padding: 10px;
-  cursor: pointer;
-  white-space: nowrap;
-  width: 40%;
-  padding: 10px; */
   background-color: #0093e9;
   color: #ffffff;
   font-size: 13px;
   font-weight: 400;
   border-radius: 12px;
   border-color: #0093e9;
-  width: 142px;
+  width: 18%;
   padding: 10px;
   margin: 10px;
   -webkit-box-shadow: inset -1px 3px 8px 5px #1f87ff, 2px 5px 16px 0px #0b325e,
@@ -119,16 +109,15 @@ transition: 0.3 ease-in-out;
 .shortcut {
   display: flex;
   flex-direction: row;
-  width: 40%;
+  width: 100%;
   justify-content: center;
 }
 
 .iconContainer {
   display: flex;
   flex-direction: row;
-  width: 40%;
-  /* border: 1px solid black; */
-  justify-content: flex-start;
+  width: 100%;
+  justify-content: center;
   align-items: center;
   font-size: 25px;
   /* color: #0093e9; */
@@ -147,6 +136,12 @@ transition: 0.3 ease-in-out;
   align-items: center;
   margin-right: 25px;
   cursor: pointer;
+}
+
+.userLinkContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .logout {
@@ -174,7 +169,7 @@ transition: 0.3 ease-in-out;
 .myEvents {
   text-align: justify;
   color: #0175b8;
-  font-size: medium;
+  font-size: 0.80rem;
   white-space: nowrap;
   cursor: pointer;
   font-weight: 500;
@@ -210,9 +205,11 @@ transition: 0.3 ease-in-out;
   font-style: italic;
 }
 
+.signContainer {
+  width: 50%
+}
+
 .infoSession {
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
-  gap: 10px;
 }

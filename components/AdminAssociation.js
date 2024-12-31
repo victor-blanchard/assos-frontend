@@ -43,6 +43,8 @@ function AdminAssociation() {
   const [cityEditable, setCityEditable] = useState(false);
   const [categories, setCategories] = useState("");
   const [target, setTarget] = useState("");
+  console.log("categories:", categories);
+  console.log("target:", target);
   // const { street, city, zipcode } = address;
   const [photoFile, setPhotoFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
@@ -710,7 +712,7 @@ function AdminAssociation() {
               &times;
             </span>{" "}
             <h2>{editingEvent ? "Edit Event" : "Create New Event"}</h2>
-            <form onSubmit={editingEvent ? handleSubmitEditEvent : handleSubmitEvent}>
+            <form className={styles.form} onSubmit={editingEvent ? handleSubmitEditEvent : handleSubmitEvent}>
               <div>
                 <label htmlFor="eventName">Name:</label>
                 <input

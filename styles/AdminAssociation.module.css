@@ -77,12 +77,12 @@ height: auto;
 
 .editEventSection {
   position: relative;
-  /* display: flex; */
+  display: flex;
   flex-direction: row;
   justify-content: space-around;
   /* align-items: center; */
   width: 100%;
-  height: 70%;
+  height: auto;
 }
 .eventButton{
   position: relative;
@@ -104,7 +104,7 @@ height: auto;
 } 
 .tableContainer {
   width: 100%;
-  height: 100%;
+  height: auto;
   overflow: auto;
   overflow-x: auto;
   border: 1px solid black;
@@ -167,9 +167,9 @@ height: auto;
 
 
 .modal {
-    position: fixed; 
-    left: 0;
-    top: 0;
+    position: absolute; 
+    /* left: 0;
+    top: 0; */
     width: 100%; 
     height: 100%; 
     background-color: rgba(0, 0, 0, 0.4); 
@@ -179,11 +179,23 @@ height: auto;
   }
   
   .modalContent {
+    position: absolute;
     background-color: #fefefe;
     margin: 15% auto; 
     padding: 20px;
     border: 1px solid #888;
-    width: 60%; 
+    width: 40%; 
+    z-index: 1000;
+  }
+
+  .form input {
+    width: 100%;
+    height: 30px;
+    padding: 5px;
+    border-radius: 15px;
+    border: 1px solid #d8d8d8;
+    text-align: center;
+    font-size: 16px;
   }
   
   .close {
