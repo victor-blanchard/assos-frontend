@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import ModalCreate from "../components/ModalCreate";
 import ModalForm from "../components/ModalForm";
+import MobileWarningPopup from "../components/MobileWarningPopup";
 import { Calendar, DatePicker, Input } from "antd";
 
 // Redux imports
@@ -76,6 +77,7 @@ function App({ Component, pageProps }) {
           <Head>
             <title>LaSauce.fr</title>
           </Head>
+          <MobileWarningPopup />
           <Header />
           <Component className="content" {...pageProps} />
           <ModalForm />
