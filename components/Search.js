@@ -113,9 +113,9 @@ const EventSearchContent = () => {
           <div className={styles.cardDate}>{formattedDate}</div>
           <div className={styles.cardName}>{data.name}</div>
           {/* <div className={styles.cardOrganiser}>{data.organiser.name}</div> */}
-          <div className={styles.cardDescription}>{sliceByWords(data.description, 200)}</div>
+          <div className={styles.cardDescription}>{sliceByWords(data.description, 150)}</div>
 
-          <div className={styles.cardSlotsAvailable}>{data.slotsAvailable} Places </div>
+          {/* <div className={styles.cardSlotsAvailable}>{data.slotsAvailable} Places </div> */}
         </div>
         <div className={styles.cardType}>
           <div className={styles.cardCategories}>{categoriesToDisplay}</div>
@@ -329,7 +329,7 @@ const AssociationSearchContent = () => {
         />
         <div className={styles.cardInfos}>
           <div className={styles.cardName}>{data.name}</div>
-          <div className={styles.cardDescription}>{sliceByWords(data.description, 300)}</div>
+          <div className={styles.cardDescription}>{sliceByWords(data.description, 150)}</div>
         </div>
         <div className={styles.cardType}>
           <div className={styles.cardCategories}>{categoriesToDisplay}</div>

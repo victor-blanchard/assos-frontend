@@ -212,7 +212,7 @@ function Header() {
         <div className={styles.searchContainers}>
           <input
             className={styles.searchText}
-            placeholder="Une activité ? "
+            placeholder=" Une activité ? "
             type="text"
             onChange={(e) => setKeyword(e.target.value)}
             value={keyword}
@@ -220,7 +220,7 @@ function Header() {
           />
           <input
             className={styles.searchLocation}
-            placeholder="Où ?"
+            placeholder=" Où ?"
             type="text"
             onChange={(e) => setLocation(e.target.value)}
             value={location}

@@ -101,6 +101,10 @@ function Home() {
 
     router.push(`/search?categories=${event}`); // Navigation vers la page de résultats
   };
+  let handleClick = () => {
+    handleSearch("");
+    router.push(`/search?keyword=&location=`);
+  };
 
   // const iconEvent = dataEvent.map((data, i) => { //On map sur le tableau d'objet afin de recuperer les infos de manière dynamique
   //   console.log(data.event)
@@ -148,8 +152,8 @@ function Home() {
               des activités adaptées à vos envies.
             </p>
             {!token && (
-              <Button type="primary" onClick={handleSign} className={styles.btn}>
-                Rejoindre La Sauce
+              <Button type="primary" onClick={() => handleClick()} className={styles.btn}>
+                Découvrir les Evenements et les Associations
               </Button>
             )}
           </div>

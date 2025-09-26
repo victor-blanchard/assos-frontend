@@ -147,8 +147,8 @@
 
   justify-content: space-between;
   /* background-color: aquamarine; */
-  padding-top: 2vh;
-  padding-bottom: 2vh;
+  padding-top: 8vh;
+  padding-bottom: 8vh;
   padding-left: 2vw;
   padding-right: 2vw;
   cursor: pointer;
@@ -177,6 +177,8 @@
 .cardImage {
   border-radius: 5%;
   margin-right: 2vw;
+
+  aspect-ratio: 16/9;
 }
 .cardDescription {
   display: flex;

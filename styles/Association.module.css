@@ -2,9 +2,9 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  height: 100vh; 
-  overflow-y: auto; 
-  padding: 10px; 
+  height: 100vh;
+  overflow-y: auto;
+  padding: 10px;
 }
 
 .imageAndTitleAndDescription {
@@ -15,9 +15,7 @@
   align-items: center;
   justify-content: space-around;
   /* border: 1px solid #d8d8d8; */
-  
 }
-
 
 .identityCardAndLikeAndEvents {
   padding-left: 10px;
@@ -28,19 +26,18 @@
   align-items: center;
   justify-content: space-around;
   /* border: 1px solid #d8d8d8; */
-  padding: 20px; 
+  padding: 20px;
 }
 
 .identityCardAndLike {
-  margin: 30px; 
+  margin: 30px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
   /* border: 1px solid #d8d8d8; */
-  width: calc(100% - 60px); 
-  height: 30%; 
-
+  width: calc(100% - 60px);
+  height: 30%;
 }
 
 .identityCardDiv {
@@ -53,10 +50,8 @@
   padding-right: 20px;
 }
 
-
-
 .eventsOfAssociation {
-  padding: 10px; 
+  padding: 10px;
   height: 70%;
   width: 100%;
 }
@@ -66,7 +61,7 @@
   justify-content: space-around;
   list-style-type: none;
   width: 100%;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 .filterbox {
@@ -84,14 +79,14 @@
 .resultPageAndMap {
   display: flex;
   flex-direction: row;
-  align-items: flex-start; 
+  align-items: flex-start;
   justify-content: space-around;
 }
 
 .map {
-  margin: 10px; 
+  margin: 10px;
   width: 30%;
-  height: 100%; 
+  height: 100%;
   border: 1px solid #d8d8d8;
 }
 
@@ -99,10 +94,10 @@
   padding: 10px;
   /* border: 1px solid #d8d8d8; */
   width: 70%;
-  height: calc(100% - 20px); 
-  margin: 10px; 
+  height: calc(100% - 20px);
+  margin: 10px;
   scroll-behavior: smooth;
-  overflow-y: auto; 
+  overflow-y: auto;
 }
 
 .resultDefandIcons {
@@ -120,12 +115,11 @@
   margin-bottom: 10px;
 }
 
-.resultContentAndIcons{
+.resultContentAndIcons {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-
 }
 
 .imageContainer {
