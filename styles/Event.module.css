@@ -12,7 +12,7 @@
 .leftContainer {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
   margin-left: 2%;
   width: 60vw;
 }
@@ -45,7 +45,7 @@
   font-weight: 500;
   margin-top: 1vh;
   flex-wrap: wrap;
-  justify-self: start;
+  justify-self: flex-start;
   text-align: justify;
   line-height: 190%;
 }
@@ -53,7 +53,7 @@
 .rightContainer {
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: flex-end;
   margin-right: 4%;
 }
 
@@ -92,7 +92,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: start;
+  align-items: flex-start;
   width: 28vw;
   padding: 5%;
   border-radius: 10px;
@@ -139,12 +139,12 @@
   margin-left: 4%;
   display: flex;
   flex-direction: column;
-  justify-content: end;
-  align-items: end;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .eventStreet {
-  text-align: end;
+  text-align: flex-end;
   width: 100%;
 }
 
@@ -152,18 +152,18 @@
   margin-left: 4%;
   display: flex;
   flex-direction: column;
-  justify-content: end;
-  align-items: end;
-  text-align: end;
-  align-items: end;
+  justify-content: flex-end;
+  align-items: flex-end;
+  text-align: flex-end;
+  align-items: flex-end;
 }
 .eventCategories {
   margin-left: 4%;
   display: flex;
   flex-direction: column;
-  justify-content: end;
-  text-align: end;
-  align-items: end;
+  justify-content: flex-end;
+  text-align: flex-end;
+  align-items: flex-end;
 }
 
 .eventInfos {
@@ -171,7 +171,7 @@
   margin-top: 5%;
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
   /* border: 1px solid rgb(115, 115, 115); */
   width: 28vw;
   border-radius: 10px;

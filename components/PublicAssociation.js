@@ -2,7 +2,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "../styles/PublicAssociation.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Table, Empty } from "antd/lib";
+import { Button, Table, Empty, Spin } from "antd/lib";
+import { LoadingOutlined } from "@ant-design/icons";
 import {
   faHeart,
   faShare,
@@ -30,6 +31,8 @@ function PublicAssociation() {
   const [events, setEvents] = useState([]);
   const [sortOrder, setSortOrder] = useState({});
   const [assoLikeStatus, setAssolikeStatus] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [eventsLoading, setEventsLoading] = useState(true);
   const user = useSelector((state) => {
     return state.users.value;
   });
@@ -47,6 +50,7 @@ function PublicAssociation() {
     if (!associationId) return;
 
     const fetchAssociation = async () => {
+      setLoading(true);
       try {
         const response = await fetch(
           `https://assos-backend-victors-projects-dcc70eda.vercel.app/associations/getAssoInfos/${associationId}`,
@@ -65,6 +69,8 @@ function PublicAssociation() {
         }
       } catch (error) {
         console.error("Erreur lors de la récupération de l'association :", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchAssociation();
@@ -94,12 +100,14 @@ function PublicAssociation() {
   // Effet pour récupérer les événements de l'association
   useEffect(() => {
     if (associationId) {
+      setEventsLoading(true);
       fetch(
         `https://assos-backend-victors-projects-dcc70eda.vercel.app/events/getAllEvents/${associationId}`
       )
         .then((response) => response.json())
         .then((data) => setEvents(data.events))
-        .catch((error) => console.error("Erreur lors de la récupération des événements :", error));
+        .catch((error) => console.error("Erreur lors de la récupération des événements :", error))
+        .finally(() => setEventsLoading(false));
       console.log("Events de l'association récupérés");
     }
   }, [associationId]);
@@ -274,6 +282,14 @@ function PublicAssociation() {
 
   ///// END - DISLIKE OF THE ASSOCIATION //////
 
+  if (loading) {
+    return (
+      <div className={styles.loadingContainer}>
+        <Spin indicator={<LoadingOutlined spin />} size="large" />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.publicAssoMain}>
       <div className={styles.leftContainer}>
@@ -338,14 +354,20 @@ function PublicAssociation() {
         </div>
 
         <h1>Événements</h1>
-        <Table
-          locale={{
-            emptyText: <Empty description="Pas d'événements à afficher"></Empty>,
-          }}
-          columns={columns}
-          dataSource={data}
-          onChange={onChange}
-        />
+        {eventsLoading ? (
+          <div className={styles.eventsLoadingContainer}>
+            <Spin indicator={<LoadingOutlined spin />} size="large" />
+          </div>
+        ) : (
+          <Table
+            locale={{
+              emptyText: <Empty description="Pas d'événements à afficher"></Empty>,
+            }}
+            columns={columns}
+            dataSource={data}
+            onChange={onChange}
+          />
+        )}
       </div>
     </div>
   );

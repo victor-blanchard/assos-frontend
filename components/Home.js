@@ -15,6 +15,7 @@ import {
   faDog,
   faPalette,
   faUserGraduate,
+  faHandHoldingHeart,
 } from "@fortawesome/free-solid-svg-icons";
 
 import ModalForm from "./ModalForm";
@@ -31,13 +32,10 @@ function Home() {
 
   //Tableau d'objets qui contient le nom d'un evenement associé à une icon
   const dataEvent = [
-    { event: "Aide à la personne", icon: faHandshakeAngle },
     { event: "Sport", icon: faFutbol },
     { event: "Santé", icon: faHeartPulse },
     { event: "Enfant", icon: faChildren },
-    { event: "Solidarité", icon: faDog },
-    { event: "Art & Culture", icon: faPalette },
-    { event: "Education", icon: faUserGraduate },
+    { event: "Solidarité", icon: faHandHoldingHeart },
     { event: "Animaux", icon: faDog },
   ];
 
@@ -131,7 +129,7 @@ function Home() {
             onClick={() => handleSearch(data.event)} // Appelle handleSearch
           />
         </div>
-        <p>{data.event}</p>
+        <p className={styles.eventText}>{data.event}</p>
       </div>
     );
   });

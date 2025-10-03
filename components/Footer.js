@@ -6,7 +6,7 @@ function Footer() {
     <footer className={styles.footer}>
       <ul className={styles.footerInfos}>
         {/* <Link className={styles.link} href='/about'><li>A propos</li></Link> */}
-        <div>2024 La Sauce &copy; Tous droits réservés</div>
+        {/* <div>2024 La Sauce</div> */}
         <Link className={styles.link} href="/contact">
           <li>Contact</li>
         </Link>

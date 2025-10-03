@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/Event.module.css";
-import { Image, Button } from "antd";
+import { Image, Button, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +13,7 @@ import { addLikeEvent } from "../reducers/searchResults";
 function Event() {
   const [event, setEvent] = useState(null);
   const [like, setLike] = useState(false);
+  const [loading, setLoading] = useState(true);
   // const eventSelectedId = useSelector((state) => state.searchResults.value.selectedEventId);
   const user = useSelector((state) => state.users.value);
   const userLikedEvents = useSelector((state) => state.users.value.likedEvents);
@@ -27,6 +29,7 @@ function Event() {
       setEventId(router.query.id);
     }
     if (eventId) {
+      setLoading(true);
       fetch(
         `https://assos-backend-victors-projects-dcc70eda.vercel.app/events/eventById/${eventId}`,
         {
@@ -40,7 +43,8 @@ function Event() {
             setEvent(data.event);
           }
         })
-        .catch((error) => console.error("Erreur lors de la récupération de l'événement :", error));
+        .catch((error) => console.error("Erreur lors de la récupération de l'événement :", error))
+        .finally(() => setLoading(false));
 
       fetch(
         `https://assos-backend-victors-projects-dcc70eda.vercel.app/users/getUserLikedEvents/${user.token}`,
@@ -152,6 +156,14 @@ function Event() {
       />
     );
   };
+
+  if (loading) {
+    return (
+      <div className={styles.loadingContainer}>
+        <Spin indicator={<LoadingOutlined spin />} size="large" />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.mainContainer}>

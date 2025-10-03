@@ -16,12 +16,12 @@
   justify-content: space-around;
   /* padding: 20px; */
   margin-top: 5%;
-  margin-bottom: 5%;
 }
 
 .mainText {
   width: 50%;
   margin-top: 3%;
+  font-size: 120%;
 }
 
 .description {
@@ -31,7 +31,7 @@
   flex-wrap: wrap;
   justify-self: start;
   text-align: justify;
-  line-height: 160%;
+  line-height: 180%;
 }
 
 .btn {
@@ -79,6 +79,8 @@
   align-items: center;
   margin-left: 2%;
   margin-right: 1%;
+  margin-top: 2%;
+  margin-bottom: 3%;
 }
 
 .cicleEvent {
@@ -110,4 +112,7 @@
   width: 100%;
   flex-direction: row;
   gap: 20px;
+}
+.eventText {
+  white-space: normal;
 }

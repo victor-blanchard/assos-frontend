@@ -3,9 +3,22 @@ import { useRouter } from "next/router";
 import styles from "../styles/Search.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShare, faBookmark } from "@fortawesome/free-solid-svg-icons";
+import { LoadingOutlined } from "@ant-design/icons";
 import Image from "next/image";
 import React from "react";
-import { Calendar, DatePicker, Input, Select, Switch, Tabs, List, Avatar } from "antd/lib";
+
+import {
+  Calendar,
+  DatePicker,
+  Input,
+  Select,
+  Switch,
+  Tabs,
+  List,
+  Avatar,
+  Spin,
+  icons,
+} from "antd/lib";
 import { useState, useEffect } from "react";
 import { Button } from "antd";
 import { useSelector, useDispatch } from "react-redux";
@@ -38,46 +51,122 @@ const publicOptions = [
   { label: "Senior", value: "Senior" },
 ];
 
+// Hook personnalisé pour la recherche factorisée
+const useSearch = (type) => {
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+
+  const performSearch = async (filters) => {
+    setLoading(true);
+    try {
+      const params = new URLSearchParams(
+        Object.fromEntries(
+          Object.entries(filters).filter(
+            ([_, value]) => value !== undefined && value !== null && value !== ""
+          )
+        )
+      );
+
+      const queryString = params.toString().replace(/%2C/g, ",");
+      const endpoint =
+        type === "events"
+          ? `https://assos-backend-victors-projects-dcc70eda.vercel.app/events/filtered?${queryString}`
+          : `https://assos-backend-victors-projects-dcc70eda.vercel.app/associations/filtered?${queryString}`;
+
+      const response = await fetch(endpoint, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await response.json();
+
+      if (data.result) {
+        if (type === "events") {
+          dispatch(addEvents(data.events));
+          console.log(`${data.events.length} events ajoutés au reducer searchResult`);
+        } else {
+          dispatch(addAssociations(data.associations));
+          console.log(`${data.associations.length} associations ajoutés au reducer searchResult`);
+        }
+      }
+    } catch (error) {
+      console.error("Erreur lors de la recherche:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { performSearch, loading };
+};
+
+// Hook pour le chargement initial des données
+const useInitialData = (performSearch) => {
+  const [eventsLoading, setEventsLoading] = useState(false);
+  const [associationsLoading, setAssociationsLoading] = useState(false);
+
+  const loadInitialEvents = async (filters = {}) => {
+    setEventsLoading(true);
+    try {
+      await performSearch(filters);
+    } catch (error) {
+      console.error("Erreur lors du chargement des événements:", error);
+    } finally {
+      setEventsLoading(false);
+    }
+  };
+
+  const loadInitialAssociations = async (filters = {}) => {
+    setAssociationsLoading(true);
+    try {
+      await performSearch(filters);
+    } catch (error) {
+      console.error("Erreur lors du chargement des associations:", error);
+    } finally {
+      setAssociationsLoading(false);
+    }
+  };
+
+  return { loadInitialEvents, loadInitialAssociations, eventsLoading, associationsLoading };
+};
+
 const EventSearchContent = () => {
   const router = useRouter();
   const events = useSelector((state) => state.searchResults.value.events);
-  // const eventSelectedId = useSelector((state) => state.searchResults.value.selectedEventId);
   const filters = useSelector((state) => state.searchResults.value.filters);
   const [keyword, setKeyword] = useState("");
   const [location, setLocation] = useState("");
   const [date, setDate] = useState("");
   const [categories, setCategories] = useState(null);
   const [target, setTarget] = useState(null);
-  const [openOnly, setOpenOnly] = useState(true);
+  const [showPassed, setShowPassed] = useState(true);
 
-  const test = router.query;
-  console.log(test.testQuery);
+  const { performSearch, loading } = useSearch("events");
+  const { loadInitialEvents, eventsLoading } = useInitialData(performSearch);
 
   useEffect(() => {
+    // Initialisation des filtres depuis l'URL
+    const urlFilters = {};
+
     if (router.query.categories) {
       const categories = router.query.categories;
-      if (categories != "") setCategories(categories);
+      if (categories != "") {
+        setCategories(categories);
+        urlFilters.categories = categories;
+      }
     }
 
     if (router.query.keyword) {
       setKeyword(router.query.keyword);
+      urlFilters.keyword = router.query.keyword;
     }
 
     if (router.query.location) {
       setLocation(router.query.location);
+      urlFilters.location = router.query.location;
     }
 
-    // if (filters?.keyword?.length > 0) {
-    //   setKeyword(filters.keyword);
-    // }
-
-    // if (filters?.location?.length > 0) {
-    //   setLocation(filters.location);
-    // }
-
-    // if (filters?.categories?.length > 0) {
-    //   setCategories(filters.categories);
-    // }
+    // Chargement initial des événements avec les filtres de l'URL
+    loadInitialEvents(urlFilters);
   }, []);
 
   const eventsToDisplay = events.map((data, i) => {
@@ -132,46 +221,17 @@ const EventSearchContent = () => {
   const dispatch = useDispatch();
 
   const handleSearch = () => {
-    dispatch(
-      addFilters({
-        keyword: keyword,
-        location: location,
-        date: date,
-        categories: categories,
-        target: target,
-        openOnly: openOnly,
-      })
-    );
+    const searchFilters = {
+      keyword: keyword,
+      location: location,
+      date: date,
+      categories: categories,
+      target: target,
+      openOnly: !showPassed,
+    };
 
-    const params = new URLSearchParams(
-      Object.fromEntries(
-        Object.entries({
-          keyword: keyword,
-          location: location,
-          date: date,
-          categories: categories,
-          target: target,
-          openOnly: openOnly,
-        }).filter(([_, value]) => value !== undefined && value !== null && value !== "")
-      )
-    );
-    // Remplacer %2C par ,
-    const queryString = params.toString().replace(/%2C/g, ",");
-
-    fetch(
-      `https://assos-backend-victors-projects-dcc70eda.vercel.app/events/filtered?${queryString}`,
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.result) {
-          dispatch(addEvents(data.events));
-          console.log(`${data.events.length} events ajoutés au reducer searchResult`);
-        }
-      });
+    dispatch(addFilters(searchFilters));
+    performSearch(searchFilters);
   };
 
   const handleEventDisplay = (id) => {
@@ -253,16 +313,20 @@ const EventSearchContent = () => {
         />
 
         <div className={styles.openOnlyBox}>
-          <div className={styles.openOnlyText}> Inscriptions ouvertes uniquement </div>
-          <Switch onChange={(checked) => setOpenOnly(checked)} defaultChecked />
+          <div className={styles.openOnlyText}> Afficher événements passés </div>
+          <Switch onChange={(checked) => setShowPassed(checked)} defaultChecked={showPassed} />
         </div>
         <Button className={styles.filterbox} onClick={() => handleSearch()}>
-          Actualiser
+          Rechercher
         </Button>
       </div>
 
       <div className={styles.resultContainer}>
-        {eventsToDisplay?.length > 0 ? (
+        {loading || eventsLoading ? (
+          <div className={styles.loadingContainer}>
+            <Spin indicator={<LoadingOutlined spin />} size="large" />
+          </div>
+        ) : eventsToDisplay?.length > 0 ? (
           eventsToDisplay
         ) : (
           <div className={styles.notFoundSlot}>
@@ -299,6 +363,17 @@ function sliceByWords(text, maxLength) {
 const AssociationSearchContent = () => {
   const router = useRouter();
   const associations = useSelector((state) => state.searchResults.value.associations);
+  const [keyword, setKeyword] = useState("");
+  const [location, setLocation] = useState("");
+  const [categories, setCategories] = useState("");
+
+  const { performSearch, loading } = useSearch("associations");
+  const { loadInitialAssociations, associationsLoading } = useInitialData(performSearch);
+
+  useEffect(() => {
+    // Chargement initial des associations
+    loadInitialAssociations();
+  }, []);
 
   const handleAssociationDisplay = (id) => {
     router.push(`/public_association?id=${id}`);
@@ -345,45 +420,15 @@ const AssociationSearchContent = () => {
 
   const dispatch = useDispatch();
 
-  const [keyword, setKeyword] = useState("");
-  const [location, setLocation] = useState("");
-  const [categories, setCategories] = useState("");
-
   const handleSearch = () => {
-    dispatch(
-      addFilters({
-        keyword: keyword,
-        location: location,
-        categories: categories,
-      })
-    );
+    const searchFilters = {
+      keyword: keyword,
+      location: location,
+      categories: categories,
+    };
 
-    const params = new URLSearchParams(
-      Object.fromEntries(
-        Object.entries({
-          keyword: keyword,
-          location: location,
-          categories: categories,
-        }).filter(([_, value]) => value !== undefined && value !== null && value !== "")
-      )
-    );
-    // Remplacer %2C par ,
-    const queryString = params.toString().replace(/%2C/g, ",");
-
-    fetch(
-      `https://assos-backend-victors-projects-dcc70eda.vercel.app/associations/filtered?${queryString}`,
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.result) {
-          dispatch(addAssociations(data.associations));
-          console.log(`${data.associations.length} associations ajoutés au reducer searchResult`);
-        }
-      });
+    dispatch(addFilters(searchFilters));
+    performSearch(searchFilters);
   };
 
   const handleKeyDown = (event) => {
@@ -421,12 +466,16 @@ const AssociationSearchContent = () => {
         />
         <div className={styles.openOnlyBox}>
           <Button className={styles.filterbox} onClick={() => handleSearch()}>
-            Actualiser
+            Rechercher
           </Button>
         </div>
       </div>
       <div className={styles.resultContainer}>
-        {associationsToDisplay?.length > 0 ? (
+        {loading || associationsLoading ? (
+          <div className={styles.loadingContainer}>
+            <Spin indicator={<LoadingOutlined spin />} size="large" />
+          </div>
+        ) : associationsToDisplay?.length > 0 ? (
           associationsToDisplay
         ) : (
           <div className={styles.notFoundSlot}>
